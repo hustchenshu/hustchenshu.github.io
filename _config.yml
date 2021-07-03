@@ -3,12 +3,12 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: 起航了
 subtitle: ''
 description: ''
 keywords:
-author: John Doe
-language: en
+author: hustchenshu
+language: zh
 timezone: ''
 
 # URL
@@ -104,5 +104,5 @@ theme: landscape
 deploy:
   type: git
   repository: https://github.com/hustchenshu/hustchenshu.github.io.git  #你的仓库地址
-  branch: master
+  branch: main
 
