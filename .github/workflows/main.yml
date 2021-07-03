@@ -22,20 +22,24 @@ jobs:
       with:
         node-version: '12.x'
 
-    - name: Install dependencies & Generate static files
+    - name: Setup Hexo env
       env:
-        GIT_NAME: hustchenshu
-        GIT_EMAIL: ${{ secrets.GT_MAIL }}
-        REPO: github.com/hustchenshu/hustchenshu.github.io
-        GH_TOKEN: ${{ secrets.GT_TOKEN }}
+        ACTION_DEPLOY_KEY: ${{ secrets.ACTION_DEPLOY_KEY }}
       run: |
-        node -v
-        npm i -g hexo-cli
+        # set up private key for deploy
+        mkdir -p ~/.ssh/
+        echo "$ACTION_DEPLOY_KEY" | tr -d '\r' > ~/.ssh/id_rsa # 配置秘钥
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan github.com >> ~/.ssh/known_hosts
+        # set git infomation
+        git config --global user.name 'hustchenshu' # 
+        git config --global user.email '569874886@qq.com'
+        # install dependencies
+        npm i -g hexo-cli # 安装hexo
         npm i
-        git config --global user.name $GIT_NAME
-        git config --global user.email $GIT_EMAIL
-        git remote set-url upstream https://$GH_TOKEN:x-oauth-basic@github.com/$GIT_NAME/$REPO.git
-        git remote set-url origin https://$GH_TOKEN:x-oauth-basic@github.com/$GIT_NAME/$REPO.git
-        git branch -m main
-        hexo clean
-        hexo d
+  
+    - name: Deploy
+      run: |
+        # publish
+        hexo generate && hexo deploy # 执行部署程序
+
