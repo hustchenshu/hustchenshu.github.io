@@ -32,5 +32,7 @@ jobs:
         node -v
         npm i -g hexo-cli
         npm i
+        git config --global user.name $GIT_NAME
+        git config --global user.email $GIT_EMAIL
         hexo clean
         hexo d
