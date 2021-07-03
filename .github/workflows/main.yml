@@ -34,7 +34,8 @@ jobs:
         npm i
         git config --global user.name $GIT_NAME
         git config --global user.email $GIT_EMAIL
-        git config remote.origin.url 'https://$GH_TOKEN@github.com/hustchenshu/hustchenshu.github.io.git'
+        git remote set-url upstream https://$GH_TOKEN:x-oauth-basic@github.com/$GIT_NAME/$REPO.git
+        git remote set-url origin https://$GH_TOKEN:x-oauth-basic@github.com/$GIT_NAME/$REPO.git
         git branch -m main
         hexo clean
         hexo d
