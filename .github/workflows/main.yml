@@ -48,7 +48,6 @@ jobs:
       run: |
         hexo clean
         hexo generate 
-        cd .deploy_git
         git config remote.origin.url "git@github.com:hustchenshu/hustchenshu.github.io.git"
         hexo deploy
 
