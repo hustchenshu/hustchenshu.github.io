@@ -47,7 +47,7 @@ jobs:
         GT_TOKEN: ${{ secrets.GT_TOKEN }}
       run: |
         hexo clean
+        hexo generate 
         cd .deploy_git
         git config remote.origin.url "https://$GT_TOKEN@github.com/hustchenshu/hustchenshu.git"
-        hexo generate 
         hexo deploy
