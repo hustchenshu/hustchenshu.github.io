@@ -83,9 +83,9 @@ reward_type: 2
 # 打赏wording
 reward_wording: "请我喝杯咖啡吧~"
 # 支付宝二维码图片地址，跟你设置logo的方式一样。比如：/images/alipay.jpg
-alipay: https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg
+alipay: https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/ali_pay.jpg
 # 微信二维码图片地址
-weixin: https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg
+weixin: https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/wechat_pay.jpg
 
 # 版权声明
 # 版权声明type设定：0-关闭版权声明； 1-文章对应的md文件里有copyright: true属性，才有版权声明； 2-所有文章均有版权声明
@@ -100,7 +100,7 @@ search:
 
 # RSS订阅(先安装hexo-generator-feed插件，再去博客根目录config进行配置)
 # 不想显示可以直接留空
-rss: /atom.xml
+rss: #
 
 # 是否启用黑夜模式开关
 darkmode: true
@@ -114,7 +114,7 @@ mouse:
   path: /images/mouse.cur
 
 # 鼠标点击效果：0-关闭，1-爱心，2-爆炸烟花，3-粒子烟花
-click_effect: 1
+click_effect: 3
 
 # 页面宽度自定义（不建议修改，可能造成布局混乱），article_width文章宽度，sidebar_width侧边栏宽度
 layout:
@@ -132,7 +132,7 @@ music:
   enable: true
   # 播放器尺寸类型(1：小尺寸、2：大尺寸)
   type: 1
-  id: 22707008 # 网易云分享的音乐ID(更换音乐请更改此配置项)
+  id: 65008665 # 网易云分享的音乐ID(更换音乐请更改此配置项)
   autoPlay: true # 是否开启自动播放
 
 # 访问量统计(不蒜子)
@@ -141,7 +141,7 @@ busuanzi:
 
 # 友盟cnzz统计(url填js代码src链接)
 cnzz:
-  enable: true
+  enable: false
   url: https://s9.cnzz.com/z_stat.php?id=1278069914&web_id=1278069914
 
 # Google Analytics
@@ -173,15 +173,15 @@ pageFooter: true
 
 # ICP备案信息尾部显示
 icp:
-  enable: false
+  enable: true
   url: "http://www.beian.miit.gov.cn/" # 备案链接
-  text: "浙ICP备88888888" # 备案信息
+  text: "鄂ICP备17017286号-2" # 备案信息
 # 公安备案信息尾部显示
 gongan:
-  enable: false
+  enable: true
   img: /images/beian.png #公安备案图片
   url: "https://beian.miit.gov.cn/#/Integrated/recordQuery" #公安备案链接
-  text: "鄂ICP备17017286号-2" #公安备案信息
+  text: "30159204181516625" #公安备案信息
 
 # 友情链接
 friends_link:
