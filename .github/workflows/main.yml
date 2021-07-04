@@ -31,11 +31,13 @@ jobs:
     - name: Setup Deploy Private Key
       env:
         ACTION_DEPLOY_KEY: ${{ secrets.ACTION_DEPLOY_KEY }}
+        GT_TOKEN: ${{GT_TOKEN}}
       run: |
         mkdir -p ~/.ssh/
         echo "$ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa 
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan github.com >> ~/.ssh/known_hosts
+        git remote add origin 'https://$GT_TOKEN@github.com/hustchenshu/hustchenshu.git'
         
     - name: Setup Git Infomation
       run: | 
