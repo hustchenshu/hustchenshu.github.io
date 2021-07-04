@@ -37,12 +37,14 @@ jobs:
         echo "$ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa 
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan github.com >> ~/.ssh/known_hosts
-        git remote add origin "https://$GT_TOKEN@github.com/hustchenshu/hustchenshu.git"
         
     - name: Setup Git Infomation
+      env:
+        GT_TOKEN: ${{ secrets.GT_TOKEN }}
       run: | 
         git config --global user.name 'hustchenshu' 
         git config --global user.email '569874886@qq.com'
+        git config remote.origin.url "https://$GT_TOKEN@github.com/hustchenshu/hustchenshu.git"
     - name: Deploy Hexo 
       run: |
         hexo clean
