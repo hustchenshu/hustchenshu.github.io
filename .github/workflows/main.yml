@@ -18,10 +18,10 @@ jobs:
       uses: actions/checkout@master 
       
     # from: https://github.com/actions/setup-node  
-    - name: Setup Node.js 12.x 
+    - name: Setup Node.js 16
       uses: actions/setup-node@master
       with:
-        node-version: "12.x"
+        node-version: 16
     
     - name: Setup Hexo Dependencies
       run: |
@@ -42,12 +42,10 @@ jobs:
       run: | 
         git config --global user.name 'hustchenshu' 
         git config --global user.email '569874886@qq.com'
+        git remote set-url origin "git@github.com:hustchenshu/hustchenshu.github.io.git"
     - name: Deploy Hexo 
-      env:
-        GT_TOKEN: ${{ secrets.GT_TOKEN }}
       run: |
         hexo clean
         hexo generate 
-        git config remote.origin.url "git@github.com:hustchenshu/hustchenshu.github.io.git"
         hexo deploy
 
