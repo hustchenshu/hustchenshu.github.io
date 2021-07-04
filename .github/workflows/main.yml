@@ -39,14 +39,15 @@ jobs:
         ssh-keyscan github.com >> ~/.ssh/known_hosts
         
     - name: Setup Git Infomation
-      env:
-        GT_TOKEN: ${{ secrets.GT_TOKEN }}
       run: | 
         git config --global user.name 'hustchenshu' 
         git config --global user.email '569874886@qq.com'
-        git config remote.origin.url "https://$GT_TOKEN@github.com/hustchenshu/hustchenshu.git"
     - name: Deploy Hexo 
+      env:
+        GT_TOKEN: ${{ secrets.GT_TOKEN }}
       run: |
         hexo clean
+        cd .deploy_git
+        git config remote.origin.url "https://$GT_TOKEN@github.com/hustchenshu/hustchenshu.git"
         hexo generate 
         hexo deploy
