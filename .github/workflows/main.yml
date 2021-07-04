@@ -1,45 +1,48 @@
-# 文件路径 .github/workflows/deployment.yml
-name: Deployment
+# workflow name
+name: Hexo Blog CI
 
-on:
+# master branch on push, auto run
+on: 
   push:
-    branches: [master] # only push events on source branch trigger deployment
-
+    branches:
+      - master
+      
 jobs:
-  hexo-deployment:
-    runs-on: ubuntu-latest
-    env:
-      TZ: Asia/Shanghai
-
+  build: 
+    runs-on: ubuntu-latest 
+        
     steps:
-    - name: Checkout source
-      uses: actions/checkout@v2
+    # check it to your workflow can access it
+    # from: https://github.com/actions/checkout
+    - name: Checkout Repository master branch
+      uses: actions/checkout@master 
+      
+    # from: https://github.com/actions/setup-node  
+    - name: Setup Node.js 12.x 
+      uses: actions/setup-node@master
       with:
-        submodules: true
-
-    - name: Setup Node.js
-      uses: actions/setup-node@v1
-      with:
-        node-version: '12.x'
-
-    - name: Setup Hexo env
+        node-version: "12.x"
+    
+    - name: Setup Hexo Dependencies
+      run: |
+        npm install hexo-cli -g
+        npm install
+    
+    - name: Setup Deploy Private Key
       env:
         ACTION_DEPLOY_KEY: ${{ secrets.ACTION_DEPLOY_KEY }}
       run: |
-        # set up private key for deploy
         mkdir -p ~/.ssh/
-        echo "$ACTION_DEPLOY_KEY" | tr -d '\r' > ~/.ssh/id_rsa # 配置秘钥
+        echo "$ACTION_DEPLOY_KEY" > ~/.ssh/id_rsa 
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan github.com >> ~/.ssh/known_hosts
-        # set git infomation
-        git config --global user.name 'hustchenshu' # 
+        
+    - name: Setup Git Infomation
+      run: | 
+        git config --global user.name 'hustchenshu' 
         git config --global user.email '569874886@qq.com'
-        # install dependencies
-        npm i -g hexo-cli # 安装hexo
-        npm i
-  
-    - name: Deploy
+    - name: Deploy Hexo 
       run: |
-        # publish
-        hexo generate && hexo deploy # 执行部署程序
-
+        hexo clean
+        hexo generate 
+        hexo deploy
