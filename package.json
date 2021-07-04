@@ -26,5 +26,8 @@
     "hexo-server": "^2.0.0",
     "hexo-theme-ayer": "^1.9.2-0",
     "hexo-theme-landscape": "^0.0.3"
+  },
+  "devDependencies": {
+    "@jiangtj/hexo-extend-theme": "^0.2.4"
   }
 }

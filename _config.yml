@@ -99,6 +99,11 @@ ignore:
 ## Themes: https://hexo.io/themes/
 theme: ayer
 
+theme_plus:
+  views:
+    path: '_partial/head.ejs'
+    file: 'custom/head.ejs'
+
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
