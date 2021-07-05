@@ -50,6 +50,10 @@ jobs:
         hexo deploy
 
     # 以下是云开发的配置
+    - name: rebuild public for tcb
+      run: |
+        hexo clean
+        hexo generate --config _config_tcb.yml
     - name: Setup tcb
       run: |
         npm install -g @cloudbase/cli@latest
