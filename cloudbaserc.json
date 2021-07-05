@@ -1,5 +1,5 @@
 {
-    "envId": "{{env.ENV_ID}}",
+    "envId": "{{env.envId}}",
     "framework": {
         "name": "hustchenshu",
         "plugins": {
