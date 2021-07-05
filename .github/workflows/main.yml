@@ -50,16 +50,13 @@ jobs:
         hexo deploy
 
     # 以下是云开发的配置
-    # - name: Deploy static to Tencent CloudBase
-    #   id: deployStatic
-    #   uses: TencentCloudBase/cloudbase-action@v1.1.0
-    #   env:
-    #     PERSONAL_TOKEN: ${{ secrets.PERSONAL_TOKEN }}
-    #     PUBLISH_BRANCH: master
-    #     PUBLISH_DIR: ./public
-    #   with:
-    #     secretId: ${{ secrets.SECRET_ID }}  
-    #     secretKey: ${{ secrets.SECRET_KEY }}
-    #     envId: ${{ secrets.ENV_ID }}
-    #     staticSrcPath: ./public
+    - name: Setup tcb
+      run: |
+        npm install -g @cloudbase/cli@latest
+    - name: Deploy to Tencent CloudBase
+      uses: TencentCloudBase/cloudbase-action@v2
+      with:
+        secretId: ${{secrets.TCB_SECRET_ID}}
+        secretKey: ${{secrets.TCB_SECRET_KEY}}
+        envId: ${{secrets.TCB_ENV_ID}}
 

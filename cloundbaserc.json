@@ -1,0 +1,15 @@
+{
+    "envId": "{{env.ENV_ID}}",
+    "framework": {
+        "name": "hustchenshu",
+        "plugins": {
+            "client": {
+                "use": "@cloudbase/framework-plugin-website",
+                "inputs": {
+                    "outputPath": "public",
+                    "cloudPath": "/blog"
+                }
+            }
+        }
+    }
+  }
