@@ -47,6 +47,8 @@ jobs:
       run: |
         hexo clean
         hexo generate 
+        mkdir -p public/cdn
+        cp -r cdn public
         hexo deploy
 
     # 以下是云开发的配置
@@ -54,6 +56,8 @@ jobs:
       run: |
         hexo clean
         hexo generate --config _config_tcb.yml
+        mkdir -p public/cdn
+        cp -r cdn public
     - name: Deploy to Tencent CloudBase
       uses: TencentCloudBase/cloudbase-action@v2
       with:
