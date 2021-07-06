@@ -47,15 +47,9 @@ jobs:
       run: |
         hexo clean
         hexo generate 
-        mkdir -p .deploy_git/cdn
-        cp -r cdn .deploy_git
         hexo deploy
 
     # 以下是云开发的配置
-    - name: rebuild public for tcb
-      run: |
-        mkdir -p public/cdn
-        cp -r cdn public
     - name: Deploy to Tencent CloudBase
       uses: TencentCloudBase/cloudbase-action@v2
       with:
