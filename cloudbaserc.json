@@ -6,8 +6,7 @@
             "client": {
                 "use": "@cloudbase/framework-plugin-website",
                 "inputs": {
-                    "outputPath": "public",
-                    "cloudPath": "/blog"
+                    "outputPath": "public"
                 }
             }
         }
