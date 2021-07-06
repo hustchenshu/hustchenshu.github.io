@@ -54,9 +54,6 @@ jobs:
       run: |
         hexo clean
         hexo generate --config _config_tcb.yml
-    - name: Setup tcb
-      run: |
-        npm install -g @cloudbase/cli@latest
     - name: Deploy to Tencent CloudBase
       uses: TencentCloudBase/cloudbase-action@v2
       with:
