@@ -4,8 +4,8 @@ menu:
   归档: /archives
   分类: /categories
   标签: /tags
-  旅行: /travel
-  摄影: http://shenyu-vip.lofter.com
+  友链: /friends
+  导航: /guide
   关于我: https://github.com/hustchenshu
 
 # 站点次标题和打字动效
@@ -28,7 +28,7 @@ logo: /cdn/avatar_mini.jpeg
 # 封面配置
 # enable-是否启用封面；path-封面背景图；logo-封面logo
 cover:
-  enable: true
+  enable: false
   path: /images/cover6.jpg # /source/images目录下附送多张美图，可更换
   logo: false #/images/ayer.svg，如果不要直接设置成false
 
@@ -195,7 +195,7 @@ friends_link:
     img: https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/github.png
   CSDN:
     url: https://blog.csdn.net/dujiajiyiyi
-    img: https://img-home.csdnimg.cn/images/20201124032511.png
+    img: /cdn/csdn.png
   Hexo官网:
     url: https://hexo.io
     img: https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/hexo.png
@@ -219,12 +219,12 @@ valine:
 
 # 2、Gitalk(https://github.com/gitalk/gitalk)
 gitalk:
-  enable: false # true
-  clientID: # GitHub Application Client ID
-  clientSecret: # Client Secret
-  repo: # Repository name
-  owner: # GitHub ID
-  admin: # GitHub ID
+  enable: true # true
+  clientID: '62f48eab8d92b29e33e1' # GitHub Application Client ID
+  clientSecret: 'c5310877c4a6f89f33ff23b672affb6de34a5d7a' # Client Secret
+  repo: hustchenshu.github.io # Repository name
+  owner: hustchenshu # GitHub ID
+  admin: hustchenshu # GitHub ID
 
 # 3、Twikoo(https://github.com/imaegoo/twikoo)
 twikoo:
