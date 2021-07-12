@@ -24,6 +24,11 @@ jobs:
         node-version: 16
     
     - name: Setup Hexo Dependencies
+      uses: actions/cache@v2
+      with:
+        path: |
+          - package.json
+          - package-lock.json
       run: |
         npm install hexo-cli -g
         npm install
