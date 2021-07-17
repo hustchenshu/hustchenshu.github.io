@@ -280,13 +280,13 @@ export function createServer(config: ServerConfig): Server {
 ### 3.2 plugins
 
 
-![enter image description here](https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/anoin.png)
+![enter image description here](https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/anion.png)
 
 
 核心功能通过plugin来实现，通过添加注册plugin来扩展完善生态；核心的几个基础组件在[v1.0.1](https://github.com/vitejs/vite/blob/26001044856d6e96f78217d23c5c6bba56a21e80/src/node/server.ts)已经编写完毕
 
 
-![enter image description here](../vdn/vite-server.png)
+![enter image description here](https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/vite-server.png)
 
 ```javascript
 const internalPlugins: Plugin[] = [
@@ -393,7 +393,7 @@ function vuePlugin({app}){
 }
 ```
 
-![enter image description here](https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/vite-vue-split.vue)
+![enter image description here](https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/vite-vue-split.png)
 
 ### 4.3 HMR
 
