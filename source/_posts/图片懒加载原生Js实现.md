@@ -2,7 +2,7 @@
 title: 图片懒加载原生js实现
 date: 2017-06-02 19:44:47
 tags: [javascript, 性能优化]
-categories: [javascript基础]
+categories: [javascript]
 ---
 
 # 思路

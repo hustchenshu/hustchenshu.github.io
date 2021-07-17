@@ -2,7 +2,7 @@
 title: Js类型检测
 date: 2017-05-02 19:44:03
 tags: [javascript]
-categories: [javascript基础]
+categories: [javascript]
 ---
 
 ## 判断js对象类型之Object.prototype.toString.call(obj)

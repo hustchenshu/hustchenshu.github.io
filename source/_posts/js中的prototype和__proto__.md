@@ -2,7 +2,7 @@
 title: js中的prototype和__proto__
 date: 2017-05-02 19:44:47
 tags: [javascript]
-categories: [javascript基础]
+categories: [javascript]
 ---
 
 ## 原型对象prototype</div>

@@ -2,7 +2,7 @@
 title: 轮播图的原生js实现
 date: 2017-11-02 12:41:03
 tags: [javascript]
-categories: [javascript基础]
+categories: [javascript]
 ---
 
 # 实现原理
