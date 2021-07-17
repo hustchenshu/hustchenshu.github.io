@@ -1,7 +1,8 @@
 ---
 title: vite浅析
-date: 2021-02-17 19:55:53ßß
-tags:
+date: 2021-02-17 19:55:53
+tags: [vite, vue]
+categories: [前端框架, vue]
 ---
 
 ## 1. what

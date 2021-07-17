@@ -1,3 +1,9 @@
+---
+title: vite2.0
+date: 2021-06-17 19:55:53
+tags: [vite, vue]
+categories: [前端框架, vue]
+---
 
 ## 新特性
 
