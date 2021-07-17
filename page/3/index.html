@@ -1,0 +1,1493 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> 起航了</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/cdn/fav.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <!-- mermaid -->
+      
+      <script data-ad-client="ca-pub-2856060118135787" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link rel="alternate" href="/atom.xml" title="起航了" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+
+
+<!-- Subtitle -->
+
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['面朝大海，春暖花开', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
+        startDelay: 0,
+        typeSpeed: 200,
+        loop: true,
+        backSpeed: 100,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
+  
+<div id="main">
+  <section class="outer">
+  
+  
+  
+
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content" id="broad"></div>
+</div>
+<script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("broad").innerHTML = data.hitokoto;
+        })
+        .catch(console.error)
+</script>
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
+  
+  <article class="articles">
+    
+    
+    
+    
+    <article
+  id="post-css布局-水平居中"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2017/06/23/css%E5%B8%83%E5%B1%80-%E6%B0%B4%E5%B9%B3%E5%B1%85%E4%B8%AD/"
+    >css布局-水平垂直居中问题</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/06/23/css%E5%B8%83%E5%B1%80-%E6%B0%B4%E5%B9%B3%E5%B1%85%E4%B8%AD/" class="article-date">
+  <time datetime="2017-06-23T14:44:47.000Z" itemprop="datePublished">2017-06-23</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="1-水平居中"><a href="#1-水平居中" class="headerlink" title="1.水平居中"></a>1.水平居中</h1><h2 id="1-1-使用margin"><a href="#1-1-使用margin" class="headerlink" title="1.1 使用margin"></a>1.1 使用margin</h2><p><strong>给需要水平居中的div指定其宽度（这是必须的），然后设置其margin：0 auto；</strong></p>
+<p><strong>示例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;&quot;&gt;parent</span><br><span class="line">    &lt;div style=&quot;width:200px;height:50px；margin:0 auto;&quot;&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>效果</strong></p>
+<div style="border:solid 2px red;">parent
+    <div style="width:200px;height:50px;border:solid;margin:0 auto;">child</div>
+</div>
+**当然，我们也可以使用max-width来设定宽度**
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;border:solid 2px red;&quot;&gt;parent</span><br><span class="line">    &lt;div style=&quot;max-width:600px;height:50px;border:solid;margin:0 auto;&quot;&gt;child&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<div style="border:solid 2px red;">parent
+    <div style="max-width:600px;height:50px;border:solid;margin:0 auto;">child</div>
+</div>
+
+<p><strong>若希望不设定居中div的宽度，那么可以借助于table来实现</strong><br><strong>示例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;border:solid 2px red;&quot;&gt;</span><br><span class="line">    &lt;div style=&quot;margin:0 auto;display:table;border:solid 2px gold;&quot;&gt;block元素适用&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div style=&quot;border:solid 2px red;&quot;&gt;</span><br><span class="line">    &lt;span style=&quot;margin:0 auto;display:table;border:solid 2px gold;&quot;&gt;inline元素适用&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>效果</strong></p>
+<div style="border:solid 2px red;">
+    <div style="margin:0 auto;display:table;border:solid 2px gold;">block元素适用</div>
+</div>
+<div style="border:solid 2px red;">
+    <span style="margin:0 auto;display:table;border:solid 2px gold;">inline元素适用</span>
+</div>
+
+<h2 id="1-2-绝对定位"><a href="#1-2-绝对定位" class="headerlink" title="1.2 绝对定位"></a>1.2 绝对定位</h2><p><strong>由于absolute布局的定位相对于包含他的元素（第一个非static布局祖先元素）的指定坐标，所以设定包含该元素的父对象的position：relative；该元素自身设定position：absolute；left：50%；transform：transla（-50%）；</strong></p>
+<p><strong>示例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;border:solid 2px red;position:relative;height:40px;&quot;&gt;</span><br><span class="line">    &lt;div style=&quot;border:solid;position:absolute;left:50%;transform:translate(-50%)&quot;&gt;block元素适用&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div style=&quot;border:solid 2px red;position:relative;height:40px;&quot;&gt;</span><br><span class="line">    &lt;span style=&quot;border:solid;position:absolute;left:50%;transform:translate(-50%)&quot;&gt;inline元素适用&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>效果</strong></p>
+<div style="border:solid 2px red;position:relative;height:40px;">
+    <div style="border:solid;position:absolute;left:50%;transform:translate(-50%)">block元素适用</div>
+</div>
+<div style="border:solid 2px red;position:relative;height:40px;">
+    <span style="border:solid;position:absolute;left:50%;transform:translate(-50%)">inline元素适用</span>
+</div>
+
+
+
+<h2 id="1-3-flex布局"><a href="#1-3-flex布局" class="headerlink" title="1.3 flex布局"></a>1.3 flex布局</h2><h3 id="1-3-1"><a href="#1-3-1" class="headerlink" title="1.3.1"></a>1.3.1</h3><p>第一种实现方法：设定包含容器的样式为display：flex；justify-content：center；这里的justify-content用于设置或检索弹性盒子元素在主轴（横轴）方向上的对齐方式。取值如下：</p>
+<table>
+<thead>
+<tr>
+<th align="left">值</th>
+<th align="left">描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">flex-start</td>
+<td align="left">默认值。项目位于容器的开头。</td>
+</tr>
+<tr>
+<td align="left">flex-end</td>
+<td align="left">项目位于容器的结尾。</td>
+</tr>
+<tr>
+<td align="left">center</td>
+<td align="left">项目位于容器的中心。</td>
+</tr>
+<tr>
+<td align="left">space-between</td>
+<td align="left">项目位于各行之间留有空白的容器内。</td>
+</tr>
+<tr>
+<td align="left">space-around</td>
+<td align="left">项目位于各行之前、之间、之后都留有空白的容器内。</td>
+</tr>
+<tr>
+<td align="left">initial</td>
+<td align="left">设置该属性为它的默认值。</td>
+</tr>
+<tr>
+<td align="left">inherit</td>
+<td align="left">从父元素继承该属性。</td>
+</tr>
+</tbody></table>
+<p><strong>示例1</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;border:solid 2px red;display:flex;justify-content:center&quot;&gt;</span><br><span class="line">    &lt;div style=&quot;border:solid;&quot;&gt;block元素适用&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div style=&quot;border:solid 2px red;display:flex;justify-content:center&quot;&gt;</span><br><span class="line">    &lt;span style=&quot;border:solid;&quot;&gt;inline元素适用&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>效果1</strong></p>
+<div style="border:solid 2px red;display:flex;justify-content:center">
+    <div style="border:solid;">block元素适用</div>
+</div>
+<div style="border:solid 2px red;display:flex;justify-content:center">
+    <span style="border:solid;">inline元素适用</span>
+</div>
+
+<h3 id="1-3-2"><a href="#1-3-2" class="headerlink" title="1.3.2"></a>1.3.2</h3><p>第二种实现方法：设定包含容器的样式为display：flex；该元素自身只需要设定margin：0 auto，相比只是用margin来进行水平居中而言，有点在与不用设定元素的宽度<br><strong>示例2</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;border:solid 2px red;display:flex;&quot;&gt;</span><br><span class="line">    &lt;div style=&quot;border:solid;margin:0 auto&quot;&gt;block元素适用&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div style=&quot;border:solid 2px red;display:flex;&quot;&gt;</span><br><span class="line">    &lt;span style=&quot;border:solid;margin:0 auto&quot;&gt;inline元素适用&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>效果2</strong></p>
+<div style="border:solid 2px red;display:flex;">
+    <div style="border:solid;margin:0 auto">block元素适用</div>
+</div>
+<div style="border:solid 2px red;display:flex;">
+    <span style="border:solid;margin:0 auto">inline元素适用</span>
+</div>
+## 1.4使用inline-block和text-align
+
+<p><strong>示例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;text-align:center;border:solid 2px red;&quot;&gt;</span><br><span class="line">    &lt;div style=&quot;display: inline-block;border:solid;margin:0 auto;&quot;&gt;child【block元素适用】&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div style=&quot;text-align:center;border:solid 2px red;&quot;&gt;</span><br><span class="line">    &lt;span&gt;行内元素inline也适用&lt;/span&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div style="text-align:center;border:solid 2px red;">
+    <div style="display: inline-block;border:solid;margin:0 auto;">child【block元素适用】</div>
+</div>
+<div style="text-align:center;border:solid 2px red;">
+    <span>行内元素inline也适用</span>
+</div>
+
+
+<h2 id="1-5-float-relative"><a href="#1-5-float-relative" class="headerlink" title="1.5 float+relative"></a>1.5 float+relative</h2><p> <strong>示例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;div style=&quot;padding:0;margin:0;border:solid 2px red;overflow:hidden;&quot;&gt;</span><br><span class="line">    &lt;div style=&quot;padding:0;margin:0;border:solid 2px yellow;float:left;width:100%;position:relative;right:-50%&quot;&gt;</span><br><span class="line">        &lt;ul style=&quot;padding:0;margin:0;border:solid 2px cyan;float:left;clear:left;position:relative;&quot;&gt;</span><br><span class="line">            &lt;li style=&quot;padding:0;margin:0;position:relative;float:left;display:block;right:50%;&quot;&gt;ssssss&lt;/li&gt;</span><br><span class="line">            &lt;/ul&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div style="padding:0;margin:0;border:solid 2px red;overflow:hidden;">
+    <div style="padding:0;margin:0;border:solid 2px yellow;float:left;width:100%;position:relative;right:-50%">
+        <ul style="padding:0;margin:0;border:solid 2px cyan;float:left;clear:left;position:relative;">
+            <li style="padding:0;margin:0;position:relative;float:left;display:block;right:50%;">ssssss</li>
+            </ul>
+    </div>
+</div>
+
+<p><strong>后续将补充完善</strong></p>
+<h1 id="2-垂直居中"><a href="#2-垂直居中" class="headerlink" title="2.垂直居中"></a>2.垂直居中</h1><h2 id="2-1vertical-align"><a href="#2-1vertical-align" class="headerlink" title="2.1vertical-align"></a>2.1vertical-align</h2><p>首先我们需要弄清楚vertical-align的使用，这个属性是<strong>inline-block依赖型元素</strong>，也就是说,只有一个元素属于inline或是inline-block（table-cell也可以理解为inline-block水平）水平，其身上的vertical-align属性才会起作用。</p>
+<p>因此，可以使用一下方法来实现垂直居中：</p>
+<p><strong>示例1</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot; style=&quot;border:solid 2px gold;height:300px;width:300px;display:table-cell;vertical-align:middle;&quot;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;son&quot; style=&quot;border:solid 1px red;&quot;&gt;child&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>效果1</strong></p>
+<div class="parent" style="border:solid 2px gold;height:300px;width:300px;display:table-cell;vertical-align:middle;"</div>
+    <div class="son" style="border:solid 1px red;">child</div>
+</div>
+
+<h2 id="2-2绝对定位"><a href="#2-2绝对定位" class="headerlink" title="2.2绝对定位"></a>2.2绝对定位</h2><p>借助于absolute相对于其父对象（父对象position为非static）定位来实现居中；</p>
+<p><strong>示例1</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot; style=&quot;border:solid 2px gold;position:relative;height:200px;&quot;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;son&quot; style=&quot;border:solid 1px red;position:absolute;top:50%;transform:translate(0,-50%);&quot;&gt;child&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>效果1</strong></p>
+<div class="parent" style="border:solid 2px gold;position:relative;height:200px;"</div>
+    <div class="son" style="border:solid 1px red;position:absolute;top:50%;transform:translate(0,-50%);">child</div>
+</div>
+
+
+<h2 id="2-3借助flex布局"><a href="#2-3借助flex布局" class="headerlink" title="2.3借助flex布局"></a>2.3借助flex布局</h2><p><strong>示例1</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;parent&quot; style=&quot;border:solid 2px gold;position:relative;height:200px;&quot;&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;son&quot; style=&quot;border:solid 1px red;position:absolute;top:50%;transform:translate(0,-50%);&quot;&gt;child&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>效果1</strong></p>
+<div class="parent" style="border:solid 2px gold;height:200px;display:flex;align-items:center"</div>
+    <div class="son" style="border:solid 1px red;">child</div>
+</div>
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-图片懒加载原生Js实现"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2017/06/02/%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD%E5%8E%9F%E7%94%9FJs%E5%AE%9E%E7%8E%B0/"
+    >图片懒加载原生js实现</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/06/02/%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD%E5%8E%9F%E7%94%9FJs%E5%AE%9E%E7%8E%B0/" class="article-date">
+  <time datetime="2017-06-02T11:44:47.000Z" itemprop="datePublished">2017-06-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h1><p>首先，什么是懒加载，从字面意思就可以简单的理解为不到用时就不去加载，对于页面中的元素，我们可以这样理解：只有当滚动页面内容使得本元素进入到浏览器视窗时（或者稍微提前，需给定提前量），我们才开始加载图片；</p>
+<p>那么我们知道，当不给img元素的src属性赋值时，不会发出请求【不能使src=””，这样即使只给src赋了空值也会发出请求】，而一旦给src属性赋予资源地址值，那么该请求发出，使得图片显示；所以这里我们利用这一点控制img元素的加载时机。<br><strong>在开始的时候将资源url放置在自定义属性data-src当中，然后在需要加载的时候获取该属性并赋值给元素的src属性</strong></p>
+<h1 id="难点"><a href="#难点" class="headerlink" title="难点"></a>难点</h1><h2 id="视窗内元素判断"><a href="#视窗内元素判断" class="headerlink" title="视窗内元素判断"></a>视窗内元素判断</h2><p>从上面的分析可以看出来，主要要解决的问题就是怎么检测到元素是否在视窗当中，这里我们要借助于dom操作api当中的el.getBoundingClientRect()来获取其位置，并判断是否在视窗内，这里简单描述。</p>
+<p><strong>Element.getBoundingClientRect()方法返回元素的大小及其相对于视口的位置。返回值是一个 DOMRect 对象，这个对象是由该元素的 getClientRects() 方法返回的一组矩形的集合, 即：是与该元素相关的CSS 边框集合 。DOMRect 对象包含了一组用于描述边框的只读属性——left、top、right和bottom，单位为像素。除了 width 和 height 外的属性都是相对于视口的左上角位置而言的。</strong></p>
+<p><img src="https://mdn.mozillademos.org/files/15087/rect.png" alt="avatar"></p>
+<p>因此我们可以使用以下逻辑判断元素是否进入视窗：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">function isInSight(el)&#123;</span><br><span class="line">    var eldom = typeof el == &#x27;object&#x27;?el:document.querySelector(el);</span><br><span class="line">    var bound = eldom.getBoundingClientRect();</span><br><span class="line">    // 这里的bound包含了el距离视窗的距离；</span><br><span class="line">    // bound.left是元素距离窗口左侧的距离值；</span><br><span class="line">    // bound.top是袁术距离窗口顶端的距离值；</span><br><span class="line"></span><br><span class="line">    // 以以上两个数值判断元素是否进入视窗；</span><br><span class="line">    var clientHeigt = window.innerHeight;</span><br><span class="line">    var clientWidth = window.innerWidth;</span><br><span class="line">    // return (bound.top&gt;=0&amp;&amp;bound.left&gt;=0)&amp;&amp;(bound.top&lt;=window.innerHeight+20)&amp;&amp;(bound.left&lt;=window.innerWidth+20);</span><br><span class="line">    return !((bound.top&gt;clientHeigt)||(bound.bottom&lt;0)||(bound.left&gt;clientWidth)||(bound.right&lt;0))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>其中window.innerHeight和window.innerWidth分别为视窗的高度和宽度，之所以加上20是为了让懒加载稍稍提前，使用户体验更好；</p>
+<h2 id="添加scroll事件监听"><a href="#添加scroll事件监听" class="headerlink" title="添加scroll事件监听"></a>添加scroll事件监听</h2><p>那么什么时候去检测元素是否在视窗内，并判断是否加载呢，这里由于页面的滚动会使得元素相对于视窗的位置发生变化，也就是说滚动会改变isInSight的结果，所以这里我们在window上添加scroll事件监听：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">// 当加载完成，检测并加载可视范围内的图片</span><br><span class="line">window.onload= checkAllImgs;</span><br><span class="line">// 添加滚动监听，即可视范围变化时检测当前范围内的图片是否可以加载了</span><br><span class="line">window.addEventListener(&quot;scroll&quot;,function()&#123;</span><br><span class="line">    checkAllImgs();</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">// 检测所有图片，并给视窗中的图片的src属性赋值，即开始加载；</span><br><span class="line">function checkAllImgs()&#123;</span><br><span class="line">    var imgs = document.querySelectorAll(&quot;img&quot;);</span><br><span class="line">    Array.prototype.forEach.call(imgs,function(el)&#123;</span><br><span class="line">        if(isInSight(el))&#123;</span><br><span class="line">            loadImg(el);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br><span class="line">// 开始加载指定el的资源</span><br><span class="line">function loadImg(el)&#123;</span><br><span class="line">    var eldom = typeof el == &#x27;object&#x27;?el:document.querySelector(el);</span><br><span class="line">    if(!eldom.src)&#123;</span><br><span class="line">       // 懒加载img定义如：&lt;div class=&quot;img&quot;&gt;&lt;img  alt=&quot;加载中&quot; data-index=7 data-src=&quot;http://az608707.vo.msecnd.net/files/MartapuraMarket_EN-US9502204987_1366x768.jpg&quot;&gt;&lt;/div&gt;</span><br><span class="line">        var source = eldom.getAttribute(&quot;data-src&quot;);</span><br><span class="line">        var index = eldom.getAttribute(&quot;data-index&quot;);</span><br><span class="line">        eldom.src = source; </span><br><span class="line">        console.log(&quot;第&quot;+index+&quot;张图片进入视窗，开始加载。。。。&quot;)</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里就不考虑添加事件的各种兼容性了。</p>
+<p>这样就实现了图片的懒加载的简单实现，当然还可以对scroll进行优化等操作，这里不做过多阐述了。</p>
+<h1 id="演示地址"><a href="#演示地址" class="headerlink" title="演示地址"></a>演示地址</h1><p><a target="_blank" rel="noopener" href="https://codepen.io/hustchen/pen/ZydbRg">（LazyLoadForImg）图片的懒加载</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">性能优化</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-css布局-两栏布局"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2017/05/08/css%E5%B8%83%E5%B1%80-%E4%B8%A4%E6%A0%8F%E5%B8%83%E5%B1%80/"
+    >css布局-两栏布局</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/05/08/css%E5%B8%83%E5%B1%80-%E4%B8%A4%E6%A0%8F%E5%B8%83%E5%B1%80/" class="article-date">
+  <time datetime="2017-05-08T11:44:47.000Z" itemprop="datePublished">2017-05-08</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="1-两栏布局"><a href="#1-两栏布局" class="headerlink" title="1.两栏布局"></a>1.两栏布局</h1><h2 id="1-1借助float与margin"><a href="#1-1借助float与margin" class="headerlink" title="1.1借助float与margin"></a>1.1借助float与margin</h2><p><strong>示例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot; style=&quot;height:200px;border:solid red&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;sidebar&quot; style=&quot;float:right;width:200px;height:100%;border:solid yellow;&quot;&gt;sidebar面板：使用float向右浮动，宽度固定&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;main&quot; style=&quot;margin:0 200px 0 0;border:solid green;height:100%;&quot;&gt;main面板：宽度可伸缩&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>效果</strong></p>
+<div class="container" style="height:200px;border:solid red">
+    <div class="sidebar" style="float:right;width:200px;height:100%;border:solid yellow;">sidebar面板：使用float向右浮动，宽度固定</div>
+    <div class="main" style="margin:0 200px 0 0;border:solid green;height:100%;">main面板：宽度可伸缩</div>
+</div>
+
+<h2 id="1-2借助float与overflow"><a href="#1-2借助float与overflow" class="headerlink" title="1.2借助float与overflow"></a>1.2借助float与overflow</h2><p><strong>示例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot; style=&quot;height:200px;border:solid red&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;sidebar&quot; style=&quot;float:right;width:200px;height:100%;border:solid yellow;&quot;&gt;sidebar面板：使用float向右浮动，宽度固定&lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;main&quot; style=&quot;overflow:hidden;&quot;&gt;main面板：宽度可伸缩&lt;br&gt;</span><br><span class="line">    overflow:hidden，触发bfc模式，浮动无法影响，隔离其他元素，IE6不支持，左侧left设置margin-left当作left与right之间的边距，右侧利用overflow:hidden 进行形成bfc模式&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>效果</strong></p>
+<div class="container" style="height:200px;border:solid red">
+    <div class="sidebar" style="float:right;width:200px;height:100%;border:solid yellow;">sidebar面板：使用float向右浮动，宽度固定</div>
+    <div class="main" style="overflow:hidden;">main面板：宽度可伸缩<br>
+    overflow:hidden，触发bfc模式，浮动无法影响，隔离其他元素，IE6不支持，左侧left设置margin-left当作left与right之间的边距，右侧利用overflow:hidden 进行形成bfc模式</div>
+</div>
+
+<h2 id="1-2绝对定位"><a href="#1-2绝对定位" class="headerlink" title="1.2绝对定位"></a>1.2绝对定位</h2><p><strong>示例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot; style=&quot;position:relative;height:200px;border:solid red&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;main&quot; style=&quot;margin:0 200px 0 0;border:solid green;height:100%;&quot;&gt;main面板：宽度可伸缩&lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;sidebar&quot; style=&quot;position:absolute;top:0;right:0;width:200px;height:100%;border:solid yellow;&quot;&gt;sidebar面板：使用float向右浮动，宽度固定&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>效果</strong></p>
+<div class="container" style="position:relative;height:200px;border:solid red">
+    <div class="main" style="margin:0 200px 0 0;border:solid green;height:100%;">main面板：宽度可伸缩</div>
+        <div class="sidebar" style="position:absolute;top:0;right:0;width:200px;height:100%;border:solid yellow;">sidebar面板：使用float向右浮动，宽度固定</div>
+</div>
+
+<h2 id="1-3表格布局"><a href="#1-3表格布局" class="headerlink" title="1.3表格布局"></a>1.3表格布局</h2><ul>
+<li>分别设置百分百宽度 </li>
+</ul>
+<p><strong>示例</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot; style=&quot;display:table;width:100%;height:200px;border:solid red&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;row&quot; style=&quot;display:table-row;&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;main&quot; style=&quot;display:table-cell;vertical-align:top;width:70%%;border:solid green;&quot;&gt;main面板：宽度70%&lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;sidebar&quot; style=&quot;display:table-cell;vertical-align:top;width:30%;border:solid yellow;&quot;&gt;sidebar面板：宽度30%&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>效果</strong></p>
+<div class="container" style="display:table;width:100%;height:200px;border:solid red">
+    <div class="row" style="display:table-row;">
+        <div class="main" style="display:table-cell;vertical-align:top;width:70%%;border:solid green;">main面板：宽度70%</div>
+        <div class="sidebar" style="display:table-cell;vertical-align:top;width:30%;border:solid yellow;">sidebar面板：宽度30%</div>
+    </div>
+</div>
++ 不设置宽度，根据表格内容自动调整
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot; style=&quot;display:table;width:100%;height:200px;border:solid red&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;row&quot; style=&quot;display:table-row;&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;main&quot; style=&quot;display:table-cell;vertical-align:top;border:solid green;&quot;&gt;main面板：这边内容较多，所以自动调整为较宽&lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;sidebar&quot; style=&quot;display:table-cell;vertical-align:top;border:solid yellow;&quot;&gt;sidebar面板&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<div class="container" style="display:table;width:100%;height:200px;border:solid red">
+    <div class="row" style="display:table-row;">
+        <div class="main" style="display:table-cell;vertical-align:top;border:solid green;">main面板：这边内容较多，所以自动调整为较宽</div>
+        <div class="sidebar" style="display:table-cell;vertical-align:top;border:solid yellow;">sidebar面板</div>
+    </div>
+</div>
++ 设置sidebar固定宽度，main自动调整
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot; style=&quot;display:table;width:100%;height:200px;border:solid red&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;row&quot; style=&quot;display:table-row;&quot;&gt;</span><br><span class="line">        &lt;div class=&quot;main&quot; style=&quot;display:table-cell;vertical-align:top;border:solid green;&quot;&gt;main面板：没有设置宽度，自动调整填充剩余部分&lt;/div&gt;</span><br><span class="line">        &lt;div class=&quot;sidebar&quot; style=&quot;display:table-cell;vertical-align:top;border:solid yellow;width:200px;&quot;&gt;sidebar面板：固定宽度200px&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<div class="container" style="display:table;width:100%;height:200px;border:solid red">
+    <div class="row" style="display:table-row;">
+        <div class="main" style="display:table-cell;vertical-align:top;border:solid green;">main面板：没有设置宽度，自动调整填充剩余部分</div>
+        <div class="sidebar" style="display:table-cell;vertical-align:top;border:solid yellow;width:200px;">sidebar面板：固定宽度200px</div>
+    </div>
+</div> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-css经典布局"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2017/05/02/css%E7%BB%8F%E5%85%B8%E5%B8%83%E5%B1%80/"
+    >css布局-经典布局</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/05/02/css%E7%BB%8F%E5%85%B8%E5%B8%83%E5%B1%80/" class="article-date">
+  <time datetime="2017-05-02T11:44:47.000Z" itemprop="datePublished">2017-05-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <style>
+    div{
+        padding: 0;
+        margin: 0;
+        /*overflow: hidden;*/
+        box-sizing: border-box;
+    }
+    .containe{
+        border: 3px solid gold;
+        height:300px;
+    }
+    .left{
+        height: 100%;
+        border:  2px solid green;
+    }
+    .right{
+        height: 100%;
+        border: 2px solid red;
+    }
+    .col{
+        height: 100%;
+        border:2px solid blue;
+    }
+    .row{
+        border:2px solid orange;
+    }
+    .top,.bottom{
+        border:2px solid cyan;
+    }
+</style>
+
+<h1 id="一-两栏布局"><a href="#一-两栏布局" class="headerlink" title="一.两栏布局"></a>一.两栏布局</h1><p> 该布局方式非常常见，适用于定宽的一侧常为导航，自适应的一侧为内容的布局</p>
+<h2 id="1-左列定宽，右列自适应"><a href="#1-左列定宽，右列自适应" class="headerlink" title="1.左列定宽，右列自适应"></a>1.左列定宽，右列自适应</h2><h3 id="1-gt-实现一：float-margin"><a href="#1-gt-实现一：float-margin" class="headerlink" title="1&gt;实现一：float+margin"></a>1&gt;实现一：float+margin</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span> <span class="attr">style</span>=<span class="string">&quot;float:left;width:200px;&quot;</span>&gt;</span>这里是左侧导航栏区域，固定宽度为200px；<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;margin-left:200px;&quot;</span>&gt;</span>这里是可伸缩区域<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>效果</strong></p>
+<div class="containe">
+    <div class="left" style="float:left;width:200px;">这里是左侧导航栏区域，固定宽度为200px；</div>
+    <div class="right" style="margin-left:200px;">这里是可伸缩区域</div>
+</div>
+### 2>实现二：float+BFC
+
+<p>overflow:hidden，触发bfc模式，浮动无法影响，隔离其他元素，IE6不支持，左侧left设置margin-left当作left与right之间的边距，右侧利用overflow:hidden 进行形成bfc模式.</p>
+<p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;float:left;&quot;</span>&quot;&gt;</span>左侧定宽200；而且左浮动<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;overflow:hidden&quot;</span>&gt;</span>这里是自动调节区域，并使用overflow:hidden从而触发了BFC<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe">
+    <div class="left" style="width:200px;float:left;"">左侧定宽200；而且左浮动</div>
+    <div class="right" style="overflow:hidden">这里是自动调节区域，并使用overflow:hidden从而触发了BFC</div>
+</div>
+
+<p><strong>这里若不触发BFC，那么，.right将与父对象同宽（100%），尽管其中的内容不会进入到左侧浮动区域，但是当左侧导航栏较短时可能出现下面的情况(如下左)；若右侧形成了BFC就不会出现这样的问题了（如下右）</strong></p>
+<div style="display:flex;border:0;justify-content:space-around;">
+  <div class="containe" style="width:40%">
+    <div class="left" style="width:200px;height:30px;float:left;"">左侧定宽200；而且左浮动</div>
+    <div class="right">这里是自动调节区域，没有使用overflow:hidden。BFCffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</div>
+    </div> 
+    <div class="containe" style="width:40%">
+    <div class="left" style="width:200px;height:30px;float:left;"">左侧定宽200；而且左浮动</div>
+    <div class="right" style="overflow:hidden">这里是自动调节区域，没有使用overflow:hidden。BFCffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff</div>
+</div> 
+</div>
+
+
+
+
+<h3 id="3-gt-实现三：table"><a href="#3-gt-实现三：table" class="headerlink" title="3&gt;实现三：table"></a>3&gt;实现三：table</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table;table-layout:fixed;width:100%&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="display:table;table-layout:fixed;width:100%">
+    <div class="left" style="width:200px;display:table-cell;"></div>
+    <div class="right" style="display:table-cell;"></div>
+</div>
+
+<h3 id="4-gt-实现四：flex布局"><a href="#4-gt-实现四：flex布局" class="headerlink" title="4&gt;实现四：flex布局"></a>4&gt;实现四：flex布局</h3><p>利用右侧容器的flex:1，均分了剩余的宽度，也实现了同样的效果。而align-items 默认值为stretch，故二者高度相等</p>
+<p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:flex;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="display:flex;">
+    <div class="left" style="width:200px;"></div>
+    <div class="right" style="flex:1"></div>
+</div>
+
+<h2 id="2-右列定宽，左列自适应"><a href="#2-右列定宽，左列自适应" class="headerlink" title="2.右列定宽，左列自适应"></a>2.右列定宽，左列自适应</h2><h3 id="1-gt-float-margin"><a href="#1-gt-float-margin" class="headerlink" title="1&gt;float+margin"></a>1&gt;float+margin</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;float:right;width:200px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span> <span class="attr">style</span>=<span class="string">&quot;margin-right:200px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="">
+    <div class="right" style="float:right;width:200px;"></div>
+    <div class="left" style="margin-right:200px;"></div>
+</div>
+
+<h3 id="2-gt-table"><a href="#2-gt-table" class="headerlink" title="2&gt;table"></a>2&gt;table</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table;width:100%&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;width:200px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="display:table;width:100%">
+    <div class="left" style="display:table-cell;"></div>
+    <div class="right" style="display:table-cell;width:200px;"></div>
+</div>
+
+<h3 id="3-gt-flex"><a href="#3-gt-flex" class="headerlink" title="3&gt;flex"></a>3&gt;flex</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:flex;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="display:flex;">
+    <div class="left" style="flex:1"></div>
+    <div class="right" style="width:200px;"></div>
+</div>
+
+<h2 id="3-一列不定宽，一列自适应"><a href="#3-一列不定宽，一列自适应" class="headerlink" title="3.一列不定宽，一列自适应"></a>3.一列不定宽，一列自适应</h2><h3 id="1-gt-flex"><a href="#1-gt-flex" class="headerlink" title="1&gt; flex"></a>1&gt; flex</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:flex;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="display:flex;">
+    <div class="left" style="flex:1">这一列填充右侧剩下的空间</div> 
+    <div class="right">这一列根据自身内容调节自身的宽度</div>
+</div>
+
+<h3 id="2-gt-float-overflow"><a href="#2-gt-float-overflow" class="headerlink" title="2&gt; float+overflow"></a>2&gt; float+overflow</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span> <span class="attr">style</span>=<span class="string">&quot;float:left&quot;</span>&gt;</span>这一列自动分局自身的内容调节宽度<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;overflow:hidden;&quot;</span>&gt;</span>这一列自动填充左侧剩下的空间<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe">
+    <div class="left" style="float:left">这一列自动分局自身的内容调节宽度</div>
+    <div class="right" style="overflow:hidden;">这一列自动填充左侧剩下的空间</div>
+</div>
+
+<h3 id="3-gt-table"><a href="#3-gt-table" class="headerlink" title="3&gt; table"></a>3&gt; table</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table;width:100%;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="display:table;width:100%;">
+    <div class="left" style="display:table-cell;width:0.1%">这一列自动扩展，根据自身的内容调节自身的div宽度</div>
+    <div class="right" style="display:table-cell;">这一列自动填充剩下的空间</div>
+</div>
+
+<h1 id="二-多栏布局"><a href="#二-多栏布局" class="headerlink" title="二.多栏布局"></a>二.多栏布局</h1><h2 id="1-两列定宽，一列自适应"><a href="#1-两列定宽，一列自适应" class="headerlink" title="1.两列定宽，一列自适应"></a>1.两列定宽，一列自适应</h2><h3 id="1-gt-flex-1"><a href="#1-gt-flex-1" class="headerlink" title="1&gt; flex"></a>1&gt; flex</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:flex;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>   </span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="display:flex;">
+    <div class="col" style="width:200px;"></div>   
+    <div class="col" style="width:200px;"></div>
+    <div class="right" style="flex:1"></div>
+</div>
+
+<h3 id="2-gt-float-overflow-1"><a href="#2-gt-float-overflow-1" class="headerlink" title="2&gt; float+overflow"></a>2&gt; float+overflow</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;float:left;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;float:left;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;overflow:hidden;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe">
+    <div class="col" style="width:200px;float:left;"></div>
+    <div class="col" style="width:200px;float:left;"></div>
+    <div class="right" style="overflow:hidden;"></div>
+</div>
+
+<h3 id="3-gt-float-margin"><a href="#3-gt-float-margin" class="headerlink" title="3&gt; float+margin"></a>3&gt; float+margin</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;float:left;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;float:left;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;margin-left:400px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe">
+    <div class="col" style="width:200px;float:left;"></div>
+    <div class="col" style="width:200px;float:left;"></div>
+    <div class="right" style="margin-left:400px;"></div>
+</div>
+
+<h3 id="4-gt-table"><a href="#4-gt-table" class="headerlink" title="4&gt; table"></a>4&gt; table</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table;width:100%;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="display:table;width:100%;">
+    <div class="col" style="width:200px;display:table-cell;"></div>
+    <div class="col" style="width:200px;display:table-cell;"></div>
+    <div class="right" style="display:table-cell;"></div>
+</div>
+
+<h2 id="2-双飞翼布局（两侧定宽，中栏自适应）"><a href="#2-双飞翼布局（两侧定宽，中栏自适应）" class="headerlink" title="2.双飞翼布局（两侧定宽，中栏自适应）"></a>2.双飞翼布局（两侧定宽，中栏自适应）</h2><h3 id="1-gt-flex-2"><a href="#1-gt-flex-2" class="headerlink" title="1&gt; flex"></a>1&gt; flex</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:flex;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span>     </span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="display:flex;">
+    <div class="left" style="width:200px;"></div>     
+    <div class="col" style="flex:1"></div> 
+    <div class="right" style="width:200px;"></div>
+</div>
+
+<h3 id="2-gt-float-overflow-2"><a href="#2-gt-float-overflow-2" class="headerlink" title="2&gt; float+overflow"></a>2&gt; float+overflow</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;float:left;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;float:right;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;overflow:hidden;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe">
+    <div class="col" style="width:200px;float:left;"></div>
+    <div class="col" style="width:200px;float:right;"></div>
+    <div class="right" style="overflow:hidden;"></div>
+</div>
+
+<h3 id="3-gt-float-margin-1"><a href="#3-gt-float-margin-1" class="headerlink" title="3&gt; float+margin"></a>3&gt; float+margin</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;float:left;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;float:right;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;margin:0 200px 0 200px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe">
+    <div class="col" style="width:200px;float:left;"></div>
+    <div class="col" style="width:200px;float:right;"></div>
+    <div class="right" style="margin:0 200px 0 200px;"></div>
+</div>
+
+<h3 id="4-gt-table-1"><a href="#4-gt-table-1" class="headerlink" title="4&gt; table"></a>4&gt; table</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table;width:100%;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span> </span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="display:table;width:100%;">
+    <div class="col" style="width:200px;display:table-cell;"></div> 
+    <div class="right" style="display:table-cell;"></div>
+    <div class="col" style="width:200px;display:table-cell;"></div>
+</div>
+
+<h2 id="3-多列等分"><a href="#3-多列等分" class="headerlink" title="3.多列等分"></a>3.多列等分</h2><h3 id="1-gt-float"><a href="#1-gt-float" class="headerlink" title="1&gt;float"></a>1&gt;float</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">**效果**</span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;float:left;width:25%;padding:20px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;float:left;width:25%;padding:20px;&quot;</span>&quot;&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;float:left;width:25%;padding:20px;&quot;</span>&quot;&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;float:left;width:25%;padding:20px;&quot;</span>&quot;&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">### 2&gt;table</span><br><span class="line"></span><br><span class="line">**示例**</span><br><span class="line"></span><br><span class="line">```html</span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table;width:100%;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="display:table;width:100%;">
+    <div class="col" style="display:table-cell;"></div>
+    <div class="col" style="display:table-cell;"></div>
+    <div class="col" style="display:table-cell;"></div>
+    <div class="col" style="display:table-cell;"></div>
+</div>
+
+<h3 id="3-gt-flex-1"><a href="#3-gt-flex-1" class="headerlink" title="3&gt;flex"></a>3&gt;flex</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:flex&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="display:flex">
+    <div class="col" style="flex:1;"></div>
+    <div class="col" style="flex:1;"></div>
+    <div class="col" style="flex:1;"></div>
+    <div class="col" style="flex:1;"></div>
+</div>
+
+<h1 id="三-九宫格布局"><a href="#三-九宫格布局" class="headerlink" title="三.九宫格布局"></a>三.九宫格布局</h1><h3 id="1-gt-table"><a href="#1-gt-table" class="headerlink" title="1&gt;table"></a>1&gt;table</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table;width:100%;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-row;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;height:100px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;height:100px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;height:100px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-row;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;height:100px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;height:100px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;height:100px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-row;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;height:100px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;height:100px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:table-cell;height:100px;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="display:table;width:100%;">
+    <div class="row" style="display:table-row;">
+        <div class="col" style="display:table-cell;height:100px;"></div>
+        <div class="col" style="display:table-cell;height:100px;"></div>
+        <div class="col" style="display:table-cell;height:100px;"></div>
+    </div>
+    <div class="row" style="display:table-row;">
+        <div class="col" style="display:table-cell;height:100px;"></div>
+        <div class="col" style="display:table-cell;height:100px;"></div>
+        <div class="col" style="display:table-cell;height:100px;"></div>
+    </div>
+    <div class="row" style="display:table-row;">
+        <div class="col" style="display:table-cell;height:100px;"></div>
+        <div class="col" style="display:table-cell;height:100px;"></div>
+        <div class="col" style="display:table-cell;height:100px;"></div>
+    </div>
+</div>
+
+<h3 id="2-gt-flex"><a href="#2-gt-flex" class="headerlink" title="2&gt;flex"></a>2&gt;flex</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:flex;flex-direction:column;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row&quot;</span> <span class="attr">style</span>=<span class="string">&quot;height:100px;display:flex;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row&quot;</span> <span class="attr">style</span>=<span class="string">&quot;height:100px;display:flex;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;row&quot;</span> <span class="attr">style</span>=<span class="string">&quot;height:100px;display:flex;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;col&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="display:flex;flex-direction:column;">
+    <div class="row" style="height:100px;display:flex;">
+        <div class="col" style="flex:1"></div>
+        <div class="col" style="flex:1"></div>
+        <div class="col" style="flex:1"></div>
+    </div>
+    <div class="row" style="height:100px;display:flex;">
+        <div class="col" style="flex:1"></div>
+        <div class="col" style="flex:1"></div>
+        <div class="col" style="flex:1"></div>
+    </div>
+    <div class="row" style="height:100px;display:flex;">
+        <div class="col" style="flex:1"></div>
+        <div class="col" style="flex:1"></div>
+        <div class="col" style="flex:1"></div>
+    </div>
+</div>
+
+<h1 id="四-全屏布局"><a href="#四-全屏布局" class="headerlink" title="四.全屏布局"></a>四.全屏布局</h1><h3 id="１-gt-绝对定位"><a href="#１-gt-绝对定位" class="headerlink" title="１&gt;绝对定位"></a>１&gt;绝对定位</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;position:relative;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;top&quot;</span> <span class="attr">style</span>=<span class="string">&quot;position:absolute;top:0;left:0;height:50px;width:100%;&quot;</span>&gt;</span>top:宽度为100%；高度固定为50px<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span> <span class="attr">style</span>=<span class="string">&quot;position:absolute;top:50px;left:0;bottom:50px;height:auto;width:100px;&quot;</span>&gt;</span>左侧为固定宽度50px<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;position:absolute;top:50px;bottom:50px;left:100px;right:0;overflow:auto;height:auto;&quot;</span>&gt;</span>右侧为自适应区域<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;bottom&quot;</span> <span class="attr">style</span>=<span class="string">&quot;position:absolute;bottom:0;left:0;height:50px;width:100%&quot;</span>&gt;</span>底部为固定高度50<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>效果</strong></p>
+<div class="containe" style="position:relative;">
+    <div class="top" style="position:absolute;top:0;left:0;height:50px;width:100%;">top:宽度为100%；高度固定为50px</div>
+    <div class="left" style="position:absolute;top:50px;left:0;bottom:50px;height:auto;width:100px;">左侧为固定宽度50px</div>
+    <div class="right" style="position:absolute;top:50px;bottom:50px;left:100px;right:0;overflow:auto;height:auto;">右侧为自适应区域</div>
+    <div class="bottom" style="position:absolute;bottom:0;left:0;height:50px;width:100%">底部为固定高度50</div>
+</div>
+
+<h3 id="2-gt-flex-1"><a href="#2-gt-flex-1" class="headerlink" title="2&gt;flex"></a>2&gt;flex</h3><p><strong>示例</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;containe&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display:flex;flex-direction:column;&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;top&quot;</span> <span class="attr">style</span>=<span class="string">&quot;height:50px;&quot;</span>&gt;</span>top:宽度为100%；高度固定为50px<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;middle&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1;display:flex;&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;left&quot;</span> <span class="attr">style</span>=<span class="string">&quot;width:200px;height:auto;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;right&quot;</span> <span class="attr">style</span>=<span class="string">&quot;flex:1;height:auto;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;bottom&quot;</span> <span class="attr">style</span>=<span class="string">&quot;height:50px;&quot;</span>&gt;</span>底部为固定高度50<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>效果</strong></p>
+<div class="containe" style="display:flex;flex-direction:column;">
+    <div class="top" style="height:50px;">top:宽度为100%；高度固定为50px</div>
+    <div class="middle" style="flex:1;display:flex;">
+        <div class="left" style="width:200px;height:auto;"></div>
+        <div class="right" style="flex:1;height:auto;"></div>
+    </div>
+    <div class="bottom" style="height:50px;">底部为固定高度50</div>
+</div>
+
+<h1 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h1><p> 根据上面的各种各样的css样式布局，可以看出来，其实不管是怎样布局，怎么都是下面几种思路：</p>
+<ul>
+<li>绝对布局</li>
+<li>float+margin</li>
+<li>float+BFC</li>
+<li>table</li>
+<li>flex</li>
+</ul>
+<h2 id="绝对布局"><a href="#绝对布局" class="headerlink" title="绝对布局"></a>绝对布局</h2><p>其中，<strong>绝对布局</strong>主要是针对两种，一类是对于整个页面视窗的布局，如悬浮的导航区和回到顶部等功能按钮，这是就是借助于position:fixed；另一种是相对于父容器内的绝对布局，即position:absolute，这里需要注意的是，其布局参考对象应该是包含该元素的第一个position不为static的祖先元素，因此，我们在使用的时候一般指定父对象的position为relative；</p>
+<h2 id="float-margin"><a href="#float-margin" class="headerlink" title="float+margin"></a>float+margin</h2><p><strong>float+margin</strong>的思路比较简单，一般用于左右的布局，而且其中一方有固定宽度，而另一方则设定该方向的margin为固定宽度值。</p>
+<h2 id="float-BFC"><a href="#float-BFC" class="headerlink" title="float+BFC"></a>float+BFC</h2><p><strong>float+BFC</strong>其实主要是利用了BFC的形成条件和其特性，这里简要说一下（个人理解），首先是形成条件：<br>以下满足其一即可：</p>
+<ul>
+<li>float不为none；</li>
+<li>overflow不为visible；</li>
+<li>绝对定位（absolute和fixed）</li>
+<li>display为inline-block、table-caption或table-cell；</li>
+</ul>
+<p>此外，flex似乎会破坏BFC的形成，这点尚需验证；</p>
+<p>那么BFC有什么特性呢？<br>BFC中的元素布局不受外界影响，在同一个BFC中两个毗邻的块级盒在垂直方向的margin会重叠，每个盒子的左外边框紧挨包含块的左边框；换一种说法：</p>
+<p>在一个BFC中，垂直方向上，盒子是从包含块顶部开始一个挨着一个布局的，两个相邻的盒子的垂直距离是由margin属性决定的，在一个BFC中的两个相邻的块级盒子的垂直外边距会产生塌陷。<br>在一个BFC中，水平方向上，每个盒子的左边缘都会接触包含块的左边缘（从右向左的格式则相反）。除非出现浮动元素和其他元素相互作用的情况（当有浮动元素时，行盒可能因浮动元素而收缩，如果有盒子形成了新的BFC，那这个盒子也可能因浮动元素而变窄）。</p>
+<p>如果想要更加深入的研究可以参考<a target="_blank" rel="noopener" href="http://www.jianshu.com/p/8858828987be">http://www.jianshu.com/p/8858828987be</a></p>
+<h2 id="table与flex布局"><a href="#table与flex布局" class="headerlink" title="table与flex布局"></a>table与flex布局</h2><p> 这两者布局主要是利用了响应布局的一些默认属性，使用起来非常方便，具体可以参看资料</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.runoob.com/w3cnote/flex-grammar.html">http://www.runoob.com/w3cnote/flex-grammar.html</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/guoyong-feng/p/6076058.html">css Table布局-display:table</a></li>
+</ul>
+<h1 id="btw："><a href="#btw：" class="headerlink" title="btw："></a>btw：</h1><p>为了效果明显，文中使用的css类如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">div&#123;</span><br><span class="line">    padding: 0;</span><br><span class="line">    margin: 0;</span><br><span class="line">    /*overflow: hidden;*/</span><br><span class="line">    box-sizing: border-box;</span><br><span class="line">&#125;</span><br><span class="line">.containe&#123;</span><br><span class="line">    border: 3px solid gold;</span><br><span class="line">    height:300px;</span><br><span class="line">&#125;</span><br><span class="line">.left&#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">    border:  2px solid green;</span><br><span class="line">&#125;</span><br><span class="line">.right&#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">    border: 2px solid red;</span><br><span class="line">&#125;</span><br><span class="line">.col&#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">    border:2px solid blue;</span><br><span class="line">&#125;</span><br><span class="line">.row&#123;</span><br><span class="line">    border:2px solid orange;</span><br><span class="line">&#125;</span><br><span class="line">.top,.bottom&#123;</span><br><span class="line">    border:2px solid cyan;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-js中的prototype和__proto__"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2017/05/02/js%E4%B8%AD%E7%9A%84prototype%E5%92%8C__proto__/"
+    >js中的prototype和__proto__</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/05/02/js%E4%B8%AD%E7%9A%84prototype%E5%92%8C__proto__/" class="article-date">
+  <time datetime="2017-05-02T11:44:47.000Z" itemprop="datePublished">2017-05-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="原型对象prototype"><a href="#原型对象prototype" class="headerlink" title="原型对象prototype"></a>原型对象prototype</div></h2><p>无论什么时候，当创建了一个函数，那么该函数将会自动创建一个prototype属性，这个属性指向函数的原型对象。而原型对象都会自动获得一个construct属性，该属性指向prototype属性所在函数；<br>例如对于下面的js代码：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.id=<span class="string">&#x27;001&#x27;</span></span><br><span class="line">&#125;;</span><br><span class="line">Person.prototype.name=<span class="string">&#x27;person&#x27;</span>;</span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.name);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  那么，我们可以通过试验知道如下：<br>Person具有一个prototype属性，他指向一个原型对象，我们叫他Person Prototype，那么代码中我们给这个原型对象加上了name属性和一个sayName方法；所以他们之间的关系如下：<br><img src="https://raw.githubusercontent.com/hustchenshu/static_source/master/blog/images/Person.jpg" alt="avatar"></p>
+<h2 id="【【prototype】】-或者-proto"><a href="#【【prototype】】-或者-proto" class="headerlink" title="【【prototype】】 或者__proto__"></a>【【prototype】】 或者__proto__</div></h2><p>当调用构造函数创建一个新实例时，该实例内部包含一个指针，我们记为【【prototype】】，该属性原本是不可见的，但是Firefox、Safari和chrome等浏览器将这个属性暴露出来，我们可以通过__proto__来访问这个属性，那么这个属性是什么呢？这个属性也是一个引用，<strong>这个引用指向该实例的构造函数的原型对象</strong><br>我们使用以下代码来实例化Person；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&gt;<span class="keyword">var</span> person1 = <span class="keyword">new</span> Person();</span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> Person();</span><br></pre></td></tr></table></figure>
+<p>这里我们构建了2个Person实例，他们之间的关系如下：<br><img src="https://raw.githubusercontent.com/hustchenshu/static_source/master/blog/images/instance.jpg" alt="avatar"></p>
+<h2 id="原型继承"><a href="#原型继承" class="headerlink" title="原型继承"></a>原型继承</h2><p>说到原型，就不得不说继承，废话不多说，直接上代码解析；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> worker = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.age=<span class="number">22</span>;</span><br><span class="line">&#125;;</span><br><span class="line">worker.prototype = <span class="keyword">new</span> Person();</span><br><span class="line">worker.prototype.work=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;working&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里的意愿是让worker继承自Person，因此将worker的prototype属性设置为一个Person实例，根据上面的分析可以得到以下联系：<br><img src="https://raw.githubusercontent.com/hustchenshu/static_source/master/blog/images/jicheng.jpg" alt="avatar"></p>
+<h2 id="Object、Function和Array之间的联系"><a href="#Object、Function和Array之间的联系" class="headerlink" title="Object、Function和Array之间的联系"></a>Object、Function和Array之间的联系</h2><p>这里我们只是追溯到了Person的原型对象，如果再跟着原型链往下跟进呢，我们可以试试看：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Person.__proto__ === <span class="built_in">Function</span>.prototype</span><br><span class="line"><span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>也就是说Person本质是一个函数，因此其构造函数为Funtion，所以Person.__proto__指向Function的原型对象；</p>
+<p>再往深处追溯，我们就跟踪到Object、Function和Array这几个数据类型，我们知道Function、Array都是对象，那么他们之间是怎么联系的呢？<br>要搞清楚者三者之间的联系，需要做一下简单的试验：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Function</span>.prototype.__proto__ === <span class="built_in">Object</span>.prototype</span><br><span class="line"><span class="literal">true</span></span><br><span class="line"><span class="built_in">Function</span>.prototype===<span class="built_in">Function</span>.__proto__</span><br><span class="line"><span class="literal">true</span></span><br><span class="line"><span class="built_in">Array</span>.prototype</span><br><span class="line">[]</span><br><span class="line"><span class="built_in">Array</span>.__proto__===<span class="built_in">Function</span>.prototype</span><br><span class="line"><span class="literal">true</span></span><br><span class="line"><span class="built_in">Array</span>.prototype.__proto__===<span class="built_in">Object</span>.prototype</span><br><span class="line"><span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="https://raw.githubusercontent.com/hustchenshu/static_source/master/blog/images/object_function_array.jpg" alt="avatar"></p>
+<h2 id="汇总"><a href="#汇总" class="headerlink" title="汇总"></a>汇总</h2><p>将以上代码汇总到一起，并绘制他们之间的关系图如下：<br><img src="https://raw.githubusercontent.com/hustchenshu/static_source/master/blog/images/all.jpg" alt="avatar"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-让你的node、express服务器支持https"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2017/05/02/%E8%AE%A9%E4%BD%A0%E7%9A%84node%E3%80%81express%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%94%AF%E6%8C%81https/"
+    >让你的node服务器支持https</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/05/02/%E8%AE%A9%E4%BD%A0%E7%9A%84node%E3%80%81express%E6%9C%8D%E5%8A%A1%E5%99%A8%E6%94%AF%E6%8C%81https/" class="article-date">
+  <time datetime="2017-05-02T11:44:47.000Z" itemprop="datePublished">2017-05-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/nodejs/">nodejs</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="http与https"><a href="#http与https" class="headerlink" title="http与https"></a>http与https</h2><p>HTTP: 超文本传输协议 (HTTP-Hypertext transfer protocol) 是一种详细规定了浏览器和万维网服务器之间互相通信的规则，通过因特网传送万维网文档的数据传送协议。</p>
+<p>HTTPS:（全称：Hypertext Transfer Protocol over Secure Socket Layer），是以安全为目标的HTTP通道，简单讲是HTTP的安全版。即HTTP下加入SSL层，HTTPS的安全基础是SSL，因此加密的详细内容就需要SSL。 它是一个URI scheme（抽象标识符体系），句法类同http:体系。用于安全的HTTP数据传输。https:URL表明它使用了HTTP，但HTTPS存在不同于HTTP的默认端口及一个加密/身份验证层（在HTTP与TCP之间）。这个系统的最初研发由网景公司进行，提供了身份验证与加密通讯方法，现在它被广泛用于万维网上安全敏感的通讯，例如交易支付方面。<br>*<br>HTTPS和HTTP的区别</p>
+<p>https协议需要到ca申请证书，一般免费证书很少，需要交费。<br>http是超文本传输协议，信息是明文传输，https 则是具有安全性的ssl加密传输协议。<br>http和https使用的是完全不同的连接方式，用的端口也不一样，前者是80，后者是443。<br>http的连接很简单，是无状态的；HTTPS协议是由SSL+HTTP协议构建的可进行加密传输、身份认证的网络协议，比http协议安全。</p>
+<h1 id="申请证书"><a href="#申请证书" class="headerlink" title="申请证书"></a>申请证书</h1><p><strong>上面说到https需要得到ca申请证书，当然我们可以使用自签证，例如openSLL,当然也有免费发放证书的，这里我们向<a target="_blank" rel="noopener" href="https://www.sslforfree.com/">sslforfree</a>申请免费证书</strong></p>
+<p><strong>申请的流程这里稍微要注意一点的是域名验证当中的证书路径，具体流程参考<a target="_blank" rel="noopener" href="http://www.chinaz.com/web/2016/0216/504896.shtml">使用教学</a></strong></p>
+<ul>
+<li><p>1.在主页直接输入域名<br><img src="https://raw.githubusercontent.com/hustchenshu/static_source/master/blog/images//cer_1.png" alt="avatar"></p>
+</li>
+<li><p>2。域名验证，这里我们选择Manual Verification<br><img src="https://raw.githubusercontent.com/hustchenshu/static_source/master/blog/images//cer-2.png" alt="avatar"></p>
+</li>
+<li><p>3.下载下图中的两个文件，将这两个文件放置到服务器的静态路径的跟目录，<br><img src="https://raw.githubusercontent.com/hustchenshu/static_source/master/blog/images//cer-3.png" alt="avatar"><br>例如：我的服务器系统结构如下，而且在index文件当中定义了静态路径为public/pages，因此我们需要在这里进行操作，即在pages文件夹下面新建文件.well-known，然后在.well-known文件夹下面新建文件夹acme-challenge，最后将之前下载的两个验证文件放入到acme-challenge文件夹中；<br><img src="https://raw.githubusercontent.com/hustchenshu/static_source/master/blog/images//cer-4.png" alt="avatar"></p>
+</li>
+<li><p>4.当验证通过，打包下载给出的3个文件，如下：<br><img src="https://raw.githubusercontent.com/hustchenshu/static_source/master/blog/images//cer-5.png" alt="avatar"></p>
+</li>
+<li><p>5.将下载下来的3个文件上传的服务器，这里我放置在服务器根目录新建的key文件夹</p>
+</li>
+</ul>
+<h1 id="修改启动文件"><a href="#修改启动文件" class="headerlink" title="修改启动文件"></a>修改启动文件</h1><h2 id="之前的启动文件是基于express编写的，大致如下："><a href="#之前的启动文件是基于express编写的，大致如下：" class="headerlink" title="之前的启动文件是基于express编写的，大致如下："></a>之前的启动文件是基于express编写的，大致如下：</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">const express = require(&#x27;express&#x27;);</span><br><span class="line">const fs = require(&#x27;fs&#x27;);</span><br><span class="line">const path = require(&#x27;path&#x27;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">const app = express();</span><br><span class="line"></span><br><span class="line">app.use(express.static(&#x27;public&#x27;));</span><br><span class="line"></span><br><span class="line">app.use(express.static(path.resolve(__dirname, &#x27;public/pages&#x27;)));</span><br><span class="line"></span><br><span class="line">const router_home = require(&#x27;./routers/index.js&#x27;);</span><br><span class="line">app.use(&#x27;/&#x27;, router_home);</span><br><span class="line"></span><br><span class="line">app.get(&#x27;*&#x27;, function(req, res)&#123;</span><br><span class="line">    res.sendFile(path.resolve(__dirname, &#x27;public/pages/404.html&#x27;), &#123;</span><br><span class="line">        title: &#x27;No Found&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br><span class="line">app.listen(80);</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加https模块支持https"><a href="#添加https模块支持https" class="headerlink" title="添加https模块支持https"></a>添加https模块支持https</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">const express = require(&#x27;express&#x27;);</span><br><span class="line">const fs = require(&#x27;fs&#x27;);</span><br><span class="line">const path = require(&#x27;path&#x27;);</span><br><span class="line"></span><br><span class="line">const http = require(&#x27;http&#x27;);</span><br><span class="line">const https = require(&#x27;https&#x27;);</span><br><span class="line"></span><br><span class="line">const app = express();</span><br><span class="line"></span><br><span class="line">app.use(express.static(&#x27;public&#x27;));</span><br><span class="line"></span><br><span class="line">app.use(express.static(path.resolve(__dirname, &#x27;public/pages&#x27;)));</span><br><span class="line"></span><br><span class="line">const router_home = require(&#x27;./routers/index.js&#x27;);</span><br><span class="line">app.use(&#x27;/&#x27;, router_home);</span><br><span class="line"></span><br><span class="line">app.get(&#x27;*&#x27;, function(req, res)&#123;</span><br><span class="line">    res.sendFile(path.resolve(__dirname, &#x27;public/pages/404.html&#x27;), &#123;</span><br><span class="line">        title: &#x27;No Found&#x27;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;);</span><br><span class="line">// app.listen(80);</span><br><span class="line"></span><br><span class="line">var options = &#123;</span><br><span class="line">  ca: fs.readFileSync(&#x27;key/ca_bundle.crt&#x27;),</span><br><span class="line">  key: fs.readFileSync(&#x27;key/private.key&#x27;),</span><br><span class="line">  cert: fs.readFileSync(&#x27;key/certificate.crt&#x27;)</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">var httpServer = http.createServer(app);</span><br><span class="line">var httpsServer = https.createServer(options, app);</span><br><span class="line"></span><br><span class="line">httpServer.listen(80, function() &#123;</span><br><span class="line">    console.log(&#x27;HTTP Server is running on: http://localhost:%s&#x27;, 80);</span><br><span class="line">&#125;);</span><br><span class="line">httpsServer.listen(443, function() &#123;</span><br><span class="line">    console.log(&#x27;HTTPS Server is running on: https://localhost:%s&#x27;, 443);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>最后打开网页查看，完美支持</p>
+<ul>
+<li>http访问</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/hustchenshu/static_source/master/blog/images//cer-6.png" alt="avatar"></p>
+<ul>
+<li>https访问</li>
+</ul>
+<p><img src="https://raw.githubusercontent.com/hustchenshu/static_source/master/blog/images//cer-7.png" alt="avatar"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nodejs/" rel="tag">nodejs</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-Js类型检测"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2017/05/02/Js%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%B5%8B/"
+    >Js类型检测</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2017/05/02/Js%E7%B1%BB%E5%9E%8B%E6%A3%80%E6%B5%8B/" class="article-date">
+  <time datetime="2017-05-02T11:44:03.000Z" itemprop="datePublished">2017-05-02</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="判断js对象类型之Object-prototype-toString-call-obj"><a href="#判断js对象类型之Object-prototype-toString-call-obj" class="headerlink" title="判断js对象类型之Object.prototype.toString.call(obj)"></a>判断js对象类型之Object.prototype.toString.call(obj)</h2><p>这里我们使用Object原型上的toString函数，是因为防止需要检测类型的obj对象自己定义了toString方法，或者对其进行了修改。</p>
+<p>这里做一下测试</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="string">&#x27;aaa&#x27;</span>)</span><br><span class="line"><span class="string">&quot;[object String]&quot;</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="number">11</span>)</span><br><span class="line"><span class="string">&quot;[object Number]&quot;</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="literal">true</span>)</span><br><span class="line"><span class="string">&quot;[object Boolean]&quot;</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="literal">undefined</span>)</span><br><span class="line"><span class="string">&quot;[object Undefined]&quot;</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="literal">null</span>)</span><br><span class="line"><span class="string">&quot;[object Null]&quot;</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(&#123;&#125;)</span><br><span class="line"><span class="string">&quot;[object Object]&quot;</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call([])</span><br><span class="line"><span class="string">&quot;[object Array]&quot;</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;)</span><br><span class="line"><span class="string">&quot;[object Function]&quot;</span>   </span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="keyword">new</span> <span class="built_in">Date</span>)</span><br><span class="line"><span class="string">&quot;[object Date]&quot;</span></span><br><span class="line"><span class="built_in">Object</span>.prototype.toString.call(<span class="regexp">/abc?/ig</span>)</span><br><span class="line"><span class="string">&quot;[object RegExp]&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>##typeof<br>使用typeof判定对象类型有局限性，我们从判定结果来看局限性：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="string">&#x27;aa&#x27;</span></span><br><span class="line"><span class="string">&quot;string&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="number">11</span></span><br><span class="line"><span class="string">&quot;number&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">undefined</span></span><br><span class="line"><span class="string">&quot;undefined&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">true</span></span><br><span class="line"><span class="string">&quot;boolean&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="literal">null</span></span><br><span class="line"><span class="string">&quot;object&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> []</span><br><span class="line"><span class="string">&quot;object&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> &#123;&#125;</span><br><span class="line"><span class="string">&quot;object&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Date</span>()</span><br><span class="line"><span class="string">&quot;object&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> /^\[object\s(.*)\]$/</span><br><span class="line"><span class="string">&quot;object&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;</span><br><span class="line"><span class="string">&quot;function&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>可以看出来，对于我们的复杂对象，返回都是object，这是我们已经预想到的，但是为什么对于null也返回object呢，这里其实可以说是js检测对象的一个“bug”，JS类型值是存在32BIT单元里,32位有1-3位表示TYPE TAG,其它位表示真实值而表示object的标记位正好是低三位都是0。由于 null 代表的是空指针(大多数平台下值为0x00，Number(null)===0)，所以。。。</p>
+<p>此外，还有以下特殊情况：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">String</span></span><br><span class="line"><span class="string">&quot;object&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Boolean</span>(<span class="literal">true</span>)</span><br><span class="line"><span class="string">&quot;object&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">1</span>)</span><br><span class="line"><span class="string">&quot;object&quot;</span></span><br></pre></td></tr></table></figure>
+<p>这种情况就要说到 <strong>基本包装类型</strong>了，上面代码中的String、Boolean和Number是es提供的3个引用类型，每当读取一个基本类型值得时候，就创建一个string、boolean和number三种基本类型的基本包装类型的对象。以下面的例子为例：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> s=<span class="string">&quot;hello&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> s0 = s.substring(<span class="number">2</span>);</span><br></pre></td></tr></table></figure>
+<p>这里我们定义了一个基本类型stirng，将其赋给了s，下一行调用了s的substring方法；我们知道，stirng是基本类型，基本类型不是对象，因而是不应该有方法的，但是这里不是我们想的那么简单：这里在后台完成了一系列的工作：当运行到第二行，访问到s时，访问过程处于一种读取模式，在读取模式访问字符串时，后台操作如下：</p>
+<ul>
+<li>1.创建String类型的一个实例；</li>
+<li>2.在实例上调用指定方法；</li>
+<li>3.销毁这个实例；<br>这就是我们定义了基本类型string，但是看起来这个string可以有方法的原因；当然这个原理对于number和boolean基本类型也是一样的；</li>
+</ul>
+<p>总结来说：<strong>引用类型与基本包装类型的主要区别在与对象的生存期</strong>；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typeof</span> <span class="keyword">new</span> <span class="built_in">Number</span>(<span class="number">1</span>)</span><br><span class="line"><span class="string">&quot;object&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="built_in">Number</span>(<span class="number">2</span>)</span><br><span class="line"><span class="string">&quot;number&quot;</span></span><br><span class="line"><span class="keyword">typeof</span> <span class="number">2</span></span><br><span class="line"><span class="string">&quot;number&quot;</span></span><br><span class="line"><span class="number">2</span>===<span class="built_in">Number</span>(<span class="number">2</span>)</span><br><span class="line"><span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>上面的代码中，使用new创建的引用类型的实例在指向刘离开作用域后仍保持在内存中，而自动创建的基本包装类型的对象，则只存在于代码的执行瞬间，然后立即被销毁；</p>
+<h2 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h2><p>从上面的内容可以看出：typeof对于复杂数据类型显得无能为力；<br><code>object instanceof constructor</code><br><strong>instanceof 运算符用来测试一个对象在其原型链中是否存在一个构造函数的 prototype 属性。</strong><br>typeof对于检测基本数据类型可以胜任，而instanceof从上述描述来看，由于包装类型的原因，可能不太适合检测基本类型，但是对于复杂类型有着不可替代的作用：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 定义构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">C</span>(<span class="params"></span>)</span>&#123;&#125; </span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">D</span>(<span class="params"></span>)</span>&#123;&#125; </span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = <span class="keyword">new</span> C();</span><br><span class="line"></span><br><span class="line"><span class="comment">// true，因为 Object.getPrototypeOf(o) === C.prototype</span></span><br><span class="line">o <span class="keyword">instanceof</span> C; </span><br><span class="line"></span><br><span class="line"><span class="comment">// false，因为 D.prototype不在o的原型链上</span></span><br><span class="line">o <span class="keyword">instanceof</span> D; </span><br><span class="line"></span><br><span class="line">o <span class="keyword">instanceof</span> <span class="built_in">Object</span>; <span class="comment">// true,因为Object.prototype.isPrototypeOf(o)返回true</span></span><br><span class="line">C.prototype <span class="keyword">instanceof</span> <span class="built_in">Object</span> <span class="comment">// true,同上</span></span><br><span class="line"></span><br><span class="line">C.prototype = &#123;&#125;;</span><br><span class="line"><span class="keyword">var</span> o2 = <span class="keyword">new</span> C();</span><br><span class="line"></span><br><span class="line">o2 <span class="keyword">instanceof</span> C; <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line">o <span class="keyword">instanceof</span> C; <span class="comment">// false,C.prototype指向了一个空对象,这个空对象不在o的原型链上.</span></span><br><span class="line"></span><br><span class="line">D.prototype = <span class="keyword">new</span> C(); <span class="comment">// 继承</span></span><br><span class="line"><span class="keyword">var</span> o3 = <span class="keyword">new</span> D();</span><br><span class="line">o3 <span class="keyword">instanceof</span> D; <span class="comment">// true</span></span><br><span class="line">o3 <span class="keyword">instanceof</span> C; <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<p>因此检测复杂类型如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[] <span class="keyword">instanceof</span> <span class="built_in">Array</span></span><br><span class="line"><span class="literal">true</span></span><br><span class="line"></span><br><span class="line">/(<span class="number">1</span>~<span class="number">9</span>)?/ig <span class="keyword">instanceof</span> <span class="built_in">RegExp</span></span><br><span class="line"><span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">new</span> <span class="built_in">Date</span> <span class="keyword">instanceof</span> <span class="built_in">Date</span></span><br><span class="line"><span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a=&#123;&#125;;</span><br><span class="line">a <span class="keyword">instanceof</span> <span class="built_in">Object</span>;</span><br><span class="line"><span class="literal">true</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> f=<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;;</span><br><span class="line">f <span class="keyword">instanceof</span> <span class="built_in">Function</span>;</span><br><span class="line"><span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+  </nav>
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> hustchenshu
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        
+        由 <a href="https://hexo.io" target="_blank">Hexo</a> 强力驱动
+        <span class="division">|</span>
+        主题 - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+        <li>
+          <a href="http://www.beian.miit.gov.cn/" target="_black" rel="nofollow">鄂ICP备17017286号-2</a>
+        </li>
+        
+    </ul>
+    <ul>
+      
+      <li>
+          <img src="/images/beian.png"></img>
+          <a href="https://beian.miit.gov.cn/#/Integrated/recordQuery" target="_black" rel="nofollow">30159204181516625</a>
+      </li>
+        
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/cdn/fav.png" alt="起航了"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/guide">导航</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="https://github.com/hustchenshu">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/ali_pay.jpeg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/wechat_pay.jpeg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":true,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+
+</html>

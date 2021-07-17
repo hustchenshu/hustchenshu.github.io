@@ -1,0 +1,1642 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> 起航了</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/cdn/fav.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <!-- mermaid -->
+      
+      <script data-ad-client="ca-pub-2856060118135787" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link rel="alternate" href="/atom.xml" title="起航了" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      
+
+
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+
+
+<!-- Subtitle -->
+
+  <script>
+    try {
+      var typed = new Typed("#subtitle", {
+        strings: ['面朝大海，春暖花开', '愿你一生努力，一生被爱', '想要的都拥有，得不到的都释怀'],
+        startDelay: 0,
+        typeSpeed: 200,
+        loop: true,
+        backSpeed: 100,
+        showCursor: true
+      });
+    } catch (err) {
+      console.log(err)
+    }
+  </script>
+  
+<div id="main">
+  <section class="outer">
+  
+  
+  
+
+<div class="notice" style="margin-top:50px">
+    <i class="ri-heart-fill"></i>
+    <div class="notice-content" id="broad"></div>
+</div>
+<script type="text/javascript">
+    fetch('https://v1.hitokoto.cn')
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("broad").innerHTML = data.hitokoto;
+        })
+        .catch(console.error)
+</script>
+
+<style>
+    .notice {
+        padding: 20px;
+        border: 1px dashed #e6e6e6;
+        color: #969696;
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        background: #fbfbfb50;
+        border-radius: 10px;
+    }
+
+    .notice i {
+        float: left;
+        color: #999;
+        font-size: 16px;
+        padding-right: 10px;
+        vertical-align: middle;
+        margin-top: -2px;
+    }
+
+    .notice-content {
+        display: initial;
+        vertical-align: middle;
+    }
+</style>
+  
+  <article class="articles">
+    
+    
+    
+    
+    <article
+  id="post-browser"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/07/17/browser/"
+    >浏览器基础知识</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/07/17/browser/" class="article-date">
+  <time datetime="2021-07-17T14:01:02.000Z" itemprop="datePublished">2021-07-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%B5%8F%E8%A7%88%E5%99%A8/">浏览器</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="browser"><a href="#browser" class="headerlink" title="browser"></a>browser</h1><ul>
+<li><a href="#browser">browser</a><ul>
+<li><a href="#%E6%B5%81%E7%A8%8B">流程</a></li>
+<li><a href="#http">HTTP</a></li>
+<li><a href="#%E6%9E%84%E5%BB%BAdom%E6%A0%91">构建dom树</a></li>
+<li><a href="#%E6%B7%BB%E5%8A%A0css%E6%A0%B7%E5%BC%8F%E7%94%9F%E6%88%90cssom">添加css样式，生成cssom</a></li>
+<li><a href="#%E5%B8%83%E5%B1%80reflow">布局（reflow）</a></li>
+<li><a href="#paint">paint</a></li>
+<li><a href="#reference">reference</a><h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h2></li>
+</ul>
+</li>
+</ul>
+<p>对浏览器的实现者来说，他们做的事情，就是把一个 URL 变成一个屏幕上显示的网页。</p>
+<p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/fe-cdn/browser-pipeline.jpg" alt="browser-pipeline"></p>
+<ul>
+<li>浏览器首先使用 HTTP 协议或者 HTTPS 协议，向服务端请求页面；</li>
+<li>把请求回来的 HTML 代码经过解析，构建成 DOM 树；</li>
+<li>计算 DOM 树上的 CSS 属性；</li>
+<li>最后根据 CSS 属性对元素逐个进行渲染，得到内存中的位图；</li>
+<li>一个可选的步骤是对位图进行合成，这会极大地增加后续绘制的速度；</li>
+<li>合成之后，再绘制到界面上。</li>
+</ul>
+<h2 id="HTTP"><a href="#HTTP" class="headerlink" title="HTTP"></a><a href="./HTTP.md">HTTP</a></h2><h2 id="构建dom树"><a href="#构建dom树" class="headerlink" title="构建dom树"></a>构建dom树</h2><p>解析请求回来的 HTML 代码，构建dom树。</p>
+<p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/fe-cdn/dom-token-analyse.png" alt="dom-token-analyse"></p>
+<ul>
+<li><p>词法分析器接收到的字符流，通过分析（状态机/正则）被拆分为一个个token；</p>
+</li>
+<li><p>语法分析器对解析得到的token分析，构建dom树；</p>
+</li>
+</ul>
+<h2 id="添加css样式，生成cssom"><a href="#添加css样式，生成cssom" class="headerlink" title="添加css样式，生成cssom"></a>添加css样式，生成cssom</h2><p>在构建dom树的同时，浏览器也会流式的同步计算css属性：检查生成的dom节点匹配到了哪些规则，再根据规则的优先级，做覆盖和调整。</p>
+<p><strong>cssom是有rule部分和view部分的，rule部分是在dom开始之前就构件完成的，而view部分是跟着dom同步构建的。</strong></p>
+<h2 id="布局（reflow）"><a href="#布局（reflow）" class="headerlink" title="布局（reflow）"></a>布局（reflow）</h2><p>构建 DOM 树和计算 CSS 属性这两个步骤，我们的产出都是一个一个的元素。等所有元素生成完成，计算每个元素的大小和位置信息。</p>
+<h2 id="paint"><a href="#paint" class="headerlink" title="paint"></a>paint</h2><p>将计算好的渲染树，最终显示到屏幕上，分为渲染、合成、绘制三个部分；</p>
+<p>渲染过程把元素变成位图，合成把一部分位图变成合成层，绘制是把“位图最终绘制到屏幕上，变成肉眼可见的图像”的过程，在这之前可能还会有合成等优化步骤。</p>
+<p><strong>合成（compositing）</strong><br>合成是英文术语 compositing 的翻译，这个过程实际上是一个性能考量，它并非实现浏览器的必要一环。那么合成的目标就是提高性能，根据这个目标，我们建立的原则就是最大限度减少绘制次数原则。</p>
+<p>最后的步骤：把模型变成位图的过程，就是根据这些样式信息和大小信息，为每个元素在内存中渲染它的图形，并且把它绘制到对应的位置。</p>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/598841/how-to-get-started-building-a-web-browser">https://stackoverflow.com/questions/598841/how-to-get-started-building-a-web-browser</a></li>
+<li><a target="_blank" rel="noopener" href="https://limpet.net/mbrubeck/2014/08/08/toy-layout-engine-1.html">https://limpet.net/mbrubeck/2014/08/08/toy-layout-engine-1.html</a> </li>
+<li><a target="_blank" rel="noopener" href="https://github.com/joegesualdo/abbott">https://github.com/joegesualdo/abbott</a> </li>
+<li><a target="_blank" rel="noopener" href="https://github.com/cytle/toy-browser">https://github.com/cytle/toy-browser</a> </li>
+<li><a target="_blank" rel="noopener" href="https://github.com/ryanmcdermott/dumbkit">https://github.com/ryanmcdermott/dumbkit</a> </li>
+<li><a target="_blank" rel="noopener" href="https://github.com/aimergenge/toy-html-parser">https://github.com/aimergenge/toy-html-parser</a> </li>
+<li><a target="_blank" rel="noopener" href="https://github.com/mbrubeck/robinson">https://github.com/mbrubeck/robinson</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/maekawatoshiki/naglfar">https://github.com/maekawatoshiki/naglfar</a> </li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E6%B5%8F%E8%A7%88%E5%99%A8/" rel="tag">浏览器</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-commit-and-changelog"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/07/17/commit-and-changelog/"
+    >代码规范</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/07/17/commit-and-changelog/" class="article-date">
+  <time datetime="2021-07-17T14:01:02.000Z" itemprop="datePublished">2021-07-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%AE%9E%E8%B7%B5/">实践</a> / <a class="article-category-link" href="/categories/%E5%AE%9E%E8%B7%B5/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/">代码规范</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <p><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2016/01/commit_message_change_log.html">Commit message 和 Change log 编写指南</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/changelog/" rel="tag">changelog</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/commit/" rel="tag">commit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E4%BB%A3%E7%A0%81%E8%A7%84%E8%8C%83/" rel="tag">代码规范</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-css"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/07/17/css/"
+    >css</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/07/17/css/" class="article-date">
+  <time datetime="2021-07-17T14:01:02.000Z" itemprop="datePublished">2021-07-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/css/">css</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h1><p>CSS 的顶层样式表由两种规则组成的规则列表构成，一种被称为 at-rule，也就是 at 规则，另一种是 qualified rule，也就是普通规则。</p>
+<p>at-rule 由一个 @ 关键字和后续的一个区块组成，如果没有区块，则以分号结束。</p>
+<p>qualified rule 则是指普通的 CSS 规则，也就是我们所熟识的，由选择器和属性指定构成的规则。</p>
+<h3 id="at-规则"><a href="#at-规则" class="headerlink" title="at 规则"></a>at 规则</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/css-syntax-3/">@charset</a></li>
+</ul>
+<p>@charset 用于提示 CSS 文件使用的字符编码方式，它如果被使用，必须出现在最前面。这个规则只在给出语法解析阶段前使用，并不影响页面上的展示效果。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@charset</span> <span class="string">&quot;utf-8&quot;</span>;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/css-cascade-4/">@import</a></li>
+</ul>
+<p>@import 用于引入一个 CSS 文件，除了 @charset 规则不会被引入，@import 可以引入另一个文件的全部内容。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@import</span> <span class="string">&quot;mystyle.css&quot;</span>;</span><br><span class="line"><span class="keyword">@import</span> url(<span class="string">&quot;mystyle.css&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/css3-conditional/">@media</a></li>
+</ul>
+<p>media 就是大名鼎鼎的 media query 使用的规则了，它能够对设备的类型进行一些判断。在 media 的区块内，是普通规则列表。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@media</span> print &#123;</span><br><span class="line">    <span class="selector-tag">body</span> &#123; <span class="attribute">font-size</span>: <span class="number">10pt</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/css-page-3/">@page</a></li>
+</ul>
+<p>page 用于分页媒体访问网页时的表现设置，页面是一种特殊的盒模型结构，除了页面本身，还可以设置它周围的盒。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/css-counter-styles-3">@counter-style</a></li>
+</ul>
+<p>counter-style 产生一种数据，用于定义列表项的表现。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@counter-style</span> triangle &#123;</span><br><span class="line">  system: cyclic;</span><br><span class="line">  symbols: ‣;</span><br><span class="line">  suffix: <span class="string">&quot; &quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/css-animations-1/">@keyframes</a></li>
+</ul>
+<p>keyframes 产生一种数据，用于定义动画关键帧。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@keyframes</span> diagonal-slide &#123;</span><br><span class="line"></span><br><span class="line">  <span class="selector-tag">from</span> &#123;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">0</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">0</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="selector-tag">to</span> &#123;</span><br><span class="line">    <span class="attribute">left</span>: <span class="number">100px</span>;</span><br><span class="line">    <span class="attribute">top</span>: <span class="number">100px</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/css-fonts-3/">@fontface</a></li>
+</ul>
+<p>fontface 用于定义一种字体，icon font 技术就是利用这个特性来实现的。</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">@font-face</span> &#123;</span><br><span class="line">  <span class="attribute">font-family</span>: Gentium;</span><br><span class="line">  <span class="attribute">src</span>: <span class="built_in">url</span>(<span class="string">http://example.com/fonts/Gentium.woff</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">p</span> &#123; <span class="attribute">font-family</span>: Gentium, serif; &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/css3-conditional/">@supports</a></li>
+</ul>
+<p>support 检查环境的特性，它与 media 比较类似。</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.w3.org/TR/css-namespaces-3/">@namespace</a></li>
+</ul>
+<p>用于跟 XML 命名空间配合的一个规则，表示内部的 CSS 选择器全都带上特定命名空间。</p>
+<h3 id="普通规则"><a href="#普通规则" class="headerlink" title="普通规则"></a>普通规则</h3><ul>
+<li>普通规则<ul>
+<li>选择器</li>
+<li>声明列表<ul>
+<li>属性</li>
+<li>值<ul>
+<li>值的类型</li>
+<li>函数</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="选择器"><a href="#选择器" class="headerlink" title="选择器"></a><a target="_blank" rel="noopener" href="https://www.w3.org/TR/selectors-4/">选择器</a></h4><p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/fe-cdn/css-selector.png" alt="selector"></p>
+<ul>
+<li><strong>简单选择器</strong></li>
+</ul>
+<p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/fe-cdn/simple-selector.png" alt="simple"></p>
+<ul>
+<li><strong>选择器的组合</strong></li>
+</ul>
+<p>选择器列表是用逗号分隔的复杂选择器序列；复杂选择器则是用空格、大于号、波浪线等符号连接的复合选择器；复合选择器则是连写的简单选择器组合。</p>
+<p>根据选择器列表的语法，选择器的连接方式可以理解为像四则运算一样有优先级。</p>
+<ul>
+<li><p>第一优先级</p>
+<ul>
+<li>无连接符号</li>
+</ul>
+</li>
+<li><p>第二优先级</p>
+<ul>
+<li>“空格”</li>
+<li>“~”</li>
+<li>“+”</li>
+<li>“&gt;”</li>
+<li>“||”</li>
+</ul>
+</li>
+<li><p>第三优先级</p>
+<ul>
+<li>“,”</li>
+</ul>
+</li>
+<li><p><strong>选择器的优先级</strong></p>
+</li>
+</ul>
+<p>CSS 标准用一个三元组 (a, b, c) 来构成一个复杂选择器的优先级。</p>
+<ul>
+<li>id 选择器的数目记为 a；</li>
+<li>伪类选择器和 class 选择器的数目记为 b；</li>
+<li>伪元素选择器和标签选择器数目记为 c；</li>
+<li>“*” 不影响优先级。</li>
+</ul>
+<p>CSS 标准建议用一个足够大的进制，获取“ a-b-c ”来表示选择器优先级。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">specificity = base * base * a + base * b + c</span><br></pre></td></tr></table></figure>
+
+<p><strong>行内属性的优先级永远高于 CSS 规则，浏览器提供了一个“口子”，就是在选择器前加上“!import”。</strong></p>
+<p><strong>同一优先级的选择器遵循“后面的覆盖前面的”原则</strong></p>
+<h4 id="声明"><a href="#声明" class="headerlink" title="声明"></a>声明</h4><p>声明部分是一个由“属性: 值”组成的序列。</p>
+<p><strong>属性是由中划线、下划线、字母等组成的标识符，CSS 还支持使用反斜杠转义。我们需要注意的是：属性不允许使用连续的两个中划线开头，这样的属性会被认为是 CSS 变量。</strong></p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:root</span> &#123;</span><br><span class="line">  --<span class="selector-tag">main</span>-<span class="attribute">color</span>: <span class="number">#06c</span>;</span><br><span class="line">  --accent-<span class="attribute">color</span>: <span class="number">#006</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/* The rest of the CSS file */</span></span><br><span class="line"><span class="selector-id">#foo</span> <span class="selector-tag">h1</span> &#123;</span><br><span class="line">  <span class="attribute">color</span>: <span class="built_in">var</span>(--main-color);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="排版"><a href="#排版" class="headerlink" title="排版"></a>排版</h3><h4 id="正常流"><a href="#正常流" class="headerlink" title="正常流"></a>正常流</h4><p>我们要把正常流中的一个盒或者文字排版，需要分成三种情况处理：</p>
+<ul>
+<li>当遇到块级盒：排入块级格式化上下文。</li>
+<li>当遇到行内级盒或者文字：首先尝试排入行内级格式化上下文，如果排不下，那么创建一个行盒，先将行盒排版（行盒是块级，所以到第一种情况），行盒会创建一个行内级格式化上下文。</li>
+<li>遇到 float 盒：把盒的顶部跟当前行内级上下文上边缘对齐，然后根据 float 的方向把盒的对应边缘对到块级格式化上下文的边缘，之后重排当前行盒。</li>
+</ul>
+<p>一些元素会在其内部创建新的块级格式化上下文，这些元素有：</p>
+<ul>
+<li>浮动元素；</li>
+<li>绝对定位元素；</li>
+<li>非块级但仍能包含块级元素的容器（如 inline-blocks, table-cells, table-captions）；</li>
+<li>块级的能包含块级元素的容器，且属性 overflow 不为 visible。</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-js基础知识"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/07/17/js%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"
+    >JS基础知识</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/07/17/js%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" class="article-date">
+  <time datetime="2021-07-17T14:01:02.000Z" itemprop="datePublished">2021-07-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <ul>
+<li><a href="#javascript">JavaScript</a><ul>
+<li><a href="#%E6%96%87%E6%B3%95">文法</a></li>
+<li><a href="#%E8%AF%AD%E4%B9%89">语义</a></li>
+<li><a href="#%E8%BF%90%E8%A1%8C%E6%97%B6">运行时</a><ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84">数据结构</a><ul>
+<li><a href="#%E7%B1%BB%E5%9E%8B">类型</a></li>
+</ul>
+</li>
+<li><a href="#%E7%AE%97%E6%B3%95"><strong>算法</strong></a></li>
+<li><a href="#%E5%AD%A6%E4%B9%A0%E6%96%87%E7%8C%AE">学习文献</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h1><p><img src="https://static001.geekbang.org/resource/image/6a/9b/6aec0a09381a2f74014ec604ef99c19b.png" alt="javascript"></p>
+<p>编程语言的一般规律：用一定的词法和语法，表达一定语义，从而操作运行时。</p>
+<h2 id="文法"><a href="#文法" class="headerlink" title="文法"></a>文法</h2><h2 id="语义"><a href="#语义" class="headerlink" title="语义"></a>语义</h2><h2 id="运行时"><a href="#运行时" class="headerlink" title="运行时"></a>运行时</h2><p>运行时分为数据结构和算法部分：数据结构包含类型和实例（JavaScript 的类型系统就是它的 7 种基本类型和 7 种语言类型，实例就是它的内置对象部分）。所谓的算法，就是 JavaScript 的执行过程。</p>
+<h3 id="数据结构"><a href="#数据结构" class="headerlink" title="数据结构"></a>数据结构</h3><h4 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h4><p>7种语言类型</p>
+<ul>
+<li>Undefined</li>
+<li>Null</li>
+<li>Boolean</li>
+<li>Number</li>
+<li>String</li>
+<li>Symbol</li>
+<li>Object</li>
+</ul>
+<p><strong>undefined 和 null</strong></p>
+<p>Undefined 跟 Null 有一定的表意差别，Null 表示的是：“定义了但是为空”。所以，在实际编程时，我们一般不会把变量赋值为 undefined，这样可以保证所有值为 undefined 的变量，都是从未赋值的自然状态。Null 类型也只有一个值，就是 null，它的语义表示空值，与 undefined 不同，null 是 JavaScript 关键字，所以在任何代码中，你都可以放心用 null 关键字来获取 null 值。</p>
+<p><strong>特殊情况</strong></p>
+<ul>
+<li>null的类型是object，这是由于历史原因造成的。1995年的 JavaScript 语言第一版，只设计了五种数据类型（对象、整数、浮点数、字符串和布尔值），没考虑null，只把它当作object的一种特殊值。后来null独立出来，作为一种单独的数据类型，为了兼容以前的代码，typeof null返回object就没法改变了。</li>
+<li>String 有最大长度是 2^53 - 1</li>
+<li>JavaScript 中的 Number 类型有 18437736874454810627(即 2^64 - 2^53+3) 个值。<ul>
+<li>例外情况1：Infinity，无穷大；</li>
+<li>例外情况2：-Infinity，负无穷大。</li>
+<li>例外情况3：NaN，占用了 9007199254740990，这原本是符合 IEEE 规则的数字；</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/fe-cdn/double-bit.png" alt="double-bit"></p>
+<ul>
+<li>Number.MAX_SAFE_INTEGER === Math.pow(2, 53) - 1</li>
+<li>Number.MIN_SAFE_INTEGER === 1 - Math.pow(2, 53)</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">三种例外情况：</span><br><span class="line">无穷大： 符号位为0，指数位（阶码位）全为1,小数位全为0；（1种情况）</span><br><span class="line">0111 1111 1111 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000</span><br><span class="line">负无穷大： 符号位为1，指数位（阶码位）全为1,小数位全为0；（1种情况）</span><br><span class="line">1111 1111 1111 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000 0000</span><br><span class="line">NaN: 符号位为0或者1，指数位（阶码位）全为1,小数位非全0；（2 * （2^52 - 1）种情况）</span><br><span class="line">S111 1111 1111 XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX XXXX</span><br><span class="line"></span><br><span class="line">所以最终Number的可取值为： 2^64 - 2^53 + 3</span><br><span class="line">2^64： 总取值</span><br><span class="line">2^53： 指数位（阶码位）全为1的情况</span><br><span class="line">3：    指数位（阶码位）全为1总结为3个有效值；</span><br><span class="line"></span><br><span class="line">或者这样算：</span><br><span class="line">2^64 - （2 * （2^52 - 1） + 3</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>区分 +0 和 -0 的方式，检测 1/x 是 Infinity 还是 -Infinity。</p>
+</li>
+<li><p>Number 类型中有效的整数范围是 -0x1fffffffffffff 至 0x1fffffffffffff，所以 Number 无法精确表示此范围外的整数。</p>
+</li>
+<li><p>检查等式左右两边差的绝对值是否小于最小精度，才是正确的比较浮点数的方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log( <span class="built_in">Math</span>.abs(<span class="number">0.1</span> + <span class="number">0.2</span> - <span class="number">0.3</span>) &lt;= <span class="built_in">Number</span>.EPSILON);</span><br></pre></td></tr></table></figure></li>
+<li><p>Symbol 是 ES6 中引入的新类型，它是一切非字符串的对象 key 的集合，在 ES6 规范中，整个对象系统被用 Symbol 重塑。\</p>
+</li>
+<li><p>可以使用 Symbol.iterator 来自定义 for…of 在对象上的行为：</p>
+</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">var</span> o = <span class="keyword">new</span> <span class="built_in">Object</span></span><br><span class="line"></span><br><span class="line">o[<span class="built_in">Symbol</span>.iterator] = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> v = <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">        <span class="attr">next</span>: <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> &#123; <span class="attr">value</span>: v++, done: v &gt; <span class="number">10</span> &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;        </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> v <span class="keyword">of</span> o) </span><br><span class="line">    <span class="built_in">console</span>.log(v); <span class="comment">// 0 1 2 3 ... 9</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>Symbol 函数比较特殊，直接用 new 调用它会抛出错误，但它仍然是 Symbol 对象的构造器。</li>
+<li>运算符提供了装箱操作，它会根据基础类型构造一个临时对象，使得我们能在基础类型上调用对应对象的方法。</li>
+<li>parseInt把字符串转为证书，遇到非数字时停止解析，第一个字符为零，则基于八进制求值；Number遇到非数字返回NaN；</li>
+</ul>
+<p><strong>Object</strong><br>对象的定义是“属性的集合”。属性分为数据属性和访问器属性，二者都是 key-value 结构，key 可以是字符串或者 Symbol 类型。</p>
+<p><strong>类型转换</strong><br><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/fe-cdn/double-equal.jpg" alt="transfer"></p>
+<p><strong>装箱转换</strong></p>
+<p>每一种基本类型 Number、String、Boolean、Symbol 在对象中都有对应的类，所谓装箱转换，正是把基本类型转换为对应的对象，它是类型转换中一种相当重要的种类。</p>
+<p>Object.prototype.toString 是可以准确识别对象对应的基本类型的方法，它比 instanceof 更加准确。但需要注意的是，call 本身会产生装箱操作，所以需要配合 typeof 来区分基本类型还是对象类型。</p>
+<p><strong>拆箱转换</strong></p>
+<p>ToPrimitive 函数，它是对象类型到基本类型的转换（即，拆箱转换）。<br>对象到 String 和 Number 的转换都遵循“先拆箱再转换”的规则。通过拆箱转换，把对象变成基本类型，再从基本类型转换为对应的 String 或者 Number。</p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a><strong>算法</strong></h3><h3 id="学习文献"><a href="#学习文献" class="headerlink" title="学习文献"></a>学习文献</h3><p><a target="_blank" rel="noopener" href="https://www.boatsky.com/blog/26">双精度浮点64位类型IEEE754标准</a><br><a target="_blank" rel="noopener" href="https://www.cnblogs.com/fsjohnhuang/p/5115672.html">0.1 + 0.2 === 0.3问题</a></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-object"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/07/17/object/"
+    >JS当中的对象</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/07/17/object/" class="article-date">
+  <time datetime="2021-07-17T14:01:02.000Z" itemprop="datePublished">2021-07-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="Object"><a href="#Object" class="headerlink" title="Object"></a>Object</h1><ul>
+<li><a href="#object">Object</a><ul>
+<li><a href="#%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%89%B9%E5%BE%81">对象的特征</a></li>
+<li><a href="#javascript%E4%B8%AD%E5%AF%B9%E8%B1%A1">JavaScript中对象</a><ul>
+<li><a href="#%E7%8B%AC%E6%9C%89%E7%9A%84%E7%89%B9%E8%89%B2">独有的特色</a></li>
+<li><a href="#%E4%B8%A4%E7%B1%BB%E5%B1%9E%E6%80%A7">两类属性</a><ul>
+<li><a href="#%E6%95%B0%E6%8D%AE%E5%B1%9E%E6%80%A7">数据属性</a></li>
+<li><a href="#%E8%AE%BF%E9%97%AE%E5%99%A8%E5%B1%9E%E6%80%A7">访问器属性</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BF%98%E6%98%AF%E5%9F%BA%E4%BA%8E%E5%AF%B9%E8%B1%A1">面向对象还是基于对象</a><ul>
+<li><a href="#%E5%A6%82%E4%BD%95%E5%AE%9A%E4%B9%89%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E5%92%8C%E5%9F%BA%E4%BA%8E%E5%AF%B9%E8%B1%A1">如何定义面向对象和基于对象</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8E%9F%E5%9E%8B">原型</a><ul>
+<li><a href="#%E5%8E%9F%E5%9E%8B%E7%B3%BB%E7%BB%9F">原型系统</a></li>
+<li><a href="#%E7%B1%BB%E4%B8%8E%E5%8E%9F%E5%9E%8B">类与原型</a><ul>
+<li><a href="#new">new</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#%E5%AF%B9%E8%B1%A1%E5%88%86%E7%B1%BB">对象分类</a><ul>
+<li><a href="#%E5%86%85%E7%BD%AE%E5%AF%B9%E8%B1%A1%E5%8E%9F%E7%94%9F%E5%AF%B9%E8%B1%A1">内置对象·原生对象</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="对象的特征"><a href="#对象的特征" class="headerlink" title="对象的特征"></a>对象的特征</h2><ul>
+<li><p>对象具有唯一标识性：及时完全相同的两个对象，也并非是同一个对象;（内存地址）</p>
+</li>
+<li><p>对象有状态：独享具有状态，同意对象可能处于不用状态之下;</p>
+</li>
+<li><p>对象具有行为：即对象的状态，可能因为他的行为产生变迁；</p>
+</li>
+</ul>
+<h2 id="JavaScript中对象"><a href="#JavaScript中对象" class="headerlink" title="JavaScript中对象"></a>JavaScript中对象</h2><h3 id="独有的特色"><a href="#独有的特色" class="headerlink" title="独有的特色"></a>独有的特色</h3><p>JavaScript 中对象独有的特色是：对象具有高度的动态性，这是因为 JavaScript 赋予了使用者在运行时为对象添改状态和行为的能力。</p>
+<p><code>人话：</code>不一定要在声明时确定对象的属性，可以动态添加；</p>
+<h3 id="两类属性"><a href="#两类属性" class="headerlink" title="两类属性"></a>两类属性</h3><h4 id="数据属性"><a href="#数据属性" class="headerlink" title="数据属性"></a>数据属性</h4><ul>
+<li>value：就是属性的值。</li>
+<li>writable：决定属性能否被赋值。</li>
+<li>enumerable：决定 for in 能否枚举该属性。</li>
+<li>configurable：决定该属性能否被删除或者改变特征值。</li>
+</ul>
+<h4 id="访问器属性"><a href="#访问器属性" class="headerlink" title="访问器属性"></a>访问器属性</h4><ul>
+<li>getter：函数或 undefined，在取属性值时被调用。</li>
+<li>setter：函数或 undefined，在设置属性值时被调用。</li>
+<li>enumerable：决定 for in 能否枚举该属性。</li>
+<li>configurable：决定该属性能否被删除或者改变特征值。</li>
+</ul>
+<h2 id="面向对象还是基于对象"><a href="#面向对象还是基于对象" class="headerlink" title="面向对象还是基于对象"></a>面向对象还是基于对象</h2><p><code>“JavaScript 不是面向对象”？</code></p>
+<p>因为实际上 JavaScript 对象的运行时是一个“属性的集合”，由于 JavaScript 的对象设计跟目前主流基于类的面向对象差异非常大。<br>可事实上，这样的对象系统设计虽然特别，但是 JavaScript 提供了完全运行时的对象系统，这使得它可以模仿多数面向对象编程范式，所以它也是正统的面向对象语言。</p>
+<p><code>基于对象？基于类？</code></p>
+<p>在不同的编程语言中，设计者也利用各种不同的语言特性来抽象描述对象。最为成功的流派是使用“类”的方式来描述对象，这诞生了诸如 C++、Java 等流行的编程语言。这个流派叫做基于类的编程语言。</p>
+<p>“基于类”并非面向对象的唯一形态，如果我们把视线从“类”移开，Brendan 当年选择的原型系统，就是一个非常优秀的抽象对象的形式。</p>
+<p>还有一种就是基于原型的编程语言，它们利用原型来描述对象。我们的 JavaScript 就是其中代表。</p>
+<h3 id="如何定义面向对象和基于对象"><a href="#如何定义面向对象和基于对象" class="headerlink" title="如何定义面向对象和基于对象"></a>如何定义面向对象和基于对象</h3><ul>
+<li>基于对象</li>
+</ul>
+<p>语言和宿主的基础设施由对象来提供，并且 JavaScript 程序即是一系列互相通讯的对象集合</p>
+<ul>
+<li>面向对象</li>
+</ul>
+<h2 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h2><h3 id="原型系统"><a href="#原型系统" class="headerlink" title="原型系统"></a>原型系统</h3><p>原型系统满足两条规则</p>
+<ul>
+<li>如果所有对象都有私有字段[[prototype]]，就是对象的原型</li>
+<li>读一个属性，如果过对象本身没有，则会继续访问对象的原型，知道原型为空或者找到为止；</li>
+</ul>
+<h3 id="类与原型"><a href="#类与原型" class="headerlink" title="类与原型"></a>类与原型</h3><p>在早期版本的 JavaScript 中，“类”的定义是一个私有属性 [[class]]，语言标准为内置类型诸如 Number、String、Date 等指定了[[class]]属性，以表示它们的类。语言使用者唯一可以访问[[class]]属性的方式是 Object.prototype.toString。</p>
+<p><code>在 ES5 开始，[[class]] 私有属性被 Symbol.toStringTag 代替，可被覆盖</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> o = &#123; [<span class="built_in">Symbol</span>.toStringTag]: <span class="string">&quot;MyObject&quot;</span> &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(o + <span class="string">&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>
+
+<p><code>es6 加入了新类型class</code></p>
+<p>ES6 中引入了 class 关键字，并且在标准中删除了所有[[class]]相关的私有属性描述，类的概念正式从属性升级成语言的基础设施。</p>
+<h4 id="new"><a href="#new" class="headerlink" title="new"></a>new</h4><p>new运算符实际操作：</p>
+<ul>
+<li>以构造器的prototype属性为原型，创建新对象；</li>
+<li>将this和调用参数传递给构造器，执行；</li>
+<li>如果构造器返回对象，则返回，否则返回第一步创建的对象；</li>
+</ul>
+<p>所以可以这样模拟类：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">c1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">this</span>.p1 = <span class="number">1</span>;</span><br><span class="line">    <span class="built_in">this</span>.p2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="built_in">this</span>.p1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"><span class="keyword">var</span> o1 = <span class="keyword">new</span> c1;</span><br><span class="line">o1.p2();</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">c2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">&#125;</span><br><span class="line">c2.prototype.p1 = <span class="number">1</span>;</span><br><span class="line">c2.prototype.p2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="built_in">this</span>.p1);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> o2 = <span class="keyword">new</span> c2;</span><br><span class="line">o2.p2();</span><br></pre></td></tr></table></figure>
+
+<h2 id="对象分类"><a href="#对象分类" class="headerlink" title="对象分类"></a>对象分类</h2><ul>
+<li>宿主对象：由 JavaScript 宿主环境提供的对象，它们的行为完全由宿主环境决定。</li>
+<li>内置对象：由 JavaScript 语言提供的对象。<ul>
+<li>固有对象：由标准规定，随着 JavaScript 运行时创建而自动创建的对象实例。</li>
+<li>原生对象：可以由用户通过 Array、RegExp 等内置构造器或者特殊语法创建的对象。</li>
+<li>普通对象：由{}语法、Object 构造器或者 class 关键字定义类创建的对象，它能够被原型继承。</li>
+</ul>
+</li>
+</ul>
+<h3 id="内置对象·原生对象"><a href="#内置对象·原生对象" class="headerlink" title="内置对象·原生对象"></a>内置对象·原生对象</h3><p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/fe-cdn/native-objects.png" alt="native-objects"></p>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-vue vs react"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/07/17/vue%20vs%20react/"
+    >vue vs react</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/07/17/vue%20vs%20react/" class="article-date">
+  <time datetime="2021-07-17T14:01:02.000Z" itemprop="datePublished">2021-07-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="vue-vs-react"><a href="#vue-vs-react" class="headerlink" title="vue vs react"></a>vue vs react</h1><h2 id="用法"><a href="#用法" class="headerlink" title="用法"></a>用法</h2><table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>vue2</th>
+<th>vue3</th>
+<th>react15</th>
+<th>react16.8+</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>api</td>
+<td>options</td>
+<td>composition</td>
+<td>class</td>
+<td>hooks</td>
+</tr>
+</tbody></table>
+<h3 id="option优缺点"><a href="#option优缺点" class="headerlink" title="option优缺点"></a>option优缺点</h3><ul>
+<li><p>优点</p>
+<ul>
+<li>便于理解</li>
+<li>数据方法划分明显</li>
+</ul>
+</li>
+<li><p>缺点</p>
+<ul>
+<li>可维护性差，反复横跳</li>
+<li>可扩展性差，mixins有命名冲突问题，且以黑盒方式引入，不利于类型推断；</li>
+</ul>
+</li>
+</ul>
+<h3 id="composition优缺点"><a href="#composition优缺点" class="headerlink" title="composition优缺点"></a>composition优缺点</h3><ul>
+<li>优点<ul>
+<li>功能分块，避免反复横跳</li>
+<li>对vue可以进行tree shaking</li>
+<li>方便组合，组合优于继承</li>
+<li>数据流清晰（定义、更新）</li>
+<li>render函数只执行一次，后续靠的是响应式通知</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>缺点<ul>
+<li>难看，较难理解</li>
+</ul>
+</li>
+</ul>
+<h3 id="hooks优缺点"><a href="#hooks优缺点" class="headerlink" title="hooks优缺点"></a>hooks优缺点</h3><ul>
+<li>优点</li>
+</ul>
+<ul>
+<li>缺点<ul>
+<li>render函数每次都会执行，hooks有顺序限制</li>
+</ul>
+</li>
+</ul>
+<h2 id="数据流（mutable-vs-immutable）"><a href="#数据流（mutable-vs-immutable）" class="headerlink" title="数据流（mutable vs immutable）"></a>数据流（mutable vs immutable）</h2><p><strong>双向数据流</strong><br>代表：vue<br>可变数据，依赖收集，主动通知来驱动模板</p>
+<p><strong>单向数据流</strong><br>代表：react<br>数据不可变，计算数据diff来驱动模板</p>
+<h2 id="模板语法"><a href="#模板语法" class="headerlink" title="模板语法"></a>模板语法</h2><h3 id="jsx"><a href="#jsx" class="headerlink" title="jsx"></a>jsx</h3><p>jsx就是纯js，在react当中会被解析成<code>React.createElement</code></p>
+<ul>
+<li>优点<ul>
+<li>十分自由，js支持的jsx都支持</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>缺点<ul>
+<li>动态性强，可优化性弱（是我给你自由过了火）;</li>
+</ul>
+</li>
+</ul>
+<h3 id="template"><a href="#template" class="headerlink" title="template"></a>template</h3><p>特定语法，解析成<code>creatVNode</code>,变异过程当中会区分动态、静态节点，纯静态节点会跳过diff</p>
+<ul>
+<li>优点<ul>
+<li>有限制，可遍历，可优化性强</li>
+<li>形式上更接近html，符合认知</li>
+</ul>
+</li>
+<li>缺点<ul>
+<li>不够动态，自由度小，有语法限制（仅能使用限定api）</li>
+</ul>
+</li>
+</ul>
+<h2 id="compiler"><a href="#compiler" class="headerlink" title="compiler"></a>compiler</h2><h2 id="vdom"><a href="#vdom" class="headerlink" title="vdom"></a>vdom</h2><p>使用js对象的形式来描述dom结构</p>
+<ul>
+<li>响应式：数据变更了通知订阅者，主动通知</li>
+<li>vdom：不知道数据哪里变了，通过生成新vdom与旧的vdom进行diff才知道变化，被动计算;</li>
+</ul>
+<h3 id="性能瓶颈"><a href="#性能瓶颈" class="headerlink" title="性能瓶颈"></a>性能瓶颈</h3><ul>
+<li>性能跟模板大小正相关，跟动态节点数量无关；</li>
+<li></li>
+</ul>
+<h3 id="vue-vdom-响应式"><a href="#vue-vdom-响应式" class="headerlink" title="vue = vdom + 响应式"></a>vue = vdom + 响应式</h3><p>vue1只有响应式，一旦响应式对象太多，导致卡顿；<br>vue2引入了vdom，使用的是snabbdom的代码，双端预判，较少循环次数；<br>vue3在vue2静态标记的基础上，动态标签内部的静态标签，使用block来标记；</p>
+<p><strong>vue怎么区分使用vdom还是使用响应式呢？</strong><br>根据组件划分，组件之间通过响应式通知，组件内部，通过vdom计算diff；</p>
+<p>fiber也就是说所谓的时间切片；<br>1、任务可以切开，利用空闲时间计算；<br>2、diff可以中断</p>
+<p>原理，把树形结构转化成链表结构</p>
+<h3 id="react-纯vdom"><a href="#react-纯vdom" class="headerlink" title="react 纯vdom"></a>react 纯vdom</h3><p>解析jsx，生成createElement，没有太多标记，所以能做的优化很少</p>
+<p><strong>vdom杀手锏：</strong></p>
+<ul>
+<li>性能优化；</li>
+<li>跨端；</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/" rel="tag">vue</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-动态规划"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/07/17/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/"
+    >动态规划（Dynamic Programming）</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/07/17/%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="article-date">
+  <time datetime="2021-07-17T14:01:02.000Z" itemprop="datePublished">2021-07-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id=""><a href="#" class="headerlink" title=""></a></h1><ul>
+<li><a href="#%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92dynamic-programming">动态规划（Dynamic Programming）</a><ul>
+<li><a href="#dp%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1">DP算法设计</a></li>
+<li><a href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0">代码实现</a></li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E9%A2%98%E5%9E%8B">常见题型</a><ul>
+<li><a href="#%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E5%BA%8F%E5%88%97longest-common-sequence">最长公共子序列（longest common sequence）</a><ul>
+<li><a href="#%E5%88%86%E6%9E%90">分析</a></li>
+</ul>
+</li>
+<li><a href="#%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2longest-common-substring">最长公共子串（longest common substring）</a></li>
+<li><a href="#%E6%9C%80%E9%95%BF%E9%80%92%E5%A2%9E%E5%AD%90%E5%BA%8F%E5%88%97longest-increase-sequence">最长递增子序列（longest increase sequence）</a><ul>
+<li><a href="#%E5%88%86%E6%9E%90-1">分析</a></li>
+</ul>
+</li>
+<li><a href="#%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98">背包问题</a><ul>
+<li><a href="#01%E9%97%AE%E9%A2%98">0/1问题</a></li>
+<li><a href="#%E6%9C%89%E7%95%8C%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98">有界背包问题</a></li>
+<li><a href="#%E6%97%A0%E7%95%8C%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98">无界背包问题</a></li>
+</ul>
+</li>
+<li><a href="#%E6%9C%80%E5%A4%A7%E5%AD%90%E6%95%B0%E5%88%97%E9%97%AE%E9%A2%98">最大子数列问题</a></li>
+</ul>
+</li>
+<li><a href="#reference">reference</a></li>
+</ul>
+</li>
+</ul>
+<p>动态规划算法与分治法类似，其基本思想也是将待求解问题分解成若干个子问题，先求解子问题，然后从这些子问题的解得到原问题的解。与分治法不同的是，适合于用动态规划求解的问题，经分解得到子问题往往不是互相独立的。<br>动态规划就是把主问题的所有子问题穷尽求出最优解。</p>
+<h2 id="DP算法设计"><a href="#DP算法设计" class="headerlink" title="DP算法设计"></a>DP算法设计</h2><ul>
+<li>首先，把当前问题的状态设为x；对于状态x，f(x)为最优解；</li>
+<li>找出f(x)与那些状态有关，并写出其他们之间的关联（状态转移方程）</li>
+<li></li>
+</ul>
+<h2 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> 状态<span class="number">1</span> <span class="keyword">in</span> 状态<span class="number">1</span>的所有取值：</span><br><span class="line">    <span class="keyword">for</span> 状态<span class="number">2</span> <span class="keyword">in</span> 状态<span class="number">2</span>的所有取值：</span><br><span class="line">        <span class="keyword">for</span> ...</span><br><span class="line">            dp[状态<span class="number">1</span>][状态<span class="number">2</span>][...] = 择优(选择<span class="number">1</span>，选择<span class="number">2.</span>..)</span><br></pre></td></tr></table></figure>
+
+<h2 id="常见题型"><a href="#常见题型" class="headerlink" title="常见题型"></a>常见题型</h2><h3 id="最长公共子序列（longest-common-sequence）"><a href="#最长公共子序列（longest-common-sequence）" class="headerlink" title="最长公共子序列（longest common sequence）"></a>最长公共子序列（longest common sequence）</h3><p>最长公共子序列（longest common sequence）和最长公共子串（longest common substring）不是一回事儿。什么是子序列呢？即一个给定的序列的子序列，就是将给定序列中零个或多个元素去掉之后得到的结果。什么是子串呢？给定串中任意个连续的字符组成的子序列称为该串的子串。</p>
+<h4 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h4><ul>
+<li>设定：</li>
+</ul>
+<p>c[i,j]为系列X,Y的最长公共子序列</p>
+<ul>
+<li>状态转移方程:</li>
+</ul>
+<p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/fe-cdn/lcs-an.png" alt="lcs"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findLCS</span>(<span class="params">str1, str2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> length1 = str1.length;</span><br><span class="line">    <span class="keyword">const</span> length2 = str2.length;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化结果表</span></span><br><span class="line">    <span class="keyword">const</span> result_arr =  <span class="keyword">new</span> <span class="built_in">Array</span>(length1 + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= length1;i++) &#123;</span><br><span class="line">        result_arr[i] = [];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j = <span class="number">0</span>; j &lt;= length2; j++) &#123;</span><br><span class="line">            result_arr[i][j] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 填表</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">1</span>;i &lt; length1 + <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">let</span> x = str1.charAt(i - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j = <span class="number">1</span>;j &lt; length2 + <span class="number">1</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">let</span> y = str2.charAt(j - <span class="number">1</span>);</span><br><span class="line">            <span class="built_in">console</span>.log(&#123;</span><br><span class="line">                i,j,</span><br><span class="line">                x,y</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">if</span>(x === y) &#123;</span><br><span class="line">                result_arr[i][j] = result_arr[i - <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                result_arr[i][j] = <span class="built_in">Math</span>.max(result_arr[i - <span class="number">1</span>][j],result_arr[i][j - <span class="number">1</span>]);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`i=<span class="subst">$&#123;i&#125;</span>;j=<span class="subst">$&#123;j&#125;</span>; =&gt; <span class="subst">$&#123;result_arr[i][j]&#125;</span>`</span>)</span><br><span class="line">        &#125;       </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> result_arr[length1 - <span class="number">1</span>][length2 - <span class="number">1</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="最长公共子串（longest-common-substring）"><a href="#最长公共子串（longest-common-substring）" class="headerlink" title="最长公共子串（longest common substring）"></a>最长公共子串（longest common substring）</h3><ul>
+<li>设定：</li>
+</ul>
+<p>c[i,j]为字符串X和字符串Y的最长公共子串</p>
+<ul>
+<li>状态转移方程:</li>
+</ul>
+<p>当 xi === yi 时，c[i,j] = c[i-1,j-1] + 1;<br>否则c[i,j] = c[i-1,j-1]</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">findLCS</span>(<span class="params">str1, str2</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> length1 = str1.length;</span><br><span class="line">    <span class="keyword">const</span> length2 = str2.length;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> end = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">let</span> maxLength = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 初始化结果表</span></span><br><span class="line">    <span class="keyword">const</span> result_arr =  <span class="keyword">new</span> <span class="built_in">Array</span>(length1 + <span class="number">1</span>);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt;= length1;i++) &#123;</span><br><span class="line">        result_arr[i] = [];</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j = <span class="number">0</span>; j &lt;= length2; j++) &#123;</span><br><span class="line">            result_arr[i][j] = <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 填表</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">1</span>;i &lt; length1 + <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">let</span> x = str1.charAt(i - <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">let</span> j = <span class="number">1</span>;j &lt; length2 + <span class="number">1</span>; j++) &#123;</span><br><span class="line">            <span class="keyword">let</span> y = str2.charAt(j - <span class="number">1</span>);</span><br><span class="line">            <span class="built_in">console</span>.log(&#123;</span><br><span class="line">                i,j,</span><br><span class="line">                x,y</span><br><span class="line">            &#125;);</span><br><span class="line">            <span class="keyword">if</span>(x === y) &#123;</span><br><span class="line">                result_arr[i][j] = result_arr[i - <span class="number">1</span>][j - <span class="number">1</span>] + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">if</span>(result_arr[i][j] &gt; maxLength) &#123;</span><br><span class="line">                    maxLength = result_arr[i][j];</span><br><span class="line">                    end = i;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="comment">// 不连续了，置为0</span></span><br><span class="line">                result_arr[i][j] = <span class="number">0</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="built_in">console</span>.log(<span class="string">`i=<span class="subst">$&#123;i&#125;</span>;j=<span class="subst">$&#123;j&#125;</span>; =&gt; <span class="subst">$&#123;result_arr[i][j]&#125;</span>`</span>)</span><br><span class="line">        &#125;       </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> str1.slice(end - maxLength, maxLength)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="最长递增子序列（longest-increase-sequence）"><a href="#最长递增子序列（longest-increase-sequence）" class="headerlink" title="最长递增子序列（longest increase sequence）"></a>最长递增子序列（longest increase sequence）</h3><h4 id="分析-1"><a href="#分析-1" class="headerlink" title="分析"></a>分析</h4><ul>
+<li>设定：</li>
+</ul>
+<p>c[i]为字符串X.slice(0,i)的最长递增子序列,f(i)为c[i]的数组长度；</p>
+<p>则当x[i] &gt; max(c[i-1])时，c[i] = […c[i-1], x[i]];<br>否则c[i] = c[i-1];</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">getLIS</span>(<span class="params">arr</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">const</span> length = arr.length;</span><br><span class="line">    <span class="keyword">if</span>(arr.length&lt;<span class="number">2</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> arr.length;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> temp = [];</span><br><span class="line">    temp[<span class="number">0</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">1</span>;i&lt;length;i++)&#123;</span><br><span class="line">        temp[i] = temp[i-<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">const</span> isBigest = !arr.slice(<span class="number">0</span>,i).some(<span class="function"><span class="params">p</span> =&gt;</span> p &gt; arr[i]);</span><br><span class="line">        <span class="built_in">console</span>.log(&#123;</span><br><span class="line">            <span class="string">&#x27;arr[i-1]&#x27;</span>: arr.slice(<span class="number">0</span>,i),</span><br><span class="line">            <span class="string">&#x27;arr[i]&#x27;</span>: arr[i],</span><br><span class="line">            isBigest</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">if</span>(isBigest)&#123;</span><br><span class="line">            temp[i] += <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> temp.pop();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="背包问题"><a href="#背包问题" class="headerlink" title="背包问题"></a>背包问题</h3><h4 id="0-1问题"><a href="#0-1问题" class="headerlink" title="0/1问题"></a>0/1问题</h4><p><code>现有n件物品和一个容量为c的背包。第i件物品的重量是重量为w[i]，价值是v[i]。已知对于一件物品必须选择取（用1表示）或者不取（用0表示），且每件物品只能被取一次（这就是“0-1”的含义）。求放置哪些物品进背包，可使这些物品的重量总和不超过背包容量，且价值总和最大。</code></p>
+<h4 id="有界背包问题"><a href="#有界背包问题" class="headerlink" title="有界背包问题"></a>有界背包问题</h4><p><code>现有n种物品和一个容量为c的背包。第i件物品的重量是重量为w[i]，价值是v[i]。已知对于一件物品可选数量为（0~c）。求怎样选择物品进背包，可使这些物品的重量总和不超过背包容量，且价值总和最大。</code></p>
+<h4 id="无界背包问题"><a href="#无界背包问题" class="headerlink" title="无界背包问题"></a>无界背包问题</h4><p><code>现有n种物品和一个容量为c的背包。第i件物品的重量是重量为w[i]，价值是v[i]。求怎样选择物品进背包，可使这些物品的重量总和不超过背包容量，且价值总和最大。</code></p>
+<h3 id="最大子数列问题"><a href="#最大子数列问题" class="headerlink" title="最大子数列问题"></a>最大子数列问题</h3><p>对于数列L，找出L的的子序列，使得：</p>
+<p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/fe-cdn/largestSubArray.svg" alt="lagresetSubArr"></p>
+<p>如对于数列<code>L = [-2,-3,4,-1,-2,1,5,-3]</code>,其最大子数列为：<code>[4,-1,-2,1,5]</code>,此时<code>M = 4 + (-1) + (-2) + 1 + 5 = 7</code>;</p>
+<p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/fe-cdn/largerSubArr-example.png" alt="example"></p>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/23995189">什么是动态规划（Dynamic Programming）？动态规划的意义是什么？</a></li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-微任务与宏任务"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/07/17/%E5%BE%AE%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%AE%8F%E4%BB%BB%E5%8A%A1/"
+    >宏任务与微任务</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/07/17/%E5%BE%AE%E4%BB%BB%E5%8A%A1%E4%B8%8E%E5%AE%8F%E4%BB%BB%E5%8A%A1/" class="article-date">
+  <time datetime="2021-07-17T14:01:02.000Z" itemprop="datePublished">2021-07-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/javascript/">javascript</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id=""><a href="#" class="headerlink" title=""></a></h1><p>宏任务与微任务一直都是面试常见题型，很多时候不仔细分析可能啪叽一下就掉坑了。虽然说实际上那代码一跑就知道啥顺序，但是异步执行的分析咱还是躲不过。</p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>我们把宿主发起的任务称为宏观任务，把 JavaScript 引擎发起的任务称为微观任务。</p>
+<p>具体有哪些呢：</p>
+<ul>
+<li>宏任务<ul>
+<li>script(整体代码)</li>
+<li>setTimeout</li>
+<li>setInterval</li>
+<li>I/O</li>
+<li>UI交互</li>
+<li>postMessage</li>
+<li>MessageChannel</li>
+<li>setImmediate</li>
+<li>……</li>
+</ul>
+</li>
+<li>微任务<ul>
+<li>Promise.then</li>
+<li>Object.Observe</li>
+<li>MutaionObserver</li>
+<li>process.nextTick</li>
+<li>……</li>
+</ul>
+</li>
+</ul>
+<h2 id="运行机制"><a href="#运行机制" class="headerlink" title="运行机制"></a>运行机制</h2><p>在事件循环中，每进行一次循环操作称为 tick，每一次 tick 的任务运行机制大致如下：</p>
+<ul>
+<li>1.执行一个宏任务；</li>
+<li>2.若执行过程中遇到微任务，添加到微任务队列中；</li>
+<li>3.宏任务执行完毕，检查并执行当前微任务当中所有任务（依次）；</li>
+<li>4.进入下一个宏任务，回到第一步；</li>
+</ul>
+<p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/fe-cdn/micro_macro_pic.png" alt="pic"></p>
+<h2 id="分析实例"><a href="#分析实例" class="headerlink" title="分析实例"></a>分析实例</h2><p>之前学习winter老师的重学前端课程的时候，winter老师在互动区对一道题做了分析解答，这里借鉴一下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;sync1&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;setTimeout1&#x27;</span>)</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span> (<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;setTimeoutPromise&#x27;</span>)</span><br><span class="line">    &#125;, <span class="number">0</span>);</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;promise&#x27;</span>);</span><br><span class="line">    resolve();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">promise.then(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;pro_then&#x27;</span>);</span><br><span class="line">    <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">&#x27;pro_timeout&#x27;</span>);</span><br><span class="line">    &#125;, <span class="number">0</span>)</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line"><span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;last_setTimeout&#x27;</span>)</span><br><span class="line">&#125;, <span class="number">0</span>);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;sync2&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<p>安装运行机制，我们分析如下，这个代码段就是一个宏任务，所以从第一句到最后一局这个代码段是我们的第一个宏任务，我们开始分析如下：</p>
+<p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/fe-cdn/micro_macro_1.png" alt="step-1"></p>
+<p>第一个宏任务运行下来，总共执行了3次setTimeout，产生了3个宏任务，同时调用了一个Promise.resolve函数，产生了一个微任务，如上图；所以第一次宏任务之后，打印顺序为：<br>sync1、promise、sync2，这时，setTimeout1，setTimeoutPromise，last_setTimeout 在宏任务队列中，pro_then 在微任务队列中。</p>
+<p>运行完<code>console.log(&#39;sync2&#39;)</code>之后，第一个宏任务执行完毕，我们检查此时的微任务队列非空，因此执行微任务队列当中的函数，即下图当中的步骤4，即打印出<code>pro_then</code>，然后又调用setTimeout，因此宏任务队列又加入一员。</p>
+<p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/fe-cdn/micro_macro_2.png" alt="step-1"></p>
+<p>微任务队列执行完，重新从宏任务队列中获取宏任务，因此依次执行5、6、7、8这几个代码，依次打印setTimeout1，setTimeoutPromise，last_setTimeout，pro_timeout。</p>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000020225668">js中的宏任务与微任务</a>;</li>
+<li><a target="_blank" rel="noopener" href="https://time.geekbang.org/column/article/88275">重学前端-期中答疑</a>;</li>
+</ul>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%AE%8F%E4%BB%BB%E5%8A%A1/" rel="tag">宏任务</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BC%82%E6%AD%A5/" rel="tag">异步</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%BE%AE%E4%BB%BB%E5%8A%A1/" rel="tag">微任务</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-数据结构"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/07/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/"
+    >数据结构</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/07/17/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" class="article-date">
+  <time datetime="2021-07-17T14:01:02.000Z" itemprop="datePublished">2021-07-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a>
+  </div>
+   
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id=""><a href="#" class="headerlink" title=""></a></h1><h2 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h2><p>在计算机科学中, 一个 链表 是数据元素的线性集合, 元素的线性顺序不是由它们在内存中的物理位置给出的。</p>
+<h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ChainNode</span> </span>&#123;</span><br><span class="line">    value = <span class="literal">null</span>;</span><br><span class="line">    next = <span class="literal">null</span>;</span><br><span class="line">    <span class="function"><span class="title">constructor</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.value = value;</span><br><span class="line">        <span class="built_in">this</span>.next = <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建一个链表</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> chainHeader = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">let</span> i = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">let</span> pre = <span class="literal">null</span>;</span><br><span class="line"><span class="keyword">while</span>(i&lt;<span class="number">10</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> node = <span class="keyword">new</span> ChainNode(i);</span><br><span class="line">    <span class="keyword">if</span>(i === <span class="number">0</span>) &#123;</span><br><span class="line">        chainHeader = node;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        pre.next = node;</span><br><span class="line">    &#125;</span><br><span class="line">    pre = node;</span><br><span class="line">    i++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h3><ul>
+<li>插入</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 尾部插入</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">insertIntoTail</span>(<span class="params">value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> target = chainHeader;</span><br><span class="line">    <span class="keyword">const</span> insertVal = <span class="number">11</span>;</span><br><span class="line">    <span class="keyword">while</span>(target.next) &#123;</span><br><span class="line">        target = target.next;</span><br><span class="line">    &#125;</span><br><span class="line">    target.next = <span class="keyword">new</span> ChainNode(insertVal);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>搜索</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">find</span>(<span class="params">header , value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> start = header;</span><br><span class="line">    <span class="keyword">while</span>(start) &#123;</span><br><span class="line">        <span class="keyword">if</span>(start.value === value) &#123;</span><br><span class="line">            <span class="keyword">return</span> start;</span><br><span class="line">        &#125;;</span><br><span class="line">        start = start.next;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删除</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">delByValue</span>(<span class="params">header, value</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">let</span> current = header;</span><br><span class="line">    <span class="keyword">if</span>(current) &#123;</span><br><span class="line">        <span class="keyword">if</span>(current.value === value) &#123;</span><br><span class="line">            current = delByValue(current.next, value)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            current.next = delByValue(current.next, value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> current;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>遍历</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">printNode</span>(<span class="params">header</span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(header);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">let</span> start = header; start; start = start.next)&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(start.value);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>反向遍历</li>
+<li></li>
+</ul>
+<h2 id="双向链表"><a href="#双向链表" class="headerlink" title="双向链表"></a>双向链表</h2> 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AE%97%E6%B3%95/" rel="tag">算法</a></li></ul>
+
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+    <article
+  id="post-js手写系列"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2021/07/17/js%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97/"
+    >js手写系列</a> 
+</h2>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/07/17/js%E6%89%8B%E5%86%99%E7%B3%BB%E5%88%97/" class="article-date">
+  <time datetime="2021-07-17T13:43:07.000Z" itemprop="datePublished">2021-07-17</time>
+</a>    
+    </div>
+      
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="节流"><a href="#节流" class="headerlink" title="节流"></a>节流</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a>防抖</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="promise"><a href="#promise" class="headerlink" title="promise"></a>promise</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="Event"><a href="#Event" class="headerlink" title="Event"></a>Event</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="new"><a href="#new" class="headerlink" title="new"></a>new</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="apply-call-bind"><a href="#apply-call-bind" class="headerlink" title="apply/call/bind"></a>apply/call/bind</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="Class"><a href="#Class" class="headerlink" title="Class"></a>Class</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="批量请求"><a href="#批量请求" class="headerlink" title="批量请求"></a>批量请求</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="instanceof"><a href="#instanceof" class="headerlink" title="instanceof"></a>instanceof</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="ajax"><a href="#ajax" class="headerlink" title="ajax"></a>ajax</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h1 id="jsonp"><a href="#jsonp" class="headerlink" title="jsonp"></a>jsonp</h1><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+ 
+      <!-- reward -->
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <footer class="article-footer">
+       
+    </footer>
+  </div>
+
+    
+ 
+    
+</article>
+
+    
+  </article>
+  
+
+  
+  <nav class="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+  </nav>
+  
+</section>
+</div>
+
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2021
+        <i class="ri-heart-fill heart_icon"></i> hustchenshu
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        
+        由 <a href="https://hexo.io" target="_blank">Hexo</a> 强力驱动
+        <span class="division">|</span>
+        主题 - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+        <li>
+          <a href="http://www.beian.miit.gov.cn/" target="_black" rel="nofollow">鄂ICP备17017286号-2</a>
+        </li>
+        
+    </ul>
+    <ul>
+      
+      <li>
+          <img src="/images/beian.png"></img>
+          <a href="https://beian.miit.gov.cn/#/Integrated/recordQuery" target="_black" rel="nofollow">30159204181516625</a>
+      </li>
+        
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/cdn/fav.png" alt="起航了"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/guide">导航</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="https://github.com/hustchenshu">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/ali_pay.jpeg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/wechat_pay.jpeg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":true,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+
+</html>
