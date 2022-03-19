@@ -4,16 +4,27 @@ date: 2022-03-19 13:55:02
 tags: [css, bfc]
 categories: [css]
 ---
+<!-- TOC -->
 
-# 什么是BFC
+- [1. 什么是BFC](#1-什么是bfc)
+  - [1.1. 定义](#11-定义)
+  - [1.2. 条件（如何形成bfc）](#12-条件如何形成bfc)
+  - [1.3. 特性](#13-特性)
+  - [1.4. 应用](#14-应用)
+    - [1.4.1. 避免margin重叠](#141-避免margin重叠)
+    - [1.4.2. 两栏自适应布局（float）](#142-两栏自适应布局float)
+    - [1.4.3. 清除浮动](#143-清除浮动)
 
-## 定义
+<!-- /TOC -->
+# 1. 什么是BFC
+
+## 1.1. 定义
 
 `BFC(Block formatting context)直译为"块级格式化上下文"。它是一个独立的渲染区域，只有Block-level box参与， 它规定了内部的Block-level Box如何布局，并且与这个区域外部毫不相干。`
 
 + Box 是 CSS 布局的对象和基本单位，Box的类型由元素的类型和display属性决定。主要分为block-level box和inline-level box两种box类型：block/list/table等元素会生成box-level box，而inline/inline-blck/inline-table等生成inline-box；
 
-## 条件（如何形成bfc）
+## 1.2. 条件（如何形成bfc）
 
 + 当前元素为根元素；
 + float属性不为none；
@@ -21,7 +32,7 @@ categories: [css]
 + position不为static或者relative；
 + display的值为flex/inline-block/inline-flex/table-cell/table-caption
 
-## 特性
+## 1.3. 特性
 
 + 内部的元素会在垂直方向，从顶部开始一个接一个地放置。 
 + 元素垂直方向的距离由margin决定。属于同一个BFC的两个相邻 元素的margin会发生叠加
@@ -32,15 +43,17 @@ categories: [css]
 括浮动元素的高度）；
 + 文字层不会被浮动层覆盖，环绕于周围；
 
-## 应用
+## 1.4. 应用
 
-### 避免margin重叠
-    两个元素在同一个bfc内且垂直相邻，那么两者之间的margin会相互重叠，可以让两个元素分别形成各自的bfc，避免margin重叠；
+### 1.4.1. 避免margin重叠
+    
+两个元素在同一个bfc内且垂直相邻，那么两者之间的margin会相互重叠，可以让两个元素分别形成各自的bfc，避免margin重叠；
 
-### 两栏自适应布局（float）
-    bfc内左侧box使用float，此时左侧和右侧属于同一个bfc，两者左侧对其，要使得右侧box接在左侧box后面，需要右侧box形成单独bfc，这样右侧bfc不与左侧float box重叠，自然接在左侧box后面；
+### 1.4.2. 两栏自适应布局（float）
+   
+bfc内左侧box使用float，此时左侧和右侧属于同一个bfc，两者左侧对其，要使得右侧box接在左侧box后面，需要右侧box形成单独bfc，这样右侧bfc不与左侧float box重叠，自然接在左侧box后面；
 
-### 清除浮动 
+### 1.4.3. 清除浮动 
 
 + 浮动带来的问题
     + 子容器浮动，父容器高度塌陷
