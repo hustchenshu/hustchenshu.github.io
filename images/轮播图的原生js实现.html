@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title> 我的日常生活分享</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/cdn/fav.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <!-- mermaid -->
+      
+      <script data-ad-client="ca-pub-2856060118135787" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link rel="alternate" href="/atom.xml" title="我的日常生活分享" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="page-"
+  class="article article-type-page"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+       
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h1 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h1><p> 首先我们看看最后实现的效果图：</p>
+ <iframe height='500' scrolling='no' title='轮播的原生js实现' src='//codepen.io/hustchen/embed/jwgmXm/?height=265&theme-id=0&default-tab=result&embed-version=2' frameborder='no' allowtransparency='true' allowfullscreen='true' style='width: 100%;'>See the Pen <a target="_blank" rel="noopener" href='https://codepen.io/hustchen/pen/jwgmXm/'>轮播的原生js实现</a> by hustchen (<a target="_blank" rel="noopener" href='https://codepen.io/hustchen'>@hustchen</a>) on <a target="_blank" rel="noopener" href='https://codepen.io'>CodePen</a>.
+</iframe>
+
+
+<p><strong>1.图片的显示，可通过左右两侧的按钮切换图片；</strong></p>
+<p><strong>2.自动轮播，给定轮播时间，实现自动切换;</strong></p>
+<p><strong>3.底部按钮跟随轮播变化，点击可跳转到相应图片;</strong></p>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>这里我们从原理出发,轮播其实就是一行多图，依次将个图片移动到视窗当中，就像是小时后的胶片电影放映机一样：</p>
+<p><img src="http://img.bitscn.com/upimg/allimg/c160802/14F10222506250-1W53.jpg" alt="avatar"></p>
+<h2 id="容器及资源创建"><a href="#容器及资源创建" class="headerlink" title="容器及资源创建"></a>容器及资源创建</h2><p>也就是说我们要先定义一个容器（以下交视窗容器，container），给其固定的高宽，恰好是一张图片的尺寸，然后在其中再定义一个容器（list），与视窗等高，但是为了横排摆放我们的图片，需要设定其宽度为图片的宽度之和（container.clientWidth*图片张数），这里的div横排可以使用左浮动来实现，注意设定container的overflow为hidden，否则所有图片将横排显示了。</p>
+<p>为了之后的调用方便，我们将图片的插入放在js当中处理，这样可以实现简单的函数调用创建一个轮播：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">function setImgs(imgs)&#123;</span><br><span class="line">    // 设定图片容器宽度，使得能够横排容下所有图片</span><br><span class="line">    //（这里+1是将第一张复制到最后，实现无缝轮播）</span><br><span class="line">    this.list.style.width = (imgs.length+1) + &quot;00%&quot;;</span><br><span class="line">    if(Object.prototype.toString.call(imgs))&#123;</span><br><span class="line">        var i=0;</span><br><span class="line">        for(;i&lt;imgs.length;i++)&#123;</span><br><span class="line">            this.addItem(imgs[i],i);</span><br><span class="line">        &#125;</span><br><span class="line">        // 将第一张添加到最后，实现无缝轮播</span><br><span class="line">        this.addItem(imgs[0]);              </span><br><span class="line">    &#125;</span><br><span class="line">    this.btns = document.querySelectorAll(&quot;.btns&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//位置</span><br><span class="line">function addItem(src,index)&#123;</span><br><span class="line">    // 新建图片容器，并添加到list容器中</span><br><span class="line">    var item = document.createElement(&quot;div&quot;);</span><br><span class="line">    item.setAttribute(&#x27;class&#x27;,&quot;item&quot;);</span><br><span class="line">    var img_el = document.createElement(&quot;img&quot;);</span><br><span class="line">    img_el.setAttribute(&#x27;src&#x27;,src);</span><br><span class="line">    item.style.width = this.width + &quot;px&quot;;</span><br><span class="line">    item.appendChild(img_el);</span><br><span class="line">    this.list.appendChild(item);</span><br><span class="line"></span><br><span class="line">    // 若调用时给定了index则放置在index张位置</span><br><span class="line">    // 若没有则不需要添加（针对复制第一张放置于最后，不需要相应的按钮）</span><br><span class="line">    if(index!==undefined)&#123;</span><br><span class="line">        var li = document.createElement(&quot;a&quot;);</span><br><span class="line">        li.setAttribute(&quot;data-index&quot;,index);</span><br><span class="line">        li.setAttribute(&quot;href&quot;,&quot;javascript:void(0)&quot;);                           </span><br><span class="line">        li.setAttribute(&quot;class&quot;,&quot;btns&quot;);</span><br><span class="line">        (index==0)&amp;&amp;(li.setAttribute(&quot;class&quot;,&quot;btns cur&quot;));</span><br><span class="line">        this.circles.appendChild(li);</span><br><span class="line">    &#125;</span><br><span class="line">                    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码当中的this.width为container的宽度；至于为什么要在最后将第一张图片复制一份到最后，原因很简单，即消除首末之间的跳转转换的突兀，有这么一帧在中间，首末之间转换要经过这一帧，而我们在当中设定该帧转化时关闭动画效果，从而实现平滑过渡。如下中的move函数所示;</p>
+<p>此外，我们还在底部添加了小圆点的效果，因此在添加图片的同时我们可以顺便吧小圆点（li）给加上；</p>
+<h2 id="切换实现"><a href="#切换实现" class="headerlink" title="切换实现"></a>切换实现</h2><p>接下来要实现图片的向左向右切换，这里的原理就是list容器的left偏移来实现，所以list容器的position必须为absolute；改变list容器的left的代码如下：其中setBtns是切换完之后需要改变小圆点的状态的函数；</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">// 通过图片容器的left属性来实现平移切换</span><br><span class="line">function move(offset)&#123;</span><br><span class="line">    // 当前向左偏移</span><br><span class="line">    var oldLeft = parseInt(this.list.style.left||0);</span><br><span class="line">    // 将要实现的偏移</span><br><span class="line">    var newLeft = oldLeft+offset;</span><br><span class="line">    // 当前是最后一张了（实际上就是第一张的复制），</span><br><span class="line">    // 不能再增大向左的偏移了，归零</span><br><span class="line">    if(newLeft&lt;-this.list.clientWidth+this.width)&#123;</span><br><span class="line">        newLeft = 0;</span><br><span class="line">    &#125;</span><br><span class="line">    // 左侧是空白了，转到最后去</span><br><span class="line">    if(newLeft&gt;0)&#123;</span><br><span class="line">        newLeft = -this.list.clientWidth+this.width;</span><br><span class="line">        // return;</span><br><span class="line">    &#125;</span><br><span class="line">    // 当是第一张和最后一张之间的转化时</span><br><span class="line">    // 关闭动画效果，避免横向过长动画移动，而且由于两者是一样的</span><br><span class="line">    // 所以视觉上没有感觉</span><br><span class="line">    if(Math.abs(newLeft-oldLeft)==this.list.clientWidth-this.width)&#123;</span><br><span class="line">        this.list.style.transitionProperty = &#x27;none&#x27;;</span><br><span class="line">    &#125;else&#123;</span><br><span class="line">        this.list.style.transitionProperty = &#x27;all&#x27;;</span><br><span class="line">    &#125;</span><br><span class="line">    this.list.style.left = newLeft + &#x27;px&#x27;;</span><br><span class="line">    // 转化之后，设定对应的按钮样式</span><br><span class="line">    this.setBtns((-newLeft/this.width)%this.btns.length);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 设定当前情况下底部按钮的样式，index为当前视窗内的图片序号</span><br><span class="line">function setBtns(index)&#123;</span><br><span class="line">    // btns = document.querySelector(&quot;.btns&quot;);</span><br><span class="line">    for(var i=0;i&lt;this.btns.length;i++)&#123;</span><br><span class="line">        if(i==index)&#123;</span><br><span class="line">            this.btns[i].className = &quot;btns cur&quot;;</span><br><span class="line">        &#125;else&#123;</span><br><span class="line">            this.btns[i].className = &quot;btns&quot;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>##自动轮播<br>至于自动轮播，无非是使用setInterval来实现：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 轮播设定函数</span><br><span class="line">function play()&#123;</span><br><span class="line">    var self = this;</span><br><span class="line">    self.timer = setInterval(function()&#123;self.move(-self.width)&#125;,self.interval);</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>##模块化及调用<br>将上述功能函数进行封装：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">function Casual(source)&#123;</span><br><span class="line">    return &#123;</span><br><span class="line">        init:init,</span><br><span class="line">        timer:null,</span><br><span class="line">        width:&#x27;600px&#x27;,</span><br><span class="line">        setImgs:setImgs,</span><br><span class="line">        addItem:addItem,</span><br><span class="line">        move:move,</span><br><span class="line">        setBtns:setBtns,</span><br><span class="line">        play:play,</span><br><span class="line">        interval:3000</span><br><span class="line">    &#125;</span><br><span class="line">    function init(source)&#123;</span><br><span class="line">        this.source = source;</span><br><span class="line">        this.list = document.querySelector(&quot;.list&quot;);</span><br><span class="line">        this.pre = document.querySelector(&quot;.pre&quot;);</span><br><span class="line">        this.next = document.querySelector(&quot;.next&quot;);</span><br><span class="line">        this.container = document.querySelector(&quot;.container&quot;);</span><br><span class="line">        </span><br><span class="line"></span><br><span class="line">        this.width = this.container.clientWidth;</span><br><span class="line"></span><br><span class="line">        this.circles = document.querySelector(&#x27;.circles&#x27;);</span><br><span class="line">        var self = this;</span><br><span class="line">        // 添加左侧点击事件，即向左</span><br><span class="line">        this.pre.addEventListener(&#x27;click&#x27;,function()&#123;</span><br><span class="line">            self.move(self.width);</span><br><span class="line">        &#125;);</span><br><span class="line">        // 添加右侧点击事件，即向左</span><br><span class="line">        this.next.addEventListener(&#x27;click&#x27;,function()&#123;</span><br><span class="line">            self.move(-self.width);</span><br><span class="line">        &#125;)</span><br><span class="line">        // 添加鼠标进入到容器内部的响应事件，即停止滚动</span><br><span class="line">        this.container.addEventListener(&#x27;mouseenter&#x27;,function()&#123;</span><br><span class="line">            clearInterval(self.timer);</span><br><span class="line">        &#125;)</span><br><span class="line">        // 添加鼠标离开容器的响应事件，即恢复滚动</span><br><span class="line">        this.container.addEventListener(&#x27;mouseleave&#x27;,function()&#123;</span><br><span class="line">            self.play(self.interval);</span><br><span class="line">        &#125;)</span><br><span class="line">        // 给底部的按钮添加点击响应，即点击之后定位到相应的图片</span><br><span class="line">        this.circles.addEventListener(&#x27;click&#x27;,function(e)&#123;</span><br><span class="line">            var index = e.target.getAttribute(&quot;data-index&quot;);</span><br><span class="line">            self.setBtns(index)</span><br><span class="line">            self.list.style.left = -self.width*index+&quot;px&quot;;</span><br><span class="line">        &#125;);</span><br><span class="line">        this.setImgs(this.source)</span><br><span class="line">    // 开始轮播，轮播间隔为3500ms</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以进行简单的调用了，当然html和css还是需要提前写好的</p>
+<p><strong>css</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br><span class="line">*&#123;</span><br><span class="line">    padding: 0;</span><br><span class="line">    margin: 0;</span><br><span class="line">&#125;</span><br><span class="line">div&#123;</span><br><span class="line">    box-sizing: border-box;</span><br><span class="line">&#125;</span><br><span class="line">.container&#123;</span><br><span class="line">    width: 800px;</span><br><span class="line">    height:600px;</span><br><span class="line">    position: relative;         </span><br><span class="line">    overflow: hidden;</span><br><span class="line">margin:auto;</span><br><span class="line">&#125;</span><br><span class="line">.pre,.next&#123;</span><br><span class="line">    background: rgba(20,20,20,0.2);</span><br><span class="line">    position: absolute;</span><br><span class="line">    width: 50px;</span><br><span class="line">    height: 100%;</span><br><span class="line">    text-align: center;</span><br><span class="line"></span><br><span class="line">    line-height:400px;  </span><br><span class="line">    display: table;</span><br><span class="line">&#125;</span><br><span class="line">a&#123;</span><br><span class="line">    font-size: 20px;</span><br><span class="line">    text-decoration: none;</span><br><span class="line">    color: gray;</span><br><span class="line">    margin: auto; </span><br><span class="line"></span><br><span class="line">    display: table-cell;</span><br><span class="line">    vertical-align: middle;</span><br><span class="line">&#125;</span><br><span class="line">.pre&#123;</span><br><span class="line">    top:0;</span><br><span class="line">    left:0px;</span><br><span class="line">&#125;</span><br><span class="line">.next&#123;</span><br><span class="line">    top: 0;</span><br><span class="line">    right:0;</span><br><span class="line">&#125;</span><br><span class="line">.list&#123;</span><br><span class="line">    height: 100%;</span><br><span class="line">    position: absolute;</span><br><span class="line">    z-index: -1;</span><br><span class="line">    left:0;</span><br><span class="line"></span><br><span class="line">    transition-property: all;</span><br><span class="line">    transition-duration: 1s;</span><br><span class="line">    transition-timing-function: linear;</span><br><span class="line">&#125;</span><br><span class="line">.item&#123;</span><br><span class="line">    height:100%;</span><br><span class="line">    overflow: hidden;</span><br><span class="line">    float: left;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">.circles&#123;</span><br><span class="line">    height: 50px;</span><br><span class="line">    width: 100%;</span><br><span class="line">    padding-bottom: 10px;</span><br><span class="line">    position: absolute;</span><br><span class="line">    bottom: 0;</span><br><span class="line">    display: flex;</span><br><span class="line">    justify-content: center;</span><br><span class="line">&#125;</span><br><span class="line">.btns&#123;</span><br><span class="line">    width: 20px;</span><br><span class="line">    height: 20px;</span><br><span class="line">    display: block;</span><br><span class="line">    border-radius: 50%;</span><br><span class="line">    background: rgba(23,33,33,.4);</span><br><span class="line">    padding: 0;</span><br><span class="line">    margin: 0 2px 0 2px;</span><br><span class="line"></span><br><span class="line">    transition-property: all;</span><br><span class="line">    transition-duration: 1s;</span><br><span class="line">    transition-timing-function: linear;</span><br><span class="line">&#125;</span><br><span class="line">.cur&#123;</span><br><span class="line">    background-color: rgba(22,23,22,0.8);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>html</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;div class=&quot;container&quot;&gt;</span><br><span class="line">    &lt;div class=&quot;pre&quot;&gt;</span><br><span class="line">        &lt;a href=&quot;javascript:void(0)&quot;&gt;</span><br><span class="line">            &lt;svg class=&quot;icon&quot; style=&quot;width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;&quot; viewBox=&quot;0 0 1024 1024&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; p-id=&quot;979&quot;&gt;&lt;path d=&quot;M182.06752 496.576l319.936-308.448c29.44-28.384 29.44-74.432 0-102.816a77.44 77.44 0 0 0-106.656 0L22.09952 445.152a70.88 70.88 0 0 0 0 102.816L395.34752 907.84a77.44 77.44 0 0 0 106.656 0c29.44-28.384 29.44-74.432 0-102.816l-319.936-308.448z m435.936 0l319.936-308.448c29.44-28.384 29.44-74.432 0-102.816s-77.216-28.384-106.656 0L458.03552 445.152a70.848 70.848 0 0 0 0 102.816L831.28352 907.84a77.44 77.44 0 0 0 106.656 0c29.44-28.384 29.44-74.432 0-102.816l-319.936-308.448z&quot; p-id=&quot;980&quot;&gt;&lt;/path&gt;&lt;/svg&gt;</span><br><span class="line">        &lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;next&quot;&gt;</span><br><span class="line">        &lt;a href=&quot;javascript:void(0)&quot;&gt;</span><br><span class="line">            &lt;svg class=&quot;icon&quot; style=&quot;width: 1em; height: 1em;vertical-align: middle;fill: currentColor;overflow: hidden;&quot; viewBox=&quot;0 0 1024 1024&quot; version=&quot;1.1&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot; p-id=&quot;4081&quot;&gt;&lt;path d=&quot;M604.568 513.578l-0.074-0.074 1.578-1.578-404.766-403.313c-10.993-10.811-26.083-17.487-42.732-17.487-0.107 0-0.214 0-0.321 0.001-33.898 0-61.462 27.453-61.462 61.243 0 8.053 1.504 15.87 4.486 23.178 4.697 11.207 12.257 20.43 21.778 27.022l309.167 309.418-317.86 316.717c-10.847 10.954-17.548 26.028-17.548 42.668 0 0.069 0 0.138 0 0.206 0 33.769 27.578 61.257 61.478 61.257 0.098 0 0.215 0.001 0.331 0.001 16.457 0 31.387-6.535 42.337-17.153l403.607-402.103z&quot; p-id=&quot;4082&quot;&gt;&lt;/path&gt;&lt;path d=&quot;M966.484 509.837l-404.766-403.286c-10.992-10.803-26.077-17.474-42.72-17.474-0.115 0-0.233 0-0.347 0.001-33.897 0-61.461 27.453-61.461 61.243 0 8.053 1.504 15.87 4.486 23.178 4.697 11.207 12.257 20.43 21.778 27.022l309.181 309.404-317.872 316.704c-10.847 10.957-17.548 26.034-17.548 42.677 0 0.066 0 0.13 0 0.195 0 33.769 27.578 61.258 61.467 61.258 16.206 0 31.441-6.176 42.665-17.125l405.139-403.796z&quot; p-id=&quot;4083&quot;&gt;&lt;/path&gt;&lt;/svg&gt;</span><br><span class="line">        &lt;/a&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;circles&quot;&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;div class=&quot;list&quot;&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>js调用</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">window.onload = function ()&#123;</span><br><span class="line">    var source = [</span><br><span class="line">        &quot;http://az619822.vo.msecnd.net/files/CrescentCityConnection_EN-US11247361628_1366x768.jpg&quot;,</span><br><span class="line">        &quot;http://az619519.vo.msecnd.net/files/LagazuoiRefuge_EN-US12120955316_1366x768.jpg&quot;,</span><br><span class="line">        &quot;http://az619822.vo.msecnd.net/files/TuileriesGardenWheel_EN-US11916079727_1366x768.jpg&quot;,</span><br><span class="line">        &quot;http://az608707.vo.msecnd.net/files/ColorfulSalt_EN-US13586718897_1366x768.jpg&quot;,</span><br><span class="line">        &quot;http://az608707.vo.msecnd.net/files/FelgueirasLighthouse_EN-US11198579022_1366x768.jpg&quot;</span><br><span class="line">    ];</span><br><span class="line"></span><br><span class="line">    var ins = new Casual();</span><br><span class="line">    ins.init(source);</span><br><span class="line">    ins.play();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="效果演示及源码："><a href="#效果演示及源码：" class="headerlink" title="效果演示及源码："></a>效果演示及源码：</h2><p><a target="_blank" rel="noopener" href="https://codepen.io/hustchen/pen/jwgmXm">轮播的原生js实现</a></p>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://hustchenshu.github.io/images/%E8%BD%AE%E6%92%AD%E5%9B%BE%E7%9A%84%E5%8E%9F%E7%94%9Fjs%E5%AE%9E%E7%8E%B0.html" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+    </footer>
+  </div>
+
+   
+   
+ 
+    
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2022
+        <i class="ri-heart-fill heart_icon"></i> hustchenshu
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        
+        由 <a href="https://hexo.io" target="_blank">Hexo</a> 强力驱动
+        <span class="division">|</span>
+        主题 - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+        <li>
+          <a href="https://beian.miit.gov.cn/" target="_black" rel="nofollow">鄂ICP备17017286号-2</a>
+        </li>
+        
+    </ul>
+    <ul>
+      
+      <li>
+          <img src="/images/beian.png"></img>
+          <a href="https://beian.miit.gov.cn/#/Integrated/recordQuery" target="_black" rel="nofollow">30159204181516625</a>
+      </li>
+        
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/cdn/fav.png" alt="我的日常生活分享"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/guide">导航</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="https://github.com/hustchenshu">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/ali_pay.jpeg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/wechat_pay.jpeg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":true,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+
+</html>

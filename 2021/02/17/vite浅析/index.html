@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+
+
+<html lang="zh-CN">
+  
+
+    <head>
+      <meta charset="utf-8" />
+        
+      <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1, maximum-scale=1"
+      />
+      <title>vite浅析 |  我的日常生活分享</title>
+  <meta name="generator" content="hexo-theme-ayer">
+      
+      <link rel="shortcut icon" href="/cdn/fav.png" />
+       
+<link rel="stylesheet" href="/dist/main.css">
+
+      <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css"
+      />
+      
+<link rel="stylesheet" href="/css/custom.css">
+ 
+      <script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+       
+ 
+
+      <!-- mermaid -->
+      
+      <script data-ad-client="ca-pub-2856060118135787" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <link rel="alternate" href="/atom.xml" title="我的日常生活分享" type="application/atom+xml">
+</head>
+  </html>
+</html>
+
+
+<body>
+  <div id="app">
+    
+      
+      <canvas width="1777" height="841"
+        style="position: fixed; left: 0px; top: 0px; z-index: 99999; pointer-events: none;"></canvas>
+      
+    <main class="content on">
+      <section class="outer">
+  <article
+  id="post-vite浅析"
+  class="article article-type-post"
+  itemscope
+  itemprop="blogPost"
+  data-scroll-reveal
+>
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  vite浅析
+</h1>
+ 
+
+      
+    </header>
+     
+    <div class="article-meta">
+      <a href="/2021/02/17/vite%E6%B5%85%E6%9E%90/" class="article-date">
+  <time datetime="2021-02-17T11:55:53.000Z" itemprop="datePublished">2021-02-17</time>
+</a> 
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/">前端框架</a> / <a class="article-category-link" href="/categories/%E5%89%8D%E7%AB%AF%E6%A1%86%E6%9E%B6/vue/">vue</a>
+  </div>
+  
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> 字数统计:</span>
+            <span class="post-count">2.4k</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> 阅读时长≈</span>
+            <span class="post-count">12 分钟</span>
+        </span>
+    </span>
+</div>
+ 
+    </div>
+      
+    <div class="tocbot"></div>
+
+
+
+
+  
+    <div class="article-entry" itemprop="articleBody">
+       
+  <h2 id="1-what"><a href="#1-what" class="headerlink" title="1. what"></a>1. what</h2><p>Vite，一个基于浏览器原生 ES imports 的开发服务器。利用浏览器去解析 imports，在服务器端按需编译返回，完全跳过了打包这个概念，服务器随起随用。同时不仅有 Vue 文件支持，还搞定了热更新，而且热更新的速度不会随着模块增多而变慢。针对生产环境则可以把同一份代码用 rollup 打包。虽然现在还比较粗糙，但这个方向我觉得是有潜力的，做得好可以彻底解决改一行代码等半天热更新的问题。</p>
+<h3 id="1-1-features"><a href="#1-1-features" class="headerlink" title="1.1 features"></a>1.1 features</h3><ul>
+<li>快速的冷启动（跳过了打包流程，服务器随起随用）</li>
+<li>即时的热模块更新</li>
+<li>真正的按需编译</li>
+</ul>
+<h3 id="1-2-todos"><a href="#1-2-todos" class="headerlink" title="1.2 todos"></a>1.2 todos</h3><ul>
+<li>模块加载利用浏览器的es imports,自动发起模块请求，实现按需编译；</li>
+<li>vue文件支持，直接返回vue文件无法当做esm模块直接使用，需要做一点编译工作适配esm；</li>
+<li>node端对浏览器端发起的esm请求进行解析，返回可理解的esm模块，利用改造后的js完成代码功能；</li>
+</ul>
+<h2 id="2-Appearances"><a href="#2-Appearances" class="headerlink" title="2. Appearances"></a>2. Appearances</h2><h3 id="2-1-html"><a href="#2-1-html" class="headerlink" title="2.1 html"></a>2.1 html</h3><p><strong>source</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;icon&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/favicon.ico&quot;</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">title</span>&gt;</span>Vite App<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;module&quot;</span> <span class="attr">src</span>=<span class="string">&quot;/src/main.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p><strong>server response</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">&quot;en&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;module&quot;</span>&gt;</span><span class="javascript"><span class="keyword">import</span> <span class="string">&quot;/vite/client&quot;</span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;UTF-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;icon&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/favicon.ico&quot;</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">&quot;viewport&quot;</span> <span class="attr">content</span>=<span class="string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>Vite App<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;app&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;module&quot;</span> <span class="attr">src</span>=<span class="string">&quot;/src/main.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-main-js"><a href="#2-2-main-js" class="headerlink" title="2.2 main.js"></a>2.2 main.js</h3><p><strong>source</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// file:  ./src/main.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./index.css&#x27;</span></span><br><span class="line">createApp(App).mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+<p><strong>server response</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// request: host/src/main.js</span></span><br><span class="line"><span class="keyword">import</span> &#123; createApp &#125; <span class="keyword">from</span> <span class="string">&#x27;/@modules/vue.js&#x27;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;/src/App.vue&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;/src/index.css?import&#x27;</span></span><br><span class="line"></span><br><span class="line">createApp(App).mount(<span class="string">&#x27;#app&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-App-vue"><a href="#2-3-App-vue" class="headerlink" title="2.3 App.vue"></a>2.3 App.vue</h3><p><strong>source</strong></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">img</span> <span class="attr">class</span>=<span class="string">&quot;logo&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;Vue logo&quot;</span> <span class="attr">src</span>=<span class="string">&quot;./assets/logo.png&quot;</span> /&gt;</span></span></span><br><span class="line">  <span class="xml"><span class="tag">&lt;<span class="name">HelloWorld</span> <span class="attr">msg</span>=<span class="string">&quot;Hello Vue 3.0 + Vite&quot;</span> /&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">import</span> HelloWorld <span class="keyword">from</span> <span class="string">&quot;./components/HelloWorld.vue&quot;</span>;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span></span></span><br><span class="line"><span class="javascript"><span class="xml"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="attr">name</span>: <span class="string">&quot;App&quot;</span>,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="attr">components</span>: &#123;</span></span></span><br><span class="line"><span class="javascript"><span class="xml">    HelloWorld,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;,</span></span></span><br><span class="line"><span class="javascript"><span class="xml">&#125;;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">style</span> <span class="attr">scoped</span>&gt;</span><span class="css"></span></span></span><br><span class="line"><span class="css"><span class="xml"><span class="selector-class">.logo</span> &#123;</span></span></span><br><span class="line"><span class="css"><span class="xml">  <span class="attribute">border</span>: <span class="number">1px</span> solid greenyellow;</span></span></span><br><span class="line"><span class="css"><span class="xml">&#125;</span></span></span><br><span class="line"><span class="css"><span class="xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>server response[src/App.vue]</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> HelloWorld <span class="keyword">from</span> <span class="string">&quot;/src/components/HelloWorld.vue&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> __script = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&quot;App&quot;</span>,</span><br><span class="line">  <span class="attr">components</span>: &#123;</span><br><span class="line">    HelloWorld,</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;/src/App.vue?type=style&amp;index=0&quot;</span></span><br><span class="line">__script.__scopeId = <span class="string">&quot;data-v-7ac74a55&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; render <span class="keyword">as</span> __render &#125; <span class="keyword">from</span> <span class="string">&quot;/src/App.vue?type=template&quot;</span></span><br><span class="line">__script.render = __render</span><br><span class="line">__script.__hmrId = <span class="string">&quot;/src/App.vue&quot;</span></span><br><span class="line">__script.__file = <span class="string">&quot;E:\\vite-demo\\demos\\demo0\\src\\App.vue&quot;</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> __script</span><br><span class="line"><span class="comment">//# sourceMappingURL=data:application/json;base64,....</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>server response[src/App.vue?type=style&amp;index=0]</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; updateStyle &#125; <span class="keyword">from</span> <span class="string">&quot;/vite/client&quot;</span></span><br><span class="line"><span class="keyword">const</span> css = <span class="string">&quot;\n.logo[data-v-7ac74a55] &#123;\n  border: 1px solid greenyellow;\n&#125;\n&quot;</span></span><br><span class="line">updateStyle(<span class="string">&quot;7ac74a55-0&quot;</span>, css)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> css</span><br></pre></td></tr></table></figure>
+
+<p><strong>server response[src/App.vue?type=template]</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createVNode <span class="keyword">as</span> _createVNode, resolveComponent <span class="keyword">as</span> _resolveComponent, Fragment <span class="keyword">as</span> _Fragment, openBlock <span class="keyword">as</span> _openBlock, createBlock <span class="keyword">as</span> _createBlock, withScopeId <span class="keyword">as</span> _withScopeId, pushScopeId <span class="keyword">as</span> _pushScopeId, popScopeId <span class="keyword">as</span> _popScopeId &#125; <span class="keyword">from</span> <span class="string">&quot;/@modules/vue.js&quot;</span></span><br><span class="line"><span class="keyword">const</span> _withId = <span class="comment">/*#__PURE__*/</span>_withScopeId(<span class="string">&quot;data-v-7ac74a55&quot;</span>)</span><br><span class="line"></span><br><span class="line">_pushScopeId(<span class="string">&quot;data-v-7ac74a55&quot;</span>)</span><br><span class="line"><span class="keyword">const</span> _hoisted_1 = <span class="comment">/*#__PURE__*/</span>_createVNode(<span class="string">&quot;img&quot;</span>, &#123;</span><br><span class="line">  <span class="attr">class</span>: <span class="string">&quot;logo&quot;</span>,</span><br><span class="line">  <span class="attr">alt</span>: <span class="string">&quot;Vue logo&quot;</span>,</span><br><span class="line">  <span class="attr">src</span>: <span class="string">&quot;/src/assets/logo.png&quot;</span></span><br><span class="line">&#125;, <span class="literal">null</span>, -<span class="number">1</span> <span class="comment">/* HOISTED */</span>)</span><br><span class="line">_popScopeId()</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> render = <span class="comment">/*#__PURE__*/</span>_withId(<span class="function"><span class="keyword">function</span> <span class="title">render</span>(<span class="params">_ctx, _cache, $props, $setup, $data, $options</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> _component_HelloWorld = _resolveComponent(<span class="string">&quot;HelloWorld&quot;</span>)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (_openBlock(), _createBlock(_Fragment, <span class="literal">null</span>, [</span><br><span class="line">    _hoisted_1,</span><br><span class="line">    _createVNode(_component_HelloWorld, &#123; <span class="attr">msg</span>: <span class="string">&quot;Hello Vue 3.0 + Vite&quot;</span> &#125;)</span><br><span class="line">  ], <span class="number">64</span> <span class="comment">/* STABLE_FRAGMENT */</span>))</span><br><span class="line">&#125;)</span><br><span class="line"><span class="comment">//# sourceMappingURL=data:application/json;base64,.....</span></span><br></pre></td></tr></table></figure>
+<h2 id="3-code-analysis"><a href="#3-code-analysis" class="headerlink" title="3. code analysis"></a>3. code analysis</h2><h3 id="3-1-cli-entry"><a href="#3-1-cli-entry" class="headerlink" title="3.1 cli entry"></a>3.1 cli entry</h3><p><strong>入口</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ./bin</span></span><br><span class="line">#!<span class="regexp">/usr/</span>bin/env node</span><br><span class="line"><span class="built_in">require</span>(<span class="string">&#x27;../dist/node/cli&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ./src/node/cli.ts</span></span><br><span class="line">...</span><br><span class="line">  <span class="keyword">const</span> argv = <span class="built_in">require</span>(<span class="string">&#x27;minimist&#x27;</span>)(process.argv.slice(<span class="number">2</span>)) <span class="comment">// 取参数</span></span><br><span class="line">  <span class="function"><span class="keyword">function</span> <span class="title">logHelp</span>(<span class="params"></span>) </span>&#123; ... &#125; <span class="comment">// help log</span></span><br><span class="line">  <span class="keyword">const</span> &#123; help, h, mode, m, version, v &#125; = argv</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (help || h) &#123;</span><br><span class="line">    logHelp()</span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (version || v) &#123;</span><br><span class="line">    <span class="comment">// noop, already logged</span></span><br><span class="line">    <span class="keyword">return</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!options.command || options.command === <span class="string">&#x27;serve&#x27;</span>) &#123;</span><br><span class="line">    runServe(options)</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (options.command === <span class="string">&#x27;build&#x27;</span>) &#123;</span><br><span class="line">    runBuild(options)</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (options.command === <span class="string">&#x27;optimize&#x27;</span>) &#123;</span><br><span class="line">    runOptimize(options)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">console</span>.error(chalk.red(<span class="string">`unknown command: <span class="subst">$&#123;options.command&#125;</span>`</span>))</span><br><span class="line">    process.exit(<span class="number">1</span>)</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">开启开发服务器</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">runServe</span>(<span class="params">options: UserConfig</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> server = <span class="built_in">require</span>(<span class="string">&#x27;./server&#x27;</span>).createServer(options)</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">生产环境打包</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">runBuild</span>(<span class="params">options: UserConfig</span>) </span>&#123; </span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="built_in">require</span>(<span class="string">&#x27;./build&#x27;</span>)[options.ssr ? <span class="string">&#x27;ssrBuild&#x27;</span> : <span class="string">&#x27;build&#x27;</span>](options)</span><br><span class="line">    process.exit(<span class="number">0</span>)</span><br><span class="line">  &#125; ... </span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">async</span> <span class="function"><span class="keyword">function</span> <span class="title">runOptimize</span>(<span class="params">options: UserConfig</span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>./src/node/server/index.ts</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">createServer</span>(<span class="params">config: ServerConfig</span>): <span class="title">Server</span> </span>&#123;</span><br><span class="line">  ......</span><br><span class="line">  <span class="keyword">const</span> app = <span class="keyword">new</span> Koa&lt;State, Context&gt;()</span><br><span class="line">  <span class="keyword">const</span> server = resolveServer(config, app.callback())</span><br><span class="line">  <span class="keyword">const</span> watcher = chokidar.watch(root, &#123;</span><br><span class="line">    <span class="attr">ignored</span>: [<span class="regexp">/node_modules/</span>, <span class="regexp">/\.git/</span>]</span><br><span class="line">  &#125;) <span class="keyword">as</span> HMRWatcher</span><br><span class="line">  <span class="keyword">const</span> resolver = createResolver(root, resolvers, alias)</span><br><span class="line">  <span class="comment">// 透传给插件的内容</span></span><br><span class="line">  <span class="keyword">const</span> context: ServerPluginContext = &#123;</span><br><span class="line">    root, <span class="comment">// process.pwd(),当前工作目录</span></span><br><span class="line">    app, <span class="comment">// koa实例</span></span><br><span class="line">    server, <span class="comment">// http server</span></span><br><span class="line">    watcher, <span class="comment">// 文件变化监视器</span></span><br><span class="line">    resolver, <span class="comment">// 路径解析工具</span></span><br><span class="line">    config, <span class="comment">// 用户配置</span></span><br><span class="line">    <span class="comment">// port is exposed on the context for hmr client connection</span></span><br><span class="line">    <span class="comment">// in case the files are served under a different port</span></span><br><span class="line">    <span class="attr">port</span>: config.port || <span class="number">3000</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// attach server context to koa context</span></span><br><span class="line">  app.use(<span class="function">(<span class="params">ctx, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="built_in">Object</span>.assign(ctx, context)</span><br><span class="line">    ctx.read = cachedRead.bind(<span class="literal">null</span>, ctx)</span><br><span class="line">    <span class="keyword">return</span> next()</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> resolvedPlugins = [</span><br><span class="line">    <span class="comment">// rewrite and source map plugins take highest priority and should be run</span></span><br><span class="line">    <span class="comment">// after all other middlewares have finished</span></span><br><span class="line">    sourceMapPlugin,</span><br><span class="line">    moduleRewritePlugin,</span><br><span class="line">    htmlRewritePlugin,</span><br><span class="line">    <span class="comment">// user plugins</span></span><br><span class="line">    ...(<span class="built_in">Array</span>.isArray(configureServer) ? configureServer : [configureServer]),</span><br><span class="line">    envPlugin,</span><br><span class="line">    moduleResolvePlugin,</span><br><span class="line">    proxyPlugin,</span><br><span class="line">    clientPlugin,</span><br><span class="line">    hmrPlugin,</span><br><span class="line">    ......</span><br><span class="line">    vuePlugin,</span><br><span class="line">    cssPlugin,</span><br><span class="line">    enableEsbuild ? esbuildPlugin : <span class="literal">null</span>,</span><br><span class="line">    jsonPlugin,</span><br><span class="line">    assetPathPlugin,</span><br><span class="line">    webWorkerPlugin,</span><br><span class="line">    wasmPlugin,</span><br><span class="line">    serveStaticPlugin</span><br><span class="line">  ]</span><br><span class="line">  resolvedPlugins.forEach(<span class="function">(<span class="params">m</span>) =&gt;</span> m &amp;&amp; m(context))</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> listen = server.listen.bind(server)</span><br><span class="line">  server.listen = (<span class="keyword">async</span> (port: number, ...args: any[]) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (optimizeDeps.auto !== <span class="literal">false</span>) &#123;</span><br><span class="line">      <span class="keyword">await</span> <span class="built_in">require</span>(<span class="string">&#x27;../optimizer&#x27;</span>).optimizeDeps(config)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">const</span> listener = listen(port, ...args)</span><br><span class="line">    context.port = server.address().port</span><br><span class="line">    <span class="keyword">return</span> listener</span><br><span class="line">  &#125;) <span class="keyword">as</span> any</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> server</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-plugins"><a href="#3-2-plugins" class="headerlink" title="3.2 plugins"></a>3.2 plugins</h3><p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/anion.png" alt="enter image description here"></p>
+<p>核心功能通过plugin来实现，通过添加注册plugin来扩展完善生态；核心的几个基础组件在<a target="_blank" rel="noopener" href="https://github.com/vitejs/vite/blob/26001044856d6e96f78217d23c5c6bba56a21e80/src/node/server.ts">v1.0.1</a>已经编写完毕</p>
+<p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/vite-server.png" alt="enter image description here"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> internalPlugins: Plugin[] = [</span><br><span class="line">  moduleRewritePlugin,</span><br><span class="line">  moduleResolvePlugin,</span><br><span class="line">  vuePlugin,</span><br><span class="line">  jsonPlugin,</span><br><span class="line">  cssPlugin,</span><br><span class="line">  hmrPlugin,</span><br><span class="line">  serveStaticPlugin</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ServerPluginContext[透传给插件的内容]</li>
+</ul>
+<p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/vite-plugin.png" alt="enter image description here"></p>
+<p>一个简单的插件<br><strong>serverPluginWebWorker</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; ServerPlugin &#125; <span class="keyword">from</span> <span class="string">&#x27;.&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> webWorkerPlugin: ServerPlugin = <span class="function">(<span class="params">&#123; app &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  app.use(<span class="function">(<span class="params">ctx, next</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (ctx.query.worker != <span class="literal">null</span>) &#123;</span><br><span class="line">      ctx.type = <span class="string">&#x27;js&#x27;</span></span><br><span class="line">      ctx.body = <span class="string">`export default function WrappedWorker() &#123;</span></span><br><span class="line"><span class="string">        return new Worker(<span class="subst">$&#123;<span class="built_in">JSON</span>.stringify(ctx.path)&#125;</span>, &#123; type: &#x27;module&#x27; &#125;)</span></span><br><span class="line"><span class="string">      &#125;`</span></span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> next()</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="4-core"><a href="#4-core" class="headerlink" title="4. core"></a>4. core</h2><h3 id="4-1-ES-module"><a href="#4-1-ES-module" class="headerlink" title="4.1 ES module"></a>4.1 <a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Modules">ES module</a></h3><p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/caniuse-esmodule.png" alt="enter image description here"></p>
+<p>从上面可以看出，除IE之外的主流浏览器基本都支持使用export/import来导入导出js模块</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;module&quot;</span>&gt;</span><span class="javascript"></span></span><br><span class="line"><span class="javascript">    <span class="keyword">import</span> &#123; source &#125; <span class="keyword">from</span> <span class="string">&#x27;./index.js&#x27;</span></span></span><br><span class="line"><span class="javascript"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>如上，当html嵌入上述模块，浏览器发出http请求[<a target="_blank" rel="noopener" href="http://host/index.js],%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%9C%80%E8%A6%81%E5%AF%B9%E8%AF%A5%E8%AF%B7%E6%B1%82%E8%BF%94%E5%9B%9E%E5%AF%B9%E5%BA%94%E7%9A%84js%E6%A8%A1%E5%9D%97%E5%86%85%E5%AE%B9%E5%8D%B3%E5%8F%AF">http://host/index.js],服务器需要对该请求返回对应的js模块内容即可</a></p>
+<h3 id="4-2-SCF"><a href="#4-2-SCF" class="headerlink" title="4.2 SCF"></a>4.2 SCF</h3><p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/vite-vue-parse.png" alt="enter image description here"></p>
+<p>浏览器对SCF是不支持的，因为他不是符合标准的ESM模块，因此需要对vue单文件进行预处理，如同webpack在打包时需要vue-loader一样，这里通过<code>serverPluginVue</code>插件拆分为js、templete和style三个模块，通过请求路径的query来分别返回对应内容。</p>
+<p>简化后的处理逻辑如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// serverPluginVue.ts</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">vuePlugin</span>(<span class="params">&#123;app&#125;</span>)</span>&#123;</span><br><span class="line">  app.use(<span class="keyword">async</span> (ctx, next) =&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (!ctx.path.endsWith(<span class="string">&#x27;.vue&#x27;</span>) &amp;&amp; !ctx.vue) &#123;</span><br><span class="line">      <span class="keyword">return</span> next()</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> query = ctx.query</span><br><span class="line">    <span class="comment">// 获取文件名称</span></span><br><span class="line">    <span class="keyword">let</span> filename = resolver.requestToFile(publicPath)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 解析器解析 SFC</span></span><br><span class="line">    <span class="keyword">const</span> descriptor = <span class="keyword">await</span> parseSFC(root, filename, ctx.body)</span><br><span class="line">    <span class="keyword">if</span> (!descriptor) &#123;</span><br><span class="line">      ctx.status = <span class="number">404</span></span><br><span class="line">      <span class="keyword">return</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 第一次请求 .vue</span></span><br><span class="line">    <span class="keyword">if</span> (!query.type) &#123;</span><br><span class="line">      <span class="keyword">if</span> (descriptor.script &amp;&amp; descriptor.script.src) &#123;</span><br><span class="line">        filename = <span class="keyword">await</span> resolveSrcImport(descriptor.script, ctx, resolver)</span><br><span class="line">      &#125;</span><br><span class="line">      ctx.type = <span class="string">&#x27;js&#x27;</span></span><br><span class="line">      <span class="keyword">const</span> &#123; code, map &#125; = <span class="keyword">await</span> compileSFCMain(</span><br><span class="line">        descriptor,</span><br><span class="line">        filePath,</span><br><span class="line">        publicPath,</span><br><span class="line">        root</span><br><span class="line">      )</span><br><span class="line">      ctx.body = code</span><br><span class="line">      ctx.map = map</span><br><span class="line">      <span class="keyword">return</span> etagCacheCheck(ctx)</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 请求/App.vue?type=template</span></span><br><span class="line">    <span class="keyword">if</span> (query.type === <span class="string">&#x27;template&#x27;</span>) &#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 请求/App.vue?type=style</span></span><br><span class="line">    <span class="keyword">if</span> (query.type === <span class="string">&#x27;style&#x27;</span>) &#123;</span><br><span class="line">      <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/vite-vue-split.png" alt="enter image description here"></p>
+<h3 id="4-3-HMR"><a href="#4-3-HMR" class="headerlink" title="4.3 HMR"></a>4.3 HMR</h3><p>热更新一般分为以下四点：</p>
+<ul>
+<li>通过 watcher 监听文件改动</li>
+<li>通过 server 端编译资源，并推送新资源信息给 client 。</li>
+<li>需要框架支持组件 rerender/reload </li>
+<li>client 收到资源信息，执行框架 rerender 逻辑。</li>
+</ul>
+<p>我们通过<code>serverPluginHmr</code>插件，收集文件变动，搭建ws server端，当文件变动，通知客户端进行更新；<br>同时加客户端所需的hmr框架<code>client.js</code>插入到html中，<code>client.js</code>将会建立与ws server的链接，接收文件变动信息，动态更新模块；</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ----------------------serverPluginHmr.ts--------------------</span></span><br><span class="line">  <span class="keyword">const</span> wss = <span class="keyword">new</span> WebSocket.Server(&#123; <span class="attr">noServer</span>: <span class="literal">true</span> &#125;)</span><br><span class="line">  ......</span><br><span class="line">  watcher.on(<span class="string">&#x27;change&#x27;</span>, <span class="function">(<span class="params">file</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!(file.endsWith(<span class="string">&#x27;.vue&#x27;</span>) || isCSSRequest(file))) &#123;</span><br><span class="line">      <span class="comment">// everything except plain .css are considered HMR dependencies.</span></span><br><span class="line">      <span class="comment">// plain css has its own HMR logic in ./serverPluginCss.ts.</span></span><br><span class="line">      handleJSReload(file)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// ------------------------client.js-------------------</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Listen for messages</span></span><br><span class="line"><span class="keyword">const</span> socket = <span class="keyword">new</span> WebSocket(socketUrl, <span class="string">&#x27;vite-hmr&#x27;</span>)</span><br><span class="line">socket.addEventListener(<span class="string">&#x27;message&#x27;</span>, <span class="keyword">async</span> (&#123; data &#125;) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> payload = <span class="built_in">JSON</span>.parse(data) <span class="keyword">as</span> HMRPayload | MultiUpdatePayload</span><br><span class="line">  <span class="keyword">if</span> (payload.type === <span class="string">&#x27;multi&#x27;</span>) &#123;</span><br><span class="line">    payload.updates.forEach(handleMessage)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    handleMessage(payload)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="5-why-amp-amp-diff"><a href="#5-why-amp-amp-diff" class="headerlink" title="5. why &amp;&amp; diff"></a>5. why &amp;&amp; diff</h2><p><img src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/yyx-webpack.png" alt="enter image description here"></p>
+<h3 id="5-1-advantages"><a href="#5-1-advantages" class="headerlink" title="5.1 advantages"></a>5.1 advantages</h3><ul>
+<li>无打包环节</li>
+</ul>
+<p>打包即通过webpack等工具将各个代码模块聚合在一起形成bundle文件，并且能够通过制定的规则读取调用模块代码。比如 webpack 使用 map 存放模块 id 和路径，使用 <strong>webpack_require</strong>  方法获取模块导出，因为浏览器支持了模块化，所以打包这一步就可以省略了。</p>
+<ul>
+<li><p>天然按需加载<br>上面说到通过打包工具会将源代码聚合成bundle，但是打包是提前进行，而且是静态的，无论是否执行都会打进来，当然现在可以通过import()、require.ensure等方法实现异步动态加载（被引入模块仍然需要打包），或者通过tree shaking减小体积，但是这些需要开发者通过评估进行优化，vite则能够让开发者只专注于code。</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://open-wc.org/developing/es-dev-server.html">es-dev-server</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://rollupjs.org/guide/en/">rollup</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.snowpack.dev/">snowpack</a></p>
+<ul>
+<li>两个工具都原生支持基于 ESM 的 HMR。 Vite 先一步支持， snowpack 在 v2 时也支持了。双方在基于 ESM 的 HMR 上合作过，尝试建立统一的 api， 但因为底层不同还是会略微不同。</li>
+<li>vite 更加专注，自带更多功能，如 typescript 编译，css 导入， css 模块和 post css 的默然支持。</li>
+<li>生产环境打包， vite 使用 rollup， snowpack 使用 parcel/webpack</li>
+</ul>
+</li>
+</ul>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><h3 id="commit-history"><a href="#commit-history" class="headerlink" title="commit history"></a>commit history</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/vitejs/vite/commit/820c2cfbefd376b7be2d0ba5ad1fd39d3e45347e">first commit</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/vitejs/vite/tree/26001044856d6e96f78217d23c5c6bba56a21e80">v1.0.1</a></li>
+</ul>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/6844904146915573773">Vite 原理浅析</a></li>
+<li><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/761551">vite 如何做到让 vue 本地开发更快速？</a></li>
+<li><a target="_blank" rel="noopener" href="https://juejin.im/post/6871081408815693837">🤚手摸手带你实现Vite</a></li>
+</ul>
+ 
+      <!-- reward -->
+      
+      <div id="reword-out">
+        <div id="reward-btn">
+          打赏
+        </div>
+      </div>
+      
+    </div>
+    
+
+    <!-- copyright -->
+    
+    <div class="declare">
+      <ul class="post-copyright">
+        <li>
+          <i class="ri-copyright-line"></i>
+          <strong>版权声明： </strong>
+          
+          本博客所有文章除特别声明外，著作权归作者所有。转载请注明出处！
+          
+        </li>
+      </ul>
+    </div>
+    
+    <footer class="article-footer">
+       
+<div class="share-btn">
+      <span class="share-sns share-outer">
+        <i class="ri-share-forward-line"></i>
+        分享
+      </span>
+      <div class="share-wrap">
+        <i class="arrow"></i>
+        <div class="share-icons">
+          
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="ri-weibo-fill"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="ri-wechat-fill"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="ri-qq-fill"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="ri-douban-line"></i>
+          </a>
+          <!-- <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a> -->
+          
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="ri-facebook-circle-fill"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="ri-twitter-fill"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="ri-google-fill"></i>
+          </a>
+        </div>
+      </div>
+</div>
+
+<div class="wx-share-modal">
+    <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://hustchenshu.github.io/2021/02/17/vite%E6%B5%85%E6%9E%90/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div id="share-mask"></div>  
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vite/" rel="tag">vite</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vue/" rel="tag">vue</a></li></ul>
+
+    </footer>
+  </div>
+
+   
+  <nav class="article-nav">
+    
+      <a href="/2021/03/19/%E5%89%8D%E7%AB%AF%E7%9F%A5%E8%AF%86%E6%A1%86%E6%9E%B6/" class="article-nav-link">
+        <strong class="article-nav-caption">上一篇</strong>
+        <div class="article-nav-title">
+          
+            前端知识框架
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2021/01/17/cache/" class="article-nav-link">
+        <strong class="article-nav-caption">下一篇</strong>
+        <div class="article-nav-title">前端缓存</div>
+      </a>
+    
+  </nav>
+
+   
+ 
+   
+<div class="gitalk" id="gitalk-container"></div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css">
+
+
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/blueimp-md5@2.10.0/js/md5.min.js"></script>
+
+<script type="text/javascript">
+  var gitalk = new Gitalk({
+    clientID: '62f48eab8d92b29e33e1',
+    clientSecret: 'c5310877c4a6f89f33ff23b672affb6de34a5d7a',
+    repo: 'hustchenshu.github.io',
+    owner: 'hustchenshu',
+    admin: ['hustchenshu'],
+    // id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: md5(location.pathname),
+    distractionFreeMode: false,  // Facebook-like distraction free mode
+    pagerDirection: 'last'
+  })
+
+  gitalk.render('gitalk-container')
+</script>
+
+     
+</article>
+
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2015-2022
+        <i class="ri-heart-fill heart_icon"></i> hustchenshu
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        
+        由 <a href="https://hexo.io" target="_blank">Hexo</a> 强力驱动
+        <span class="division">|</span>
+        主题 - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        <span>
+  <span><i class="ri-user-3-fill"></i>访问人数:<span id="busuanzi_value_site_uv"></span></span>
+  <span class="division">|</span>
+  <span><i class="ri-eye-fill"></i>浏览次数:<span id="busuanzi_value_page_pv"></span></span>
+</span>
+        
+      </li>
+    </ul>
+    <ul>
+      
+        <li>
+          <a href="https://beian.miit.gov.cn/" target="_black" rel="nofollow">鄂ICP备17017286号-2</a>
+        </li>
+        
+    </ul>
+    <ul>
+      
+      <li>
+          <img src="/images/beian.png"></img>
+          <a href="https://beian.miit.gov.cn/#/Integrated/recordQuery" target="_black" rel="nofollow">30159204181516625</a>
+      </li>
+        
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/cdn/fav.png" alt="我的日常生活分享"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">主页</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">归档</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/categories">分类</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/tags">标签</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/friends">友链</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/guide">导航</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" target="_blank" rel="noopener" href="https://github.com/hustchenshu">关于我</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="搜索">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/ali_pay.jpeg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://booker-17dbbd-1252444055.tcloudbaseapp.com/cdn/wechat_pay.jpeg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+ 
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Tocbot -->
+ 
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: ".tocbot",
+    contentSelector: ".article-entry",
+    headingSelector: "h1, h2, h3, h4, h5, h6",
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: "main",
+    positionFixedSelector: ".tocbot",
+    positionFixedClass: "is-position-fixed",
+    fixedSidebarOffset: "auto",
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css"
+/>
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+ <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script> 
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+ 
+<script src="/js/busuanzi-2.3.pure.min.js"></script>
+ 
+<!-- ClickLove -->
+
+<!-- ClickBoom1 -->
+
+<!-- ClickBoom2 -->
+ 
+<script src="/js/clickBoom2.js"></script>
+ 
+<!-- CodeCopy -->
+ 
+<link rel="stylesheet" href="/css/clipboard.css">
+ <script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+ 
+<!-- CanvasBackground -->
+ 
+<script src="/js/dz.js"></script>
+ 
+<script>
+  if (window.mermaid) {
+    mermaid.initialize({ theme: "forest" });
+  }
+</script>
+
+
+    
+  </div>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":true,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body>
+
+</html>
