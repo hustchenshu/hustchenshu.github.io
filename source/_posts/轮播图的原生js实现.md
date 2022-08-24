@@ -30,7 +30,7 @@ categories: [javascript]
 也就是说我们要先定义一个容器（以下交视窗容器，container），给其固定的高宽，恰好是一张图片的尺寸，然后在其中再定义一个容器（list），与视窗等高，但是为了横排摆放我们的图片，需要设定其宽度为图片的宽度之和（container.clientWidth*图片张数），这里的div横排可以使用左浮动来实现，注意设定container的overflow为hidden，否则所有图片将横排显示了。
 
 为了之后的调用方便，我们将图片的插入放在js当中处理，这样可以实现简单的函数调用创建一个轮播：
-```
+```js
 function setImgs(imgs){
     // 设定图片容器宽度，使得能够横排容下所有图片
     //（这里+1是将第一张复制到最后，实现无缝轮播）
@@ -76,7 +76,7 @@ function addItem(src,index){
 
 ## 切换实现
 接下来要实现图片的向左向右切换，这里的原理就是list容器的left偏移来实现，所以list容器的position必须为absolute；改变list容器的left的代码如下：其中setBtns是切换完之后需要改变小圆点的状态的函数；
-```
+```js
 // 通过图片容器的left属性来实现平移切换
 function move(offset){
     // 当前向左偏移
@@ -122,7 +122,7 @@ function setBtns(index){
 ##自动轮播
 至于自动轮播，无非是使用setInterval来实现：
 
-```
+```js
 // 轮播设定函数
 function play(){
     var self = this;
@@ -133,7 +133,7 @@ function play(){
 
 ##模块化及调用
 将上述功能函数进行封装：
-```
+```js
 function Casual(source){
     return {
         init:init,
@@ -192,7 +192,7 @@ function Casual(source){
 然后就可以进行简单的调用了，当然html和css还是需要提前写好的
 
 **css**
-```
+```css
 
 
 *{
@@ -207,7 +207,7 @@ div{
     height:600px;
     position: relative;         
     overflow: hidden;
-margin:auto;
+    margin:auto;
 }
 .pre,.next{
     background: rgba(20,20,20,0.2);
@@ -280,7 +280,7 @@ a{
 ```
 
 **html**
-```
+```html
 <div class="container">
     <div class="pre">
         <a href="javascript:void(0)">
@@ -300,7 +300,7 @@ a{
 ```
 
 **js调用**
-```
+```js
 window.onload = function (){
     var source = [
         "http://az619822.vo.msecnd.net/files/CrescentCityConnection_EN-US11247361628_1366x768.jpg",

@@ -44,22 +44,44 @@ class MyPromise {
     }
 
     then(onFulfilled, onRejected) {
-        switch(this.status) {
-            case PROMISE_STATUS.PENDING:
-                onFulfilled && this.resolveCallbacks.push(onFulfilled);
-                onRejected && this.rejectCallbacks.push(onRejected);
-                break;
-            case PROMISE_STATUS.FUIFILLED:
-                const value = onFulfilled(this.value);
-                break;
-            case PROMISE_STATUS.REJECTED:
-                onRejected(this.error);
-                break;
-        }
-    }
+        const thenPromise = new MyPromise((resolve, reject) => {
+            const resolvePromise = cb => {
+                try{
+                    const x = cb(this.value);
+                    // 本身
+                    if(x === thenPromise) {
+                        throw new Error('cannot return self')
+                    }
+                    if(x instanceof MyPromise) {
+                        x.then(resolve, reject);
+                    } else {
+                        resolve(x);
+                    }
+                } catch (e) {
+                    reject(e);
+                }
+            };
 
-    static returnPromise(value) {
-        if(Object.isProperty)
+            switch(this.status) {
+                case PROMISE_STATUS.PENDING:
+                    // onFulfilled && this.resolveCallbacks.push(onFulfilled);
+                    this.resolveCallbacks.push(resolvePromise.bind(this, onFulfilled));
+                    this.rejectCallbacks.push(resolvePromise.bind(this, onRejected));
+                    // onRejected && this.rejectCallbacks.push(onRejected);
+                    break;
+                case PROMISE_STATUS.FUIFILLED:
+                    // onFulfilled(this.value);
+                    resolvePromise(onFulfilled);
+                    break;
+                case PROMISE_STATUS.REJECTED:
+                    // onRejected(this.error);
+                    resolvePromise(onRejected);
+                    break;
+            }
+
+        })
+
+        return thenPromise;
     }
 }
 
@@ -68,6 +90,8 @@ const demo = new MyPromise((resolve, reject) => {
     setTimeout(() => {
         resolve(111);
     }, 3000)
+}).then((value) => {
+    console.log('resolve1', value)
 })
 
 console.log(demo)

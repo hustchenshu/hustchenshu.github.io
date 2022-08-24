@@ -3,9 +3,10 @@ Function.prototype.myCall = function (context, ...arr) {
         throw 'not function'
     }
     const self = context || window;
-    self.fn = this;
-    const result = self.fn(...arr);
-    delete self.fn;
+    const fnSymbol = Symbol('fn');
+    self[fnSymbol] = this;
+    const result = self[fnSymbol](...arr);
+    delete self[fnSymbol];
 
     return result;
 }
